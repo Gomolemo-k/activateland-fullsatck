@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+#  astro:
+#    build: .
+#    volumes:
+#      - ./:/app
+#    depends_on:
+#      - mongodb
+#    ports:
+#      - '3000:3000'
+
+  mongodb:
+    image: mongo:4.4.12
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - '27017:27017'
+
+volumes:
+  mongodb_data:
