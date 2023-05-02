@@ -1,5 +1,5 @@
 // import images
-import LogoImg from './assets/img/header/logo.svg';
+import LogoImg from '../../assets/img/logo.svg';
 import HeroImg from './assets/img/hero/image.svg';
 import OverviewProductImg from './assets/img/overview/product.svg';
 import FacebookImg from './assets/img/overview/brands/facebook.svg';
@@ -30,7 +30,7 @@ import LinkedinIcon from './assets/img/copyright/linkedin.svg';
 
 export const header = {
   logo: LogoImg,
-  btnText: 'Request a demo',
+  btnText: 'Try it now!',
 };
 
 export const nav = [

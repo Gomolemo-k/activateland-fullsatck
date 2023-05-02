@@ -13,7 +13,7 @@ const Footer = () => {
         <div className='flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left lg:justify-between gap-y-8'>
           {/* logo */}
           <div data-aos='fade-up' data-aos-offset='200' data-aos-delay='300'>
-            <img src={logo} alt='' />
+          <img class="object-cover h-20 w-35" src={logo} alt='' />
           </div>
           {/* list 1 */}
           <div data-aos='fade-up' data-aos-offset='200' data-aos-delay='500'>
