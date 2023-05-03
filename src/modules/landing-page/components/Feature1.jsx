@@ -1,6 +1,6 @@
 import React from 'react';
 // import data
-import { features } from '../data';
+import { features } from '../../../assets/data/landing-page/data';
 
 const Feature1 = () => {
   // destructure features

@@ -1,6 +1,6 @@
 import React from 'react';
 // import data
-import { product } from '../data';
+import { product } from '../../../assets/data/landing-page/data';
 // import components
 import Cards from './Cards';
 

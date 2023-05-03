@@ -1,6 +1,6 @@
 import React from 'react';
 // import data
-import { overview } from '../data';
+import { overview } from '../../../assets/data/landing-page/data';
 
 const Overview = () => {
   // destructure overview data

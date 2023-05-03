@@ -1,32 +1,33 @@
 // import images
-import LogoImg from '../../assets/img/logo.svg';
-import HeroImg from './assets/img/hero/image.svg';
-import OverviewProductImg from './assets/img/overview/product.svg';
-import FacebookImg from './assets/img/overview/brands/facebook.svg';
-import GoogleImg from './assets/img/overview/brands/google.svg';
-import CocaColaImg from './assets/img/overview/brands/coca-cola.svg';
-import LinkedInImg from './assets/img/overview/brands/linkedin.svg';
-import SamsungImg from './assets/img/overview/brands/samsung.svg';
-import Feature1Img from './assets/img/features/feature1-img.svg';
-import Feature2Img from './assets/img/features/feature2-img.svg';
-import Feature3Img from './assets/img/features/feature3-img.svg';
-import ArrowRightImg from './assets/img/features/arrow-right.svg';
-import CardIconImg1 from './assets/img/product/cards/icon1.svg';
-import CardIconImg2 from './assets/img/product/cards/icon2.svg';
-import CardIconImg3 from './assets/img/product/cards/icon3.svg';
-import PricingIcon1 from './assets/img/pricing/icon1.svg';
-import PricingIcon2 from './assets/img/pricing/icon2.svg';
-import PricingIcon3 from './assets/img/pricing/icon3.svg';
-import AvatarImg1 from './assets/img/testimonial/avatar1.png';
-import AvatarImg2 from './assets/img/testimonial/avatar2.png';
-import AvatarImg3 from './assets/img/testimonial/avatar3.png';
-import AvatarImg4 from './assets/img/testimonial/avatar4.png';
-import AvatarImg5 from './assets/img/testimonial/avatar5.png';
-import CtaImg1 from './assets/img/cta/image1.svg';
-import CtaImg2 from './assets/img/cta/image2.svg';
-import FacebookIcon from './assets/img/copyright/facebook.svg';
-import TwitterIcon from './assets/img/copyright/twitter.svg';
-import LinkedinIcon from './assets/img/copyright/linkedin.svg';
+import LogoImg from '../../img/logo/logo.svg';
+import HeroImg from '../../img/landing-page/hero/image.svg';
+import OverviewProductImg from '../../img/landing-page/overview/product.svg';
+import FacebookImg from '../../img/landing-page/overview/brands/facebook.svg';
+import GoogleImg from '../../img/landing-page/overview/brands/google.svg';
+import CocaColaImg from '../../img/landing-page/overview/brands/coca-cola.svg';
+import LinkedInImg from '../../img/landing-page/overview/brands/linkedin.svg';
+import SamsungImg from '../../img/landing-page/overview/brands/samsung.svg';
+import Feature1Img from '../../img/landing-page/features/feature1-img.svg';
+import Feature2Img from '../../img/landing-page/features/feature2-img.svg';
+import Feature3Img from '../../img/landing-page/features/feature3-img.svg';
+import ArrowRightImg from '../../img/landing-page/features/arrow-right.svg';
+import CardIconImg1 from '../../img/landing-page/product/cards/icon1.svg';
+import CardIconImg2 from '../../img/landing-page/product/cards/icon2.svg';
+import CardIconImg3 from '../../img/landing-page/product/cards/icon3.svg';
+import PricingIcon1 from '../../img/landing-page/pricing/icon1.svg';
+import PricingIcon2 from '../../img/landing-page/pricing/icon2.svg';
+import PricingIcon3 from '../../img/landing-page/pricing/icon3.svg';
+import AvatarImg1 from '../../img/landing-page/testimonial/avatar1.png';
+import AvatarImg2 from '../../img/landing-page/testimonial/avatar2.png';
+import AvatarImg3 from '../../img/landing-page/testimonial/avatar3.png';
+import AvatarImg4 from '../../img/landing-page/testimonial/avatar4.png';
+import AvatarImg5 from '../../img/landing-page/testimonial/avatar5.png';
+import CtaImg1 from '../../img/landing-page/cta/image1.svg';
+import CtaImg2 from '../../img/landing-page/cta/image2.svg';
+import FacebookIcon from '../../img/landing-page/copyright/facebook.svg';
+import TwitterIcon from '../../img/landing-page/copyright/twitter.svg';
+import LinkedinIcon from '../../img/landing-page/copyright/linkedin.svg';
+import ArrowImg from '../../img/landing-page/product/cards/arrow.svg';
 
 export const header = {
   logo: LogoImg,
@@ -106,6 +107,7 @@ export const features = {
 
 export const product = {
   title: 'The Product we work with.',
+  arrowImg: ArrowImg,
   subtitle:
     'Tellus lacus morbi sagittis lacus in. Amet nisl at mauris enim aumsan nisi, tincidunt vel. Enim ipsum, at quis ullamcorper eget ut.',
   cards: [

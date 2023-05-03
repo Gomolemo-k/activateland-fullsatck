@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import data
-import { header } from '../data';
+import { header } from '../../../assets/data/landing-page/data';
 // import icons
 import { HiMenuAlt4, HiOutlineX } from 'react-icons/hi';
 // import components

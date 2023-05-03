@@ -1,6 +1,6 @@
 import React from 'react';
 // import data
-import { footer } from '../data';
+import { footer } from '../../../assets/data/landing-page/data';
 // import components
 import Copyright from './Copyright';
 

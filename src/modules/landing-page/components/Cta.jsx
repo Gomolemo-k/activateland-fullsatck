@@ -1,6 +1,6 @@
 import React from 'react';
 // import data
-import { cta } from '../data';
+import { cta } from '../../../assets/data/landing-page/data';
 // import icons
 import { HiOutlineChevronDown } from 'react-icons/hi';
 

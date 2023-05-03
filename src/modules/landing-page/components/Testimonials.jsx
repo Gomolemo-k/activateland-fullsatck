@@ -1,6 +1,6 @@
 import React from 'react';
 // import data
-import { testimonials } from '../data';
+import { testimonials } from '../../../assets/data/landing-page/data';
 // import components
 import ClientSlider from './ClientSlider';
 

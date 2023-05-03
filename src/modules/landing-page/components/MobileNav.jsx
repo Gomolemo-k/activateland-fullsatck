@@ -1,6 +1,6 @@
 import React from 'react';
 // import data
-import { nav } from '../data';
+import { nav } from '../../../assets/data/landing-page/data';
 
 const MobileNav = () => {
   return (

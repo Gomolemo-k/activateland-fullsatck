@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import data
-import { pricing } from '../data';
+import { pricing } from '../../../assets/data/landing-page/data';
 // import icons
 import { HiCheck, HiOutlineArrowNarrowRight } from 'react-icons/hi';
 

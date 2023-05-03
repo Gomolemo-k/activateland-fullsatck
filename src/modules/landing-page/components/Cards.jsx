@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 // import data
-import { product } from '../data';
-// import images
-import ArrowImg from '../assets/img/product/cards/arrow.svg';
+import { product } from '../../../assets/data/landing-page/data';
 
 const Cards = () => {
   // index state
   const [index, setIndex] = useState(1);
   // destructure product data
-  const { cards } = product;
+  const { cards, arrowImg } = product;
   return (
     <>
       {/* cards */}
@@ -38,7 +36,7 @@ const Cards = () => {
                 {/* card subtitle */}
                 <p className='mb-6 text-light'>{subtitle}</p>
                 {/* arrow img */}
-                {index === cardIndex && <img src={ArrowImg} />}
+                {index === cardIndex && <img src={arrowImg} />}
               </div>
             </div>
           );
