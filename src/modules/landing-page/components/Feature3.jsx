@@ -6,9 +6,9 @@ const Feature3 = () => {
   // destructure features
   const { feature3 } = features;
   // destructure feature3
-  const { pretitle, title, subtitle, btnLink, btnIcon, image } = feature3;
+  const { id, pretitle, title, subtitle, btnLink, btnIcon, image } = feature3;
   return (
-    <section className='section py-10'>
+    <section id={id} className='section py-10'>
       <div className='container mx-auto'>
         <div className='flex flex-col lg:flex-row lg:items-center lg:gap-x-[30px]'>
           {/* text */}

@@ -4,9 +4,10 @@ import { copyright } from '../../../assets/data/landing-page/data';
 
 const Copyright = () => {
   // destructure copyright data
-  const { link1, link2, copyText, social } = copyright;
+  const { id, link1, link2, copyText, social } = copyright;
   return (
     <div
+      id={id} 
       className='flex flex-col items-center gap-y-2 lg:flex-row lg:justify-between'
       data-aos='fade-up'
       data-aos-offset='0'

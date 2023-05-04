@@ -6,9 +6,9 @@ import ClientSlider from './ClientSlider';
 
 const Testimonials = () => {
   // destructure testimonials
-  const { title, clients } = testimonials;
+  const { id, title, clients } = testimonials;
   return (
-    <section className='section py-10 bg-gradient-to-r from-green-800 to-green-400'>
+    <section id={id} className='section py-10 bg-gradient-to-r from-green-800 to-green-400'>
       <div className='container mx-auto py-10'>
         {/* title */}
         <h2

@@ -36,12 +36,13 @@ export const header = {
 
 export const nav = [
   { name: 'Home', href: '/' },
-  { name: 'Features', href: '/' },
-  { name: 'Pricing', href: '/' },
-  { name: 'Feedback', href: '/' },
+  { name: 'Features', href: '#feature1' },
+  { name: 'Pricing', href: '#pricing' },
+  { name: 'Contact', href: '#footer' },
 ];
 
 export const hero = {
+  id: 'hero',
   title: 'Analyze Real Estate Investment Opportunities',
   subtitle: 'A comprehensive SaaS platform for property investors - Discover, compare, and analyze potential investments with ease',
   btnText: 'Get Started',
@@ -50,8 +51,13 @@ export const hero = {
 };
 
 export const overview = {
+  id: 'overview',
   productImg: OverviewProductImg,
-  brands: [
+};
+
+export const brands = {
+  id: 'brands',
+  logos: [
     {
       image: FacebookImg,
       delay: 300,
@@ -77,6 +83,7 @@ export const overview = {
 
 export const features = {
   feature1: {
+    id: 'feature1',
     pretitle: 'Full Control',
     title: 'In-depth Property Analysis',
     subtitle:
@@ -86,6 +93,7 @@ export const features = {
     image: Feature1Img,
   },
   feature2: {
+    id: 'feature2',
     pretitle: 'Collaborative Platform',
     title: 'Work Seamlessly with Teams',
     subtitle:
@@ -95,6 +103,7 @@ export const features = {
     image: Feature2Img,
   },
   feature3: {
+    id: 'feature3',
     pretitle: 'Manage Opportunities',
     title: 'Personalized Investment Tracking',
     subtitle:
@@ -107,6 +116,7 @@ export const features = {
 
 
 export const product = {
+  id: 'product',
   title: 'Experience the Advantages.',
   arrowImg: ArrowImg,
   subtitle:
@@ -135,6 +145,7 @@ export const product = {
 
 
 export const pricing = {
+  id: 'pricing',
   title: 'Choose Your Ideal Plan',
   cards: [
     {
@@ -180,6 +191,7 @@ export const pricing = {
 };
 
 export const testimonials = {
+  id: 'testimonials',
   title: 'Trusted by Property Investors Worldwide',
   clients: [
     {
@@ -226,6 +238,7 @@ export const testimonials = {
 };
 
 export const cta = {
+  id: 'cta',
   title: 'Join Thousands of Satisfied Property Investors',
   subtitle: 'Experience the powerful features with a start free plan.',
   btnText: 'Start Your Free Plan',
@@ -235,16 +248,16 @@ export const cta = {
 
 
 export const footer = {
+  id: 'footer',
   logo: LogoImg,
   links: [
     { name: 'Home', href: '/' },
-    { name: 'Features', href: '/' },
-    { name: 'Pricing', href: '/' },
-    { name: 'Feedback', href: '/' },
+    { name: 'Features', href: '#feature1' },
+    { name: 'Pricing', href: '#pricing' },
+    { name: 'Contact', href: '#footer' },
   ],
   legal: [
     { name: 'Terms of use', href: '/' },
-    { name: 'Terms of conditions', href: '/' },
     { name: 'Privacy policy', href: '/' },
     { name: 'Cookie policy', href: '/' },
   ],
@@ -260,6 +273,7 @@ export const footer = {
 };
 
 export const copyright = {
+  id: 'copyright',
   link1: {
     name: 'Privacy & Terms',
     href: '/',

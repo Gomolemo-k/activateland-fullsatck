@@ -6,9 +6,9 @@ import Cards from './Cards';
 
 const Product = () => {
   // destructure product data
-  const { title, subtitle } = product;
+  const { id, title, subtitle } = product;
   return (
-    <section className='section py-10'>
+    <section id={id} className='section py-10'>
       <div className='container mx-auto py-10'>
         {/* title */}
         <h2

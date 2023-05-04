@@ -6,9 +6,9 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 
 const Cta = () => {
   // destructure cta data
-  const { title, subtitle, btnText, img1, img2 } = cta;
+  const { id, title, subtitle, btnText, img1, img2 } = cta;
   return (
-    <section className='section bg-cover bg-left-top bg-gradient-to-r from-purple-500 to-pink-500 py-10'>
+    <section id={id} className='section bg-cover bg-left-top bg-gradient-to-r from-purple-500 to-pink-500 py-10'>
       <div className='max-w-[1340px] mx-auto px-[25px]'>
         {/* text */}
         <div className='max-w-[920px] mx-auto text-center'>

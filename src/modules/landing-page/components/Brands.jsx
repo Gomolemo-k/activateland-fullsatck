@@ -1,15 +1,15 @@
 import React from 'react';
 // import data
-import { overview } from '../../../assets/data/landing-page/data';
+import { brands } from '../../../assets/data/landing-page/data';
 
 const Brands = () => {
   // destructure overview
-  const { brands } = overview;
+  const { id, logos } = brands;
   return (
-    <section className='py-10 bg-slate-200'>
+    <section id={id} className='py-10 bg-slate-200'>
       <div className='container mx-auto flex flex-col lg:flex-row items-center justify-between space-y-6'>
-        {/* brands */}
-        {brands.map((item, index) => {
+        {/* logos */}
+        {logos.map((item, index) => {
           // destructure item
           const { image, delay } = item;
           return (

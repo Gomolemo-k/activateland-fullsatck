@@ -8,9 +8,9 @@ const Pricing = () => {
   // index state
   const [index, setIndex] = useState(1);
   // destructure pricing
-  const { title, cards } = pricing;
+  const { id, title, cards } = pricing;
   return (
-    <section className='section py-10'>
+    <section id={id} className='section py-10'>
       <div className='container mx-auto'>
         {/* title */}
         <h2
