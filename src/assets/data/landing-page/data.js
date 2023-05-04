@@ -29,6 +29,12 @@ import TwitterIcon from '../../img/landing-page/copyright/twitter.svg';
 import LinkedinIcon from '../../img/landing-page/copyright/linkedin.svg';
 import ArrowImg from '../../img/landing-page/product/cards/arrow.svg';
 
+import CookieConsentCss from '../../css/landing-page/CookieConsent.css';
+
+export const cookieConsent = {
+  css: CookieConsentCss,
+};
+
 export const header = {
   logo: LogoImg,
   btnText: 'Try it now!',
@@ -260,6 +266,7 @@ export const footer = {
     { name: 'Terms of use', href: '/' },
     { name: 'Privacy policy', href: '/' },
     { name: 'Cookie policy', href: '/' },
+    { name: 'Service guarantees', href: '/' },
   ],
   newsletter: {
     title: 'Newsletter',

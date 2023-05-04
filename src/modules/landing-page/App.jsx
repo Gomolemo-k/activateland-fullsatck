@@ -18,6 +18,7 @@ import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import Cta from './components/Cta';
 import Footer from './components/Footer';
+import CookieConsent from './components/CookieConsent';
 
 const App = () => {
   // initialize
@@ -39,6 +40,7 @@ const App = () => {
       <Pricing />
       <Brands />
       <Footer />
+      <CookieConsent />
     </div>
   );
 };
