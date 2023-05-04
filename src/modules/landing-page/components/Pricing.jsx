@@ -10,11 +10,11 @@ const Pricing = () => {
   // destructure pricing
   const { title, cards } = pricing;
   return (
-    <section className='section'>
+    <section className='section py-10'>
       <div className='container mx-auto'>
         {/* title */}
         <h2
-          className='h2 mb-10 lg:mb-20 text-center'
+          className='h2 mb-10 lg:mb-20 text-center text-2xl text-white'
           data-aos='fade-up'
           data-aos-delay='200'
         >
@@ -68,7 +68,7 @@ const Pricing = () => {
                     <div>
                       <span className='text-2xl font-semibold'>{price}/</span>
                       <span className='text-xl text-light font-light'>
-                        year
+                        month
                       </span>
                     </div>
                     <div className='text-base text-light'>{userAmount}</div>

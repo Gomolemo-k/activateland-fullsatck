@@ -8,12 +8,12 @@ const Cta = () => {
   // destructure cta data
   const { title, subtitle, btnText, img1, img2 } = cta;
   return (
-    <section className='section bg-cover bg-left-top bg-gradient-to-r from-purple-500 to-pink-500'>
+    <section className='section bg-cover bg-left-top bg-gradient-to-r from-purple-500 to-pink-500 py-10'>
       <div className='max-w-[1340px] mx-auto px-[25px]'>
         {/* text */}
         <div className='max-w-[920px] mx-auto text-center'>
           <h2
-            className='h2 text-white mb-6'
+            className='h2 mb-6 text-center text-2xl text-white'
             data-aos='fade-up'
             data-aos-delay='200'
           >

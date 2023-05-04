@@ -6,7 +6,7 @@ const Brands = () => {
   // destructure overview
   const { brands } = overview;
   return (
-    <section className='py-9'>
+    <section className='py-10 bg-slate-200'>
       <div className='container mx-auto flex flex-col lg:flex-row items-center justify-between space-y-6'>
         {/* brands */}
         {brands.map((item, index) => {

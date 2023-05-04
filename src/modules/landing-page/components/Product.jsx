@@ -8,29 +8,19 @@ const Product = () => {
   // destructure product data
   const { title, subtitle } = product;
   return (
-    <section className='section'>
-      <div className='container mx-auto'>
-        {/* title & subtitle */}
-        <div className='flex flex-col items-center lg:flex-row mb-10 lg:mb-20'>
-          <h2
-            className='section-title'
-            data-aos='fade-up'
-            data-aos-offset='400'
-            data-aos-delay='300'
-          >
-            {title}
-          </h2>
-          <p
-            className='lead lg:max-w-[350px]'
-            data-aos='fade-up'
-            data-aos-offset='400'
-            data-aos-delay='400'
-          >
-            {subtitle}
-          </p>
+    <section className='section py-10'>
+      <div className='container mx-auto py-10'>
+        {/* title */}
+        <h2
+          className='title mb-10 lg:mb-20 max-w-[920px] mx-auto strong text-center text-2xl text-orange-600'
+          data-aos='fade-up'
+          data-aos-delay='200'
+        >
+          {title}
+        </h2>
+        <div data-aos='fade-up' data-aos-delay='400'>
+          <Cards />
         </div>
-        {/* cards */}
-        <Cards />
       </div>
     </section>
   );

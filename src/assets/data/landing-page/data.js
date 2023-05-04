@@ -35,16 +35,16 @@ export const header = {
 };
 
 export const nav = [
+  { name: 'Home', href: '/' },
   { name: 'Features', href: '/' },
-  { name: 'About us', href: '/' },
   { name: 'Pricing', href: '/' },
   { name: 'Feedback', href: '/' },
 ];
 
 export const hero = {
-  title: 'Track your Expenses to Save Money',
-  subtitle: 'Helps you to organize your income and expenses',
-  btnText: 'Try free demo',
+  title: 'Analyze Real Estate Investment Opportunities',
+  subtitle: 'A comprehensive SaaS platform for property investors - Discover, compare, and analyze potential investments with ease',
+  btnText: 'Get Started',
   compText: '— Web, iOS and Android',
   image: HeroImg,
 };
@@ -77,169 +77,170 @@ export const overview = {
 
 export const features = {
   feature1: {
-    pretitle: 'Alwalys online',
-    title: 'Real-time support with cloud',
+    pretitle: 'Full Control',
+    title: 'In-depth Property Analysis',
     subtitle:
-      'Tellus lacus morbi sagittis lacus in. Amet nisl at mauris enim accumsan nisi, tincidunt vel. Enim ipsum, amet quis ullamcorper eget ut.',
+      'Leverage extensive data sets and advanced analytics to evaluate potential investments, identify trends, and make informed decisions.',
     btnLink: 'Learn more',
     btnIcon: ArrowRightImg,
     image: Feature1Img,
   },
   feature2: {
-    pretitle: 'Free some cost',
-    title: 'Save cost for you and family',
+    pretitle: 'Collaborative Platform',
+    title: 'Work Seamlessly with Teams',
     subtitle:
-      'Tellus lacus morbi sagittis lacus in. Amet nisl at mauris enim accumsan nisi, tincidunt vel. Enim ipsum, amet quis ullamcorper eget ut.',
+      'Create projects and workgroups, share findings, and collaborate with your team to maximize efficiency in your investment process.',
     btnLink: 'Learn more',
     btnIcon: ArrowRightImg,
     image: Feature2Img,
   },
   feature3: {
-    pretitle: 'Use anytime',
-    title: 'Use anytime when you need',
+    pretitle: 'Manage Opportunities',
+    title: 'Personalized Investment Tracking',
     subtitle:
-      'Tellus lacus morbi sagittis lacus in. Amet nisl at mauris enim accumsan nisi, tincidunt vel. Enim ipsum, amet quis ullamcorper eget ut.',
+      'Monitor and manage your property portfolio and investment opportunities, offering a comprehensive overview of your investments.',
     btnLink: 'Learn more',
     btnIcon: ArrowRightImg,
     image: Feature3Img,
   },
 };
 
+
 export const product = {
-  title: 'The Product we work with.',
+  title: 'Experience the Advantages.',
   arrowImg: ArrowImg,
   subtitle:
-    'Tellus lacus morbi sagittis lacus in. Amet nisl at mauris enim aumsan nisi, tincidunt vel. Enim ipsum, at quis ullamcorper eget ut.',
+    'Utilize cutting-edge technology and innovative features to streamline your real estate investment process and maximize returns.',
   cards: [
     {
       icon: CardIconImg1,
-      title: 'Cross platform',
-      subtitle: 'Elit esse cillum dolore eu fugiat nulla pariatur',
+      title: 'Scalable Architecture',
+      subtitle: 'Built with microservices for seamless integration and enhanced performance.',
       delay: 200,
     },
     {
       icon: CardIconImg2,
-      title: 'Cloud server',
-      subtitle: 'Elit esse cillum dolore eu fugiat nulla pariatur',
+      title: 'Secure & Reliable',
+      subtitle: 'Experience robust data security and reliable access to your investment data.',
       delay: 400,
     },
     {
       icon: CardIconImg3,
-      title: 'Pure Javascript',
-      subtitle: 'Elit esse cillum dolore eu fugiat nulla pariatur',
+      title: 'Intuitive Design',
+      subtitle: 'Effortlessly navigate and utilize the platform with a user-friendly interface.',
       delay: 600,
     },
   ],
 };
 
+
 export const pricing = {
-  title: 'Choose your flexible plan.',
+  title: 'Choose Your Ideal Plan',
   cards: [
     {
       icon: PricingIcon1,
-      title: 'Starter Plan',
+      title: 'Free Plan',
       services: [
-        { name: 'Store unlimited data' },
-        { name: 'Export to pdf, xls, csv' },
-        { name: 'Cloud server support' },
+        { name: 'Access to Core Features' },
+        { name: 'Up to 3 Property Analyses' },
+        { name: 'Standard Customer Support' },
       ],
-      price: '$9.99',
-      userAmount: 'up to 3 user + 1.99 per user',
-      btnText: 'Get this',
+      price: '$0',
+      userAmount: 'per user, per month',
+      btnText: 'Get Started',
       delay: 300,
     },
     {
       icon: PricingIcon2,
-      title: 'Silver Plan',
+      title: 'Pro Plan',
       services: [
-        { name: 'Store unlimited data' },
-        { name: 'Export to pdf, xls, csv' },
-        { name: 'Cloud server support' },
+        { name: 'Unlimited Property Analyses' },
+        { name: 'Advanced Analytics & Reporting' },
+        { name: 'Priority Customer Support' },
       ],
-      price: '$19.99',
-      userAmount: 'up to 3 user + 1.99 per user',
-      btnText: 'Get this',
+      price: '$49.99',
+      userAmount: 'per user, per month',
+      btnText: 'Get Started',
       delay: 600,
     },
     {
       icon: PricingIcon3,
-      title: 'Diamond Plan',
+      title: 'Enterprise Plan',
       services: [
-        { name: 'Store unlimited data' },
-        { name: 'Export to pdf, xls, csv' },
-        { name: 'Cloud server support' },
+        { name: 'Custom Integrations & Features' },
+        { name: 'Dedicated Account Manager' },
+        { name: '24/7 Premium Support' },
       ],
-      price: '$29.99',
-      userAmount: 'up to 3 user + 1.99 per user',
-      btnText: 'Get this',
+      price: 'Custom Pricing',
+      userAmount: 'Contact us for a tailored solution',
+      btnText: 'Contact Us',
       delay: 900,
     },
   ],
 };
 
 export const testimonials = {
-  title: 'We have millions of best wishers',
+  title: 'Trusted by Property Investors Worldwide',
   clients: [
     {
       message:
-        'Eleifend fames amet, fames enim. Ullamcorper pellentesque ac volutpat nibh aliquet et, ut netus. Vel, fringilla sit eros pretium',
+        'This platform has been a game-changer for my investment strategy. The in-depth property analysis and intuitive interface make it easy to discover and evaluate potential investments.',
       image: AvatarImg1,
       name: 'Cameron Williamson',
-      position: 'CEO',
+      position: 'Real Estate Investor',
       borderColor: '#FF7235',
     },
     {
       message:
-        'Eleifend fames amet, fames enim. Ullamcorper pellentesque ac volutpat nibh aliquet et, ut netus. Vel, fringilla sit eros pretium',
+        'I love the collaborative features of the platform. Being able to work seamlessly with my team on investment projects has significantly improved our efficiency and decision-making.',
       image: AvatarImg2,
       name: 'Shirley Hand',
-      position: 'CEO',
+      position: 'Property Developer',
       borderColor: '#FFBE21',
     },
     {
       message:
-        'Eleifend fames amet, fames enim. Ullamcorper pellentesque ac volutpat nibh aliquet et, ut netus. Vel, fringilla sit eros pretium',
+        'The customizable dashboard and advanced analytics have made it easier than ever to monitor my investment portfolio and make informed decisions.',
       image: AvatarImg3,
       name: 'Dr. Olivia Hansen',
-      position: 'CEO',
+      position: 'Real Estate Consultant',
       borderColor: '#4756DF',
     },
     {
       message:
-        'Eleifend fames amet, fames enim. Ullamcorper pellentesque ac volutpat nibh aliquet et, ut netus. Vel, fringilla sit eros pretium',
+        'I appreciate the scalability and security of the platform. As my property portfolio has grown, the application has continued to meet my needs without compromising performance or data security.',
       image: AvatarImg4,
       name: 'Aubrey Sanford',
-      position: 'CEO',
+      position: 'Real Estate Entrepreneur',
       borderColor: '#3EC1F3',
     },
     {
       message:
-        'Eleifend fames amet, fames enim. Ullamcorper pellentesque ac volutpat nibh aliquet et, ut netus. Vel, fringilla sit eros pretium',
+        "Their customer support has been fantastic. Whenever I've had questions or issues, they've been quick to respond and provide solutions. I highly recommend this platform for property investors.",
       image: AvatarImg5,
       name: 'Terri Conroy',
-      position: 'CEO',
+      position: 'Real Estate Agent',
       borderColor: '#BB7259',
     },
   ],
 };
 
 export const cta = {
-  title: '20M+ downloaded from 32 different countries',
-  subtitle: 'Try demo for 7 days with full features.',
-  btnText: 'Try free demo',
+  title: 'Join Thousands of Satisfied Property Investors',
+  subtitle: 'Experience the powerful features with a start free plan.',
+  btnText: 'Start Your Free Plan',
   img1: CtaImg1,
   img2: CtaImg2,
 };
+
 
 export const footer = {
   logo: LogoImg,
   links: [
     { name: 'Home', href: '/' },
-    { name: 'About us', href: '/' },
-    { name: 'Careers', href: '/' },
-    { name: 'Pricing', href: '/' },
     { name: 'Features', href: '/' },
-    { name: 'Blog', href: '/' },
+    { name: 'Pricing', href: '/' },
+    { name: 'Feedback', href: '/' },
   ],
   legal: [
     { name: 'Terms of use', href: '/' },
@@ -254,7 +255,7 @@ export const footer = {
   form: {
     placeholder: 'Enter your email',
     btnText: 'Subscribe',
-    smallText: 'We don’t sell your email and spam',
+    smallText: "We don't sell your email and spam",
   },
 };
 

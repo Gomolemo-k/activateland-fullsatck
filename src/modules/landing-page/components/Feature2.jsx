@@ -8,7 +8,7 @@ const Feature2 = () => {
   // destructure feature2
   const { pretitle, title, subtitle, btnLink, btnIcon, image } = feature2;
   return (
-    <section className='section'>
+    <section className='section py-10'>
       <div className='container mx-auto'>
         <div className='flex flex-col lg:flex-row lg:items-center lg:gap-x-[30px]'>
           {/* image */}
@@ -26,7 +26,7 @@ const Feature2 = () => {
             data-aos-offset='400'
           >
             <div className='pretitle'>{pretitle}</div>
-            <h2 className='title'>{title}</h2>
+            <h2 className='title text-orange-700'>{title}</h2>
             <p className='lead'>{subtitle}</p>
             <button className='btn-link flex items-center gap-x-3 hover:gap-x-5 transition-all'>
               {btnLink} <img src={btnIcon} alt='' />

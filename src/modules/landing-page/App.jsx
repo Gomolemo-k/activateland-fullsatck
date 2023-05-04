@@ -20,7 +20,7 @@ import Cta from './components/Cta';
 import Footer from './components/Footer';
 
 const App = () => {
-  // initialize aos
+  // initialize
   Aos.init({
     duration: 1800,
     offset: 100,
@@ -30,16 +30,15 @@ const App = () => {
       <Header />
       <Hero />
       <Overview />
-      <Brands />
+      <Product />
+      <Testimonials />
       <Feature1 />
       <Feature2 />
       <Feature3 />
-      <Product />
-      <Pricing />
-      <Testimonials />
       <Cta />
+      <Pricing />
+      <Brands />
       <Footer />
-      {/* <div className='h-[4000px]'></div> */}
     </div>
   );
 };
