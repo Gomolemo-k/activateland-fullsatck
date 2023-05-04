@@ -31,6 +31,11 @@ import ArrowImg from '../../img/landing-page/product/cards/arrow.svg';
 
 import CookieConsentCss from '../../css/landing-page/CookieConsent.css';
 
+import CookiePolicy from '../../docs/policies/Cookie-Policy.pdf';
+import PrivacyPolicy from '../../docs/policies/Privacy-Policy.pdf';
+import ServiceGuarantees from '../../docs/policies/Service-Guarantees.pdf';
+import TermsOfUse from '../../docs/policies/Terms-of-Use.pdf';
+
 export const cookieConsent = {
   css: CookieConsentCss,
 };
@@ -257,16 +262,16 @@ export const footer = {
   id: 'footer',
   logo: LogoImg,
   links: [
-    { name: 'Home', href: '/' },
-    { name: 'Features', href: '#feature1' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Contact', href: '#footer' },
+    { name: 'Home', href: '/', target: "" },
+    { name: 'Features', href: '#feature1', target: ""},
+    { name: 'Pricing', href: '#pricing', target: ""},
+    { name: 'Contact', href: '#footer', target: "" },
   ],
   legal: [
-    { name: 'Terms of use', href: '/' },
-    { name: 'Privacy policy', href: '/' },
-    { name: 'Cookie policy', href: '/' },
-    { name: 'Service guarantees', href: '/' },
+    { name: 'Terms of use', href: TermsOfUse, target: "_blank"  },
+    { name: 'Privacy policy', href: PrivacyPolicy, target: "_blank"  },
+    { name: 'Cookie policy', href: CookiePolicy, target: "_blank"  },
+    { name: 'Service guarantees', href: ServiceGuarantees, target: "_blank"  },
   ],
   newsletter: {
     title: 'Newsletter',

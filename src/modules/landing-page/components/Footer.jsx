@@ -21,12 +21,13 @@ const Footer = () => {
             <ul className='flex flex-col gap-y-3'>
               {links.map((item, index) => {
                 // destructure item
-                const { href, name } = item;
+                const { href, name, target } = item;
                 return (
                   <li key={index}>
                     <a
                       className='font-medium hover:text-accent transition'
                       href={href}
+                      target={target} 
                     >
                       {name}
                     </a>
@@ -41,12 +42,13 @@ const Footer = () => {
             <ul className='flex flex-col gap-y-3'>
               {legal.map((item, index) => {
                 // destructure item
-                const { href, name } = item;
+                const { href, name, target } = item;
                 return (
                   <li key={index}>
                     <a
                       className='font-medium hover:text-accent transition'
                       href={href}
+                      target={target} 
                     >
                       {name}
                     </a>
