@@ -1,6 +1,6 @@
 import { mongoose } from "../../../../deps.ts";
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
@@ -11,4 +11,4 @@ const UserSchema = new mongoose.Schema({
   resetPasswordExpires: Date
 });
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model('User', userSchema);
