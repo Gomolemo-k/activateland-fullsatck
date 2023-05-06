@@ -1,5 +1,5 @@
 // Import NPM
-export * as mongoose from "npm:mongoose";
+export * as mongoose from "npm:mongoose@7.1.0";
 
 // Import HTTP
 export * as dotenv from  "https://deno.land/std@0.145.0/dotenv/load.ts"; 
