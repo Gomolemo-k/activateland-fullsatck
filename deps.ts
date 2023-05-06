@@ -1,6 +1,6 @@
 // Import NPM
-export * as mongoose from "npm:mongoose@7.1.0";
+export * as mongoose from "npm:mongoose@^7.1.0";
 
 // Import HTTP
-export * as dotenv from  "https://deno.land/std@0.145.0/dotenv/load.ts"; 
-export { assert, assertEquals } from "https://deno.land/std@0.115.0/testing/asserts.ts";
+import * as dotenv from "https://deno.land/std@0.186.0/dotenv/mod.ts"; 
+export { assert, assertEquals } from "https://deno.land/std@0.186.0/testing/asserts.ts";
