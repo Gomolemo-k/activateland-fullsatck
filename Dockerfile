@@ -2,7 +2,7 @@
 FROM node:14
 
 # Instal·la Astro
-RUN npm install -g astro@0.21.4
+RUN npm install -g astro@2.3.3
 
 # Estableix el directori de treball
 WORKDIR /app

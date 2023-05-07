@@ -19,68 +19,17 @@ const { title } = Astro.props;
 		<slot />
 	</body>
 </html>
-
-<style is:global >
-	@tailwind base;
-	@tailwind components;
-	@tailwind utilities;
-	@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap");
-	
-	@layer base {
-	  body {
-		@apply font-primary text-lg;
-	  }
-	  h1,
-	  h2,
-	  h3,
-	  h4,
-	  h5,
-	  h6 {
-		@apply text-dark;
-	  }
-	  .title,
-	  .section-title {
-		@apply text-6xl lg:text-8xl mb-6 font-bold;
-	  }
-	  .h2 {
-		@apply text-5xl lg:text-7xl font-bold;
-	  }
-	  .pretitle {
-		@apply text-lg lg:text-[22px] text-light mb-4 lg:mb-6 uppercase font-normal;
-	  }
-	  .lead {
-		@apply text-2xl text-light font-normal mb-6;
-	  }
-	  .link {
-		@apply text-lg text-dark;
-	  }
-	  .section {
-		@apply py-8 lg:py-[142px];
-	  }
-	  .btn {
-		@apply rounded-lg transition flex justify-center items-center;
-	  }
-	  .btn-lg {
-		@apply h-[75px] px-6 text-2xl font-normal;
-	  }
-	  .btn-md {
-		@apply h-[60px] px-[16px] text-lg font-normal;
-	  }
-	  .btn-sm {
-		@apply h-[48px] px-[16px] text-lg font-normal;
-	  }
-	  .btn-accent {
-		@apply text-white bg-accent hover:bg-accentHover;
-	  }
-	  .btn-white {
-		@apply text-accent bg-white hover:bg-white/90;
-	  }
-	  .btn-outline {
-		@apply bg-transparent text-accent border border-accent hover:bg-accent hover:text-white;
-	  }
-	  .btn-link {
-		@apply text-accent text-xl lg:text-2xl;
-	  }
+<style is:global>
+	:root {
+		--accent: 124, 58, 237;
+		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
 	}
-	</style>
-	
+	html {
+		font-family: system-ui, sans-serif;
+		background-color: #F6F6F6;
+	}
+	code {
+		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+			Bitstream Vera Sans Mono, Courier New, monospace;
+	}
+</style>
