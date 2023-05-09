@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import { mongoose } from "../../deps.ts";
 
 export async function connectToDatabase() {
   try {

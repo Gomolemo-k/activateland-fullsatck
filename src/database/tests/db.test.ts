@@ -1,4 +1,4 @@
-import { assert } from "std/testing/asserts.ts";
+import { assert } from "../../../deps.ts";
 import { connectToDatabase } from "../db.ts";
 
 Deno.test("Database connection", async () => {
