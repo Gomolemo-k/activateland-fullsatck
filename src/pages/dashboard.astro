@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import App from '../modules/landing-page/App';
+import i18next, { t } from "i18next";
+import { Trans, HeadHrefLangs } from "astro-i18next/components";
+---
+
+<Layout title={t("site.title")}>
+	<main>
+		<h1>Dashboard</h1>
+	</main>
+</Layout>
+

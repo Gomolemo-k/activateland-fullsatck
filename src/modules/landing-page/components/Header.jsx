@@ -41,6 +41,13 @@ const Header = () => {
         </div>
         {/* cta button - initially - show on desktop mode */}
         <button
+          className='btn btn-sm border border-accent text-accent hover:text-white hover:bg-accentHover w-[102px] lg:flex'
+          data-aos='fade-down'
+          data-aos-delay='1400'
+        >
+          Login
+        </button>
+        <button
           className='btn btn-sm bg-accent hover:bg-accentHover w-[102px] text-white lg:flex'
           data-aos='fade-down'
           data-aos-delay='1400'
