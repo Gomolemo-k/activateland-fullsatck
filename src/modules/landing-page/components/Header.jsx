@@ -6,6 +6,21 @@ import { HiMenuAlt4, HiOutlineX } from 'react-icons/hi';
 // import components
 import MobileNav from './MobileNav';
 import Nav from './Nav';
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/clerk-react";
+// TODO: Improve get .env variables.
+import { REACT_APP_CLERK_PUBLISHABLE_KEY } from "../../../../env.js";
+
+// CLERK SOO
+const clerkPubKey = REACT_APP_CLERK_PUBLISHABLE_KEY;
+if (!clerkPubKey) {
+    throw new Error("Missing Publishable Key")
+}
+//const { isLoaded, isSignedIn, user } = useUser();
 
 const Header = () => {
   // mobile nav state
@@ -40,20 +55,43 @@ const Header = () => {
           <Nav />
         </div>
         {/* cta button - initially - show on desktop mode */}
-        <button
-          className='btn btn-sm border border-accent text-accent hover:text-white hover:bg-accentHover w-[102px] lg:flex'
-          data-aos='fade-down'
-          data-aos-delay='1400'
-        >
-          Login
-        </button>
-        <button
-          className='btn btn-sm bg-accent hover:bg-accentHover w-[102px] text-white lg:flex'
-          data-aos='fade-down'
-          data-aos-delay='1400'
-        >
-          {btnText}
-        </button>
+        <ClerkProvider
+          publishableKey={clerkPubKey}
+          navigate={(to) => navigate(to)}
+          >
+            <SignedIn>
+                <a href="/dashboard">
+                  <button
+                    className='btn btn-sm text-center bg-accent hover:bg-accentHover w-[102px] text-white'
+                    data-aos='fade-down'
+                    data-aos-delay='1400'
+                  >
+                    Dashboard
+                  </button>
+                </a>
+                <UserButton />
+            </SignedIn>
+            <SignedOut>
+                <a href="/login">
+                    <button
+                      className='btn btn-sm text-center border border-accent text-accent hover:text-white hover:bg-accentHover w-[102px]'
+                      data-aos='fade-down'
+                      data-aos-delay='1400'
+                    >
+                      Login
+                    </button>
+                  </a>
+                  <a href="/signup">
+                    <button
+                      className='btn btn-sm text-center bg-accent hover:bg-accentHover w-[102px] text-white'
+                      data-aos='fade-down'
+                      data-aos-delay='1400'
+                    >
+                      {btnText}
+                    </button>
+                  </a>
+            </SignedOut>
+        </ClerkProvider>
         {/* mobile nav trigger btn - hidden on desktop */}
         <button className='lg:hidden' onClick={() => setMobileNav(!mobileNav)}>
           {mobileNav ? (
