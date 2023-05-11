@@ -9,5 +9,7 @@ import astroI18next from "astro-i18next";
 export default defineConfig({
   integrations: [react(), tailwind(), svelte(), astroI18next()],
   output: "server",
-  adapter: deno()
+  adapter: deno({
+    port: 8080,
+  })
 });
