@@ -5,6 +5,8 @@ import Joi from "npm:joi@17.9.2";
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+}, {
+	timestamps: true
 });
 
 userSchema.methods.generateAuthToken = function () {
