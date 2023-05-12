@@ -1,0 +1,12 @@
+{
+    "imports": {
+        "std/": "https://deno.land/std@0.184.0/"
+    },
+    "tasks": {
+        "dev:frontend": "deno run --allow-net --allow-read --allow-env --allow-sys ./dist/server/entry.mjs",
+        "dev:express": "deno run --allow-net --allow-read --allow-env --allow-sys ./src/api/api.service.ts",
+        "dev:test": "deno test --allow-net --allow-read --allow-env --allow-sys",
+        "dev:cache": "deno cache -r ./deps.ts",
+        "dev": "deno task dev:cache & deno task dev:frontend & deno task dev:express"
+    }
+}

@@ -1,5 +1,4 @@
 import { Request, Response } from "npm:express@4.18.2";
-import bcrypt from "npm:bcrypt@5.1.0";
 import { User, validate } from "../models/user.model.ts";
 
 const userNotFoundMessage = "User not found in database.";
@@ -37,9 +36,7 @@ export const createUser = async (req: Request, res: Response) => {
         if (user) return res.status(409).send({ message: userAlreadyExistMessage });
         
         //Save new user.
-        const salt = await bcrypt.genSalt(Number(Deno.env.get('SALT')));
-        const hashPassword = await bcrypt.hash(req.body.password, salt);
-        await new User({ ...req.body, password: hashPassword }).save();
+        await new User({ ...req.body }).save();
         res.status(201).send({ message: userCreatedMessage });
     } catch (error) {
         res.status(500).send({ message: iternalServerErrorMessage });

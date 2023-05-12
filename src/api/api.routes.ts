@@ -1,4 +1,4 @@
-import express from 'npm:express'
+import express from 'npm:express@4.18.2'
 import usersRoutes from '../modules/user/routes/user.routes.ts'
 
 const app = express()
