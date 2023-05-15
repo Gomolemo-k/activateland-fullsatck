@@ -10,29 +10,29 @@ const userSchema = new mongoose.Schema({
 	timestamps: true
 });
 
-userSchema.methods.generateAuthToken = function () {
-	const token = jwt.sign({ _id: this._id }, Deno.env.get('JWTPRIVATEKEY'), {
-		expiresIn: "7d",
-	});
-	return token;
-};
-
-userSchema.methods.generateRandomPassword = function () {
+function generateRandomPassword(): string {
 	const randomString = Math.random().toString(36).slice(-8);
 	return randomString;
-};
+}
 
-userSchema.methods.hashPassword = async function (pass: string) {
-	const salt = await bcrypt.genSalt(Number(Deno.env.get('SALT') || 8));
+async function hashPassword(pass: string): Promise<string> {
+	const salt = await bcrypt.genSalt(Number(Deno.env.get('SALT')||'8'));
 	const hashPass = await bcrypt.hash(pass, salt);
 	return hashPass;
-};
+}
+
+userSchema.pre('validate', function(next) {
+	if (!this.password) {
+	  this.password = generateRandomPassword();
+	}
+	next();
+  });
 
 userSchema.pre("save", async function(next) {
 	if (!this.isModified("password")) return next();
 	try {
-		if (!this.password) this.password = userSchema.methods.generateRandomPassword();
-		this.password = await userSchema.methods.hashPassword(this.password);
+		if (!this.password) this.password = generateRandomPassword();
+		if (this.password) this.password = await hashPassword(this.password);
 		return next();
 	} catch (error) {
 		console.log(error)
@@ -42,7 +42,7 @@ userSchema.pre("save", async function(next) {
 
 const User = mongoose.model("user", userSchema);
 
-const validate = (data) => {
+const validate = (data: { email: string, password: string }) => {
 	const schema = Joi.object({
 		email: Joi.string().email().required().label("Email"),
 		password: Joi.string().required().label("Password"),
@@ -50,4 +50,4 @@ const validate = (data) => {
 	return schema.validate(data);
 };
 
-export { User, validate };
+export { User, validate, generateRandomPassword, hashPassword };

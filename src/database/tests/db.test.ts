@@ -12,4 +12,4 @@ Deno.test("Database connection", async () => {
     if (mongoose && isConnected) {
       await mongoose.disconnect();
     }
-  });
+});
