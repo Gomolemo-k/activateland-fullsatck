@@ -1,6 +1,6 @@
 import app from "./api.routes.ts";
 import { connectToDatabase } from "../database/db.ts";
-import "https://deno.land/x/dotenv@v3.2.2/mod.ts";
+//import "https://deno.land/x/dotenv@v3.2.2/mod.ts";
 //import User from "../modules/user/models/user.model.ts";
 
 const mongoose = await connectToDatabase();

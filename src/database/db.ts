@@ -24,7 +24,7 @@ export async function connectToDatabase() {
       ? ''
       : ''
 
-      await mongoose.connect(dbURI ?? "mongodb://127.0.0.1:27017"), 
+    await mongoose.connect(dbURI ?? "mongodb://127.0.0.1:27017"), 
       { bufferCommands: true, 
       dbName: dbName, 
       user: dbUser, 

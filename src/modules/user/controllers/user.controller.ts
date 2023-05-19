@@ -34,18 +34,26 @@ export const getUser = async (ctx: RouterContext<any, any>) => {
 export const createUser = async (ctx: RouterContext<any, any>) => {
     try {
         //Get request body
-        if (!ctx.request.hasBody) {
-            ctx.throw(500);
-        }
+        console.log('hasBody', ctx.request.hasBody);
+        // if (!ctx.request.hasBody) {
+        //     ctx.throw(500);
+        // }
         const reqBody = await ctx.request.body().value;
-        const reqBodyJSON = JSON.parse(reqBody);
+        console.log('reqBody', reqBody);
+        //const reqBodyJSON = await JSON.parse(reqBody);
         //console.log(reqBodyJSON, typeof reqBodyJSON);
+
         // const body = await ctx.request.body({ type: 'form-data'});
         // const formData = await body.value.read();
         // console.log(formData.fields);
         //Save new user.
         // await new User({ ...formData.fields }).save();
-        await new User(reqBodyJSON).save();
+
+        //Create User
+        const newUser = new User(reqBody);
+        console.log('newUser', newUser);
+        await newUser.save();
+
         ctx.response.status = 201;
         ctx.response.body = { message: userCreatedMessage };
     } catch (error) {

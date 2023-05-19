@@ -19,7 +19,7 @@ import { REACT_APP_CLERK_PUBLISHABLE_KEY } from "../../../assets/js/user/clerk.j
 export async function handleSubmit(emailClerk, passwordClerk) {
     //console.log('Init handleSubmit')
     try {
-        const url = "http://localhost:8080/api/users";
+        const url = "http://localhost:3001/api/users";
         const data = {
             email: emailClerk,
             password: passwordClerk,
@@ -51,16 +51,16 @@ function ProtectedPage() {
     //Register User.
     const { isLoaded, isSignedIn, user } = useUser();
     //console.log('user.', user)
-    if (isLoaded && isSignedIn && user.primaryEmailAddress.emailAddress) {
-        let email = user.primaryEmailAddress.emailAddress;
+    const email = user.primaryEmailAddress.emailAddress;
+    if (isLoaded && isSignedIn && email) {
         console.log('Init handle submit user.')
-        handleSubmit(user, '');
+        handleSubmit(email, '');
     }
 
     return (
         <>
         <h1>Protected page</h1>
-        <UserButton />
+        <UserButton routing="path" path="/" redirectUrl='/'/>
         </>
     );
 }
@@ -91,7 +91,7 @@ return (
                     <ProtectedPage />
                 </SignedIn>
                 <SignedOut>
-                    <RedirectToSignIn />
+                    <PublicPage routing="path" path="/" redirectUrl='/' />
                 </SignedOut>
             </>
             }

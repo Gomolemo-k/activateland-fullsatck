@@ -66,7 +66,7 @@ const Header = () => {
                     Dashboard
                   </button>
                 </a>
-                <UserButton />
+                <UserButton routing="path" path="/" redirectUrl='/' />
             </SignedIn>
             <SignedOut>
                 <a href="/login">
