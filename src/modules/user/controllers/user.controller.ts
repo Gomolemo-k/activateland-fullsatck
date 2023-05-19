@@ -1,66 +1,88 @@
-import { Request, Response } from "npm:express@4.18.2";
-import { User, validate } from "../models/user.model.ts";
+import User from "../models/user.model.ts";
+import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 const userNotFoundMessage = "User not found in database.";
-const userAlreadyExistMessage = "User with given email already exist.";
 const iternalServerErrorMessage = "Internal Server Error.";
 const userCreatedMessage = "User created successfully.";
+const userDeletedMessage = "User deleted successfully.";
 
-export const getUsers = async (_req: Request, res: Response) => {
+export const getUsers = async (ctx: RouterContext<any, any>) => {
     try {
         const users = await User.find();
-        return res.json(users);
+        ctx.response.body = users;
     } catch (error) {
-        res.status(500).send({ message: iternalServerErrorMessage });
+        console.log('API ERROR USER getUsers:', error);
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };
 
-export const getUser = async (req: Request, res: Response) => {
+export const getUser = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await User.findById(req.params.id);
-        if (!user) return res.status(404).json({ message: userNotFoundMessage });
-        return res.json(user);
+        const user = await User.findById(ctx.params?.id);
+        if (!user) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: userNotFoundMessage };
+        }
+        ctx.response.body = user;
     } catch (error) {
-        res.status(500).send({ message: iternalServerErrorMessage });
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
   };
 
-export const createUser = async (req: Request, res: Response) => {
-    console.log(req.body)
+export const createUser = async (ctx: RouterContext<any, any>) => {
     try {
-        const { error } = validate(req.body);
-        if (error) return res.status(400).send({ message: error.details[0].message });
-        
-        //User exist in database. 
-        const user = await User.findOne({ email: req.body.email });
-        if (user) return res.status(409).send({ message: userAlreadyExistMessage });
-        
+        //Get request body
+        if (!ctx.request.hasBody) {
+            ctx.throw(500);
+        }
+        const body = await ctx.request.body({ type: 'form-data'});
+        const formData = await body.value.read();
+        console.log(formData.fields);
         //Save new user.
-        await new User({ ...req.body }).save();
-        res.status(201).send({ message: userCreatedMessage });
+        await new User({ ...formData.fields }).save();
+        ctx.response.status = 201;
+        ctx.response.body = { message: userCreatedMessage };
     } catch (error) {
-        res.status(500).send({ message: iternalServerErrorMessage });
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        //Get request body
+        if (!ctx.request.hasBody) {
+            ctx.throw(500);
+        }
+        const body = await ctx.request.body({ type: 'form-data'});
+        const formData = await body.value.read();
+        console.log(formData.fields);
+        const user = await User.findByIdAndUpdate(ctx.params?.id, formData.fields, {
             new: true,
         });
-        if (!user) return res.status(404).json({ message: userNotFoundMessage });
-        return res.json(user);
+        if (!user) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: userNotFoundMessage };
+        }
+        return ctx.response.body = user;
     } catch (error) {
-        res.status(500).send({ message: iternalServerErrorMessage });
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        if (!user) return res.status(404).json({ message: userNotFoundMessage });
-        return res.json(user);
+        const user = await User.findByIdAndDelete(ctx.params?.id);
+        if (!user) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: userNotFoundMessage };
+        }
+        ctx.response.body = { message: userDeletedMessage };
     } catch (error) {
-        res.status(500).send({ message: iternalServerErrorMessage });
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };

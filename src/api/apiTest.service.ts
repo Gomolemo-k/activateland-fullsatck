@@ -1,13 +1,7 @@
 import app from "./api.routes.ts";
 import { connectToDatabase } from "../database/db.ts";
-//import User from "../modules/user/models/user.model.ts";
 
 const mongoose = await connectToDatabase();
-// Check to see connection status.
-console.log('Database is connected? ', mongoose.connections[0].readyState === 1);
-//const users = await User.find();
-//console.log('Users: ', users);
-
 
 // Logger
 app.use(async (ctx, next) => {
@@ -24,7 +18,7 @@ app.use(async (ctx, next) => {
 });
 
 const hostAPI = 'localhost';
-const portAPI = 3001;
+const portAPI = 3002;
 let appAPI = null;
 try {
   appAPI = await app.listen({ hostname: hostAPI, port: portAPI });

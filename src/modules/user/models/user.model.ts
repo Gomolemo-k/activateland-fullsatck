@@ -40,8 +40,6 @@ userSchema.pre("save", async function(next) {
 	}
 });
 
-const User = mongoose.model("user", userSchema);
-
 const validate = (data: { email: string, password: string }) => {
 	const schema = Joi.object({
 		email: Joi.string().email().required().label("Email"),
@@ -50,4 +48,6 @@ const validate = (data: { email: string, password: string }) => {
 	return schema.validate(data);
 };
 
-export { User, validate, generateRandomPassword, hashPassword };
+//const User = mongoose.model("User", userSchema);
+//export { User, validate, generateRandomPassword, hashPassword };
+export default mongoose.model("User", userSchema);
