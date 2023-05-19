@@ -1,5 +1,6 @@
 import app from "./api.routes.ts";
 import { connectToDatabase } from "../database/db.ts";
+import "https://deno.land/x/dotenv@v3.2.2/mod.ts";
 //import User from "../modules/user/models/user.model.ts";
 
 const mongoose = await connectToDatabase();
@@ -7,7 +8,10 @@ const mongoose = await connectToDatabase();
 console.log('Database is connected? ', mongoose.connections[0].readyState === 1);
 //const users = await User.find();
 //console.log('Users: ', users);
-
+//console.log("API connection ENV: ", Deno.env.get('DENO_ENV'))
+const env = Deno.env.get('DENO_ENV') ?? "production";
+console.log("API connection env: ", env)
+const isTesting = env === "test";
 
 // Logger
 app.use(async (ctx, next) => {
@@ -23,8 +27,8 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
 
-const hostAPI = 'localhost';
-const portAPI = 3001;
+const hostAPI = isTesting ? 'localhost' : 'localhost';
+const portAPI = isTesting ? 3002 : 3001;
 let appAPI = null;
 try {
   appAPI = await app.listen({ hostname: hostAPI, port: portAPI });

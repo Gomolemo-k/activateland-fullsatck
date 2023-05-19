@@ -48,6 +48,8 @@ const validate = (data: { email: string, password: string }) => {
 	return schema.validate(data);
 };
 
-//const User = mongoose.model("User", userSchema);
-//export { User, validate, generateRandomPassword, hashPassword };
-export default mongoose.model("User", userSchema);
+// export default mongoose.model("User", userSchema);
+
+const User = mongoose.model("User", userSchema);
+
+export { User, validate, generateRandomPassword, hashPassword };

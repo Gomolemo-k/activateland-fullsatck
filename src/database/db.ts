@@ -1,25 +1,28 @@
 import { mongoose } from "../../deps.ts";
+import "https://deno.land/x/dotenv@v3.2.2/mod.ts";
 
 export async function connectToDatabase() {
   try {
+    //console.log("Database connection ENV: ", Deno.env.get("DENO_ENV"))
     const env = Deno.env.get("DENO_ENV") ?? "production";
+    console.log("Database connection env: ", env)
     const isTesting = env === "test";
 
     const dbURI = isTesting
       ? 'mongodb://127.0.0.1:27017'
-      : Deno.env.get("DATABASE_URL")
+      : 'mongodb://127.0.0.1:27017'
 
     const dbName = isTesting
       ? 'test_db'
-      : Deno.env.get("DATABASE_NAME")
+      : 'production_db'
 
     const dbUser = isTesting
       ? ''
-      : Deno.env.get("DATABASE_USER")
+      : ''
 
     const dbPassword = isTesting
       ? ''
-      : Deno.env.get("DATABASE_PASSWORD")
+      : ''
 
       await mongoose.connect(dbURI ?? "mongodb://127.0.0.1:27017"), 
       { bufferCommands: true, 

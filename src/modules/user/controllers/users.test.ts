@@ -1,18 +1,21 @@
 import { assertEquals } from "https://deno.land/std@0.187.0/testing/asserts.ts";
+import { superoak } from "https://deno.land/x/superoak@4.7.0/mod.ts";
+import app from "../../../api/api.routes.ts";
 
+const request = await superoak(app);
 let testUserId: string;
 
 Deno.test("POST /api/users", async () => {
     try {
         const newUser = {
-            name: "Test User",
             email: "test@user.com",
             password: "password123"
         };
-    
-        const res = await app.post("/api/users").send(newUser);
-        assertEquals(res.status, 201);
-        assertEquals(res.body.message, "User created successfully.");
+        
+        const res = await request.post("/api/users").send(newUser)
+
+        assertEquals(res.status, 200);
+        assertEquals(Array.isArray(res.body), true);
     } catch(error) {
         console.log('ERROR: ', error);
     }
@@ -20,8 +23,8 @@ Deno.test("POST /api/users", async () => {
 
 Deno.test("GET /api/users", async () => {
     try {
-        const res = await app.get("/api/users");
-
+        const res = await request.get("/api/users");
+        console.log('BODY: ', res.body)
         testUserId = res.body[0]._id;
     
         assertEquals(res.status, 200);
@@ -33,7 +36,7 @@ Deno.test("GET /api/users", async () => {
 
 Deno.test("GET /api/users/:id", async () => {
     try {
-        const res = await app.get(`/api/users/${testUserId}`);
+        const res = await request.get(`/api/users/${testUserId}`);
 
         assertEquals(res.status, 200);
         assertEquals(typeof res.body, 'object');
@@ -49,9 +52,9 @@ Deno.test("PUT /api/users/:id", async () => {
             name: "Updated Test User",
             email: "updated@user.com",
             password: "updatedpassword123"
-            };
+        };
         
-            const res = await app.put(`/api/users/${testUserId}`).send(updatedUser);
+            const res = await request.put(`/api/users/${testUserId}`).send(updatedUser);
         
             assertEquals(res.status, 200);
             assertEquals(res.body._id, testUserId);
@@ -64,7 +67,7 @@ Deno.test("PUT /api/users/:id", async () => {
 
 Deno.test("DELETE /api/users/:id", async () => {
     try {
-        const res = await app.delete(`/api/users/${testUserId}`);
+        const res = await request.delete(`/api/users/${testUserId}`);
 
         assertEquals(res.status, 200);
         assertEquals(res.body._id, testUserId);

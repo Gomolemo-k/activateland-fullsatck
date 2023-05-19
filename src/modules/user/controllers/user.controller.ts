@@ -1,4 +1,4 @@
-import User from "../models/user.model.ts";
+import { User } from "../models/user.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 const userNotFoundMessage = "User not found in database.";
@@ -29,7 +29,7 @@ export const getUser = async (ctx: RouterContext<any, any>) => {
         ctx.response.status = 500;
         ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
-  };
+};
 
 export const createUser = async (ctx: RouterContext<any, any>) => {
     try {
@@ -37,11 +37,15 @@ export const createUser = async (ctx: RouterContext<any, any>) => {
         if (!ctx.request.hasBody) {
             ctx.throw(500);
         }
-        const body = await ctx.request.body({ type: 'form-data'});
-        const formData = await body.value.read();
-        console.log(formData.fields);
+        const reqBody = await ctx.request.body().value;
+        const reqBodyJSON = JSON.parse(reqBody);
+        //console.log(reqBodyJSON, typeof reqBodyJSON);
+        // const body = await ctx.request.body({ type: 'form-data'});
+        // const formData = await body.value.read();
+        // console.log(formData.fields);
         //Save new user.
-        await new User({ ...formData.fields }).save();
+        // await new User({ ...formData.fields }).save();
+        await new User(reqBodyJSON).save();
         ctx.response.status = 201;
         ctx.response.body = { message: userCreatedMessage };
     } catch (error) {
@@ -56,10 +60,9 @@ export const updateUser = async (ctx: RouterContext<any, any>) => {
         if (!ctx.request.hasBody) {
             ctx.throw(500);
         }
-        const body = await ctx.request.body({ type: 'form-data'});
-        const formData = await body.value.read();
-        console.log(formData.fields);
-        const user = await User.findByIdAndUpdate(ctx.params?.id, formData.fields, {
+        const reqBody = await ctx.request.body().value;
+        const reqBodyJSON = JSON.parse(reqBody);
+        const user = await User.findByIdAndUpdate(ctx.params?.id, reqBodyJSON, {
             new: true,
         });
         if (!user) {
