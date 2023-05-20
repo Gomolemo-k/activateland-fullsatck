@@ -34,12 +34,12 @@ export const getUser = async (ctx: RouterContext<any, any>) => {
 export const createUser = async (ctx: RouterContext<any, any>) => {
     try {
         //Get request body
-        console.log('hasBody', ctx.request.hasBody);
-        // if (!ctx.request.hasBody) {
-        //     ctx.throw(500);
-        // }
+        //console.log('hasBody', ctx.request.hasBody);
+        if (!ctx.request.hasBody) {
+            ctx.throw(500);
+        }
         const reqBody = await ctx.request.body().value;
-        console.log('reqBody', reqBody);
+        //console.log('reqBody', reqBody);
         //const reqBodyJSON = await JSON.parse(reqBody);
         //console.log(reqBodyJSON, typeof reqBodyJSON);
 
@@ -50,12 +50,11 @@ export const createUser = async (ctx: RouterContext<any, any>) => {
         // await new User({ ...formData.fields }).save();
 
         //Create User
-        const newUser = new User(reqBody);
-        console.log('newUser', newUser);
-        await newUser.save();
+        const user = new User(reqBody);
+        await user.save();
 
         ctx.response.status = 201;
-        ctx.response.body = { message: userCreatedMessage };
+        ctx.response.body = user;
     } catch (error) {
         ctx.response.status = 500;
         ctx.response.body = { message: iternalServerErrorMessage, error: error };
