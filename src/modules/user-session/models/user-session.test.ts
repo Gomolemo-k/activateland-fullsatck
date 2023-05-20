@@ -92,9 +92,9 @@ Deno.test("Delete an existing UserSession", async () => {
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const foundProject = await UserSession.findOne(testModelId);
-        if (foundProject) {
-            await UserSession.deleteOne({ _id: foundProject._id });
+        const record = await UserSession.findOne(testModelId);
+        if (record) {
+            await UserSession.deleteOne({ _id: record._id });
         }
     
         const deleted = await UserSession.findOne(testModelId);

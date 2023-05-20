@@ -89,9 +89,9 @@ Deno.test("Delete an existing project", async () => {
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const foundProject = await Project.findOne(testProjectId);
-        if (foundProject) {
-            await Project.deleteOne({ _id: foundProject._id });
+        const record = await Project.findOne(testProjectId);
+        if (record) {
+            await Project.deleteOne({ _id: record._id });
         }
     
         const deleted = await Project.findOne(testProjectId);

@@ -3,6 +3,7 @@ import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 import usersRoutes from '../modules/user/routes/user.routes.ts'
 import projectsRoutes from '../modules/project/routes/project.routes.ts'
 import userProfileRoutes from '../modules/user-profile/routes/user-profile.routes.ts'
+import userAccountRoutes from '../modules/user-account/routes/user-account.routes.ts'
 
 const app = new Application();
 // Configure CORS
@@ -17,5 +18,8 @@ app.use(projectsRoutes.allowedMethods());
 
 app.use(userProfileRoutes.routes());
 app.use(userProfileRoutes.allowedMethods());
+
+app.use(userAccountRoutes.routes());
+app.use(userAccountRoutes.allowedMethods());
 
 export default app;
