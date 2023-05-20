@@ -1,4 +1,4 @@
-import { User } from "../models/user.model.ts";
+import { Project } from "../models/project.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 const userNotFoundMessage = "User not found in database.";
@@ -33,6 +33,11 @@ export const getUser = async (ctx: RouterContext<any, any>) => {
 
 export const createUser = async (ctx: RouterContext<any, any>) => {
     try {
+        //Get request body
+        //console.log('hasBody', ctx.request.hasBody);
+        if (!ctx.request.hasBody) {
+            ctx.throw(500);
+        }
         const reqBody = await ctx.request.body().value;
         //console.log('reqBody', reqBody);
         //const reqBodyJSON = await JSON.parse(reqBody);
@@ -58,10 +63,15 @@ export const createUser = async (ctx: RouterContext<any, any>) => {
 
 export const updateUser = async (ctx: RouterContext<any, any>) => {
     try {
+        //Get request body
+        if (!ctx.request.hasBody) {
+            ctx.throw(500);
+        }
         const reqBody = await ctx.request.body().value;
-        // console.log('ctx.params?.id', ctx.params?.id);
-        // console.log('reqBody', reqBody);
-        const user = await User.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
+        const reqBodyJSON = JSON.parse(reqBody);
+        const user = await User.findByIdAndUpdate(ctx.params?.id, reqBodyJSON, {
+            new: true,
+        });
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
