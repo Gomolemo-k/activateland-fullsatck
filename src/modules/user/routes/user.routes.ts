@@ -1,18 +1,19 @@
 import { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 import {
-	createUser,
-	deleteUser,
-	getUser,
-	getUsers,
-	updateUser,
+	list,
+	get,
+	create,
+	update,
+	destroy,
 } from "../controllers/user.controller.ts";
 
 const router = new Router();
+const routePath = "/api/users";
 
-router.get("/api/users", async (context) => { await getUsers(context) });
-router.get("/api/users/:id", async (context) => { await getUser(context) });
-router.post("/api/users", async (context) => { await createUser(context) });
-router.put("/api/users/:id", async (context) => { await updateUser(context) });
-router.delete("/api/users/:id", async (context) => { await deleteUser(context) });
+router.get(routePath, async (context) => { await list(context) });
+router.get(`${routePath}/:id`, async (context) => { await get(context) });
+router.post(routePath, async (context) => { await create(context) });
+router.put(`${routePath}/:id`, async (context) => { await update(context) });
+router.delete(`${routePath}/:id`, async (context) => { await destroy(context) });
 
 export default router;

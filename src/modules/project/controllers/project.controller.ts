@@ -6,7 +6,7 @@ const iternalServerErrorMessage = "Internal Server Error.";
 const createdMessage = "Project created successfully.";
 const deletedMessage = "Project deleted successfully.";
 
-export const getProjects = async (ctx: RouterContext<any, any>) => {
+export const list = async (ctx: RouterContext<any, any>) => {
     try {
         const projects = await Project.find();
         ctx.response.body = projects;
@@ -16,7 +16,7 @@ export const getProjects = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const getProject = async (ctx: RouterContext<any, any>) => {
+export const get = async (ctx: RouterContext<any, any>) => {
     try {
         const project = await Project.findById(ctx.params?.id);
         if (!project) {
@@ -30,7 +30,7 @@ export const getProject = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const createProject = async (ctx: RouterContext<any, any>) => {
+export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
         const project = new Project(reqBody);
@@ -44,7 +44,7 @@ export const createProject = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const updateProject = async (ctx: RouterContext<any, any>) => {
+export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
         const project = await Project.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
@@ -59,7 +59,7 @@ export const updateProject = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const deleteProject = async (ctx: RouterContext<any, any>) => {
+export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
         const project = await Project.findByIdAndDelete(ctx.params?.id);
         if (!project) {

@@ -6,7 +6,7 @@ const iternalServerErrorMessage = "Internal Server Error.";
 const userCreatedMessage = "User created successfully.";
 const userDeletedMessage = "User deleted successfully.";
 
-export const getUsers = async (ctx: RouterContext<any, any>) => {
+export const list = async (ctx: RouterContext<any, any>) => {
     try {
         const users = await User.find();
         ctx.response.body = users;
@@ -17,7 +17,7 @@ export const getUsers = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const getUser = async (ctx: RouterContext<any, any>) => {
+export const get = async (ctx: RouterContext<any, any>) => {
     try {
         const user = await User.findById(ctx.params?.id);
         if (!user) {
@@ -31,7 +31,7 @@ export const getUser = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const createUser = async (ctx: RouterContext<any, any>) => {
+export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
         //console.log('reqBody', reqBody);
@@ -56,7 +56,7 @@ export const createUser = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const updateUser = async (ctx: RouterContext<any, any>) => {
+export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
         // console.log('ctx.params?.id', ctx.params?.id);
@@ -73,7 +73,7 @@ export const updateUser = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const deleteUser = async (ctx: RouterContext<any, any>) => {
+export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
         const user = await User.findByIdAndDelete(ctx.params?.id);
         if (!user) {
