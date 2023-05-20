@@ -9,6 +9,8 @@ let testUserId: any = null;
 let testModelId: any = null;
 // Data
 let dataNew: any = null;
+// Path
+const routePath = "/api/user-profiles";
 
 Deno.test("Get parent User", async () => {
     const mongoose = await connectToDatabase();
@@ -29,8 +31,9 @@ Deno.test("Get parent User", async () => {
         testUserId = foundUser?._id.toString();
         dataNew = {
             user: testUserId,
-            name: "New Project",
-            description: "Description of the new project.",
+            firstName: "Foo",
+            lastName: "Baa Boo",
+            bio: "Bio description.",
         };
         assertEquals(testUserId, testUserId);
         assertEquals(dataNew?.user, testUserId);
@@ -40,7 +43,7 @@ Deno.test("Get parent User", async () => {
     }
 });
 
-Deno.test("POST /api/projects", async () => {
+Deno.test(`POST ${routePath}`, async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -48,13 +51,14 @@ Deno.test("POST /api/projects", async () => {
         const request = await superoak(app);
         
         try {
-            const res = await request.post("/api/projects").send(dataNew);
+            const res = await request.post(routePath).send(dataNew);
             //console.log('POST BODY: ', res.body);
 
             assertEquals(res.status, 201);
             assertEquals(res.body.user, testUserId);
-            assertEquals(res.body.name, dataNew.name);
-            assertEquals(res.body.description, dataNew.description);
+            assertEquals(res.body.firstName, dataNew.firstName);
+            assertEquals(res.body.lastName, dataNew.lastName);
+            assertEquals(res.body.bio, dataNew.bio);
         
             testModelId = res.body._id;
         } catch(error) {
@@ -67,7 +71,7 @@ Deno.test("POST /api/projects", async () => {
     }
 });
 
-Deno.test("GET /api/projects", async () => {
+Deno.test(`GET ${routePath}`, async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -75,12 +79,12 @@ Deno.test("GET /api/projects", async () => {
         const request = await superoak(app);
 
         try {
-            const res = await request.get("/api/projects");
+            const res = await request.get(routePath);
             //console.log('GET BODY: ', res.body);
         
             assertEquals(res.status, 200);
             assertEquals(typeof res.body[0]._id, "string");
-            assertEquals(typeof res.body[0].name, "string");
+            assertEquals(typeof res.body[0].firstName, "string");
         } catch(error) {
             console.log('ERROR: ', error)
         }
@@ -91,7 +95,7 @@ Deno.test("GET /api/projects", async () => {
     }
 });
 
-Deno.test("GET /api/projects/:id", async () => {
+Deno.test(`GET ${routePath}/:id`, async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -99,11 +103,11 @@ Deno.test("GET /api/projects/:id", async () => {
         const request = await superoak(app);
 
         try {
-            const res = await request.get(`/api/projects/${testModelId}`);
+            const res = await request.get(`${routePath}/${testModelId}`);
 
             assertEquals(res.status, 200);
             assertEquals(typeof res.body._id, "string");
-            assertEquals(typeof res.body.name, "string");
+            assertEquals(typeof res.body.firstName, "string");
             assertEquals(res.body._id, testModelId);
         } catch(error) {
             console.log('ERROR: ', error);
@@ -115,7 +119,7 @@ Deno.test("GET /api/projects/:id", async () => {
     }
 });
 
-Deno.test("PUT /api/projects/:id", async () => {
+Deno.test(`PUT ${routePath}/:id`, async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -124,17 +128,14 @@ Deno.test("PUT /api/projects/:id", async () => {
         
         try {
             const dataUpdate = {
-                user: testUserId,
-                name: "Update Project",
-                description: "Description of the updated project.",
+                firstName: "Updated Name"
             };
             
-            const res = await request.put(`/api/projects/${testModelId}`).send(dataUpdate);
+            const res = await request.put(`${routePath}/${testModelId}`).send(dataUpdate);
         
             assertEquals(res.status, 200);
             assertEquals(res.body._id, testModelId);
-            assertEquals(res.body.name, dataUpdate.name);
-            assertEquals(res.body.description, dataUpdate.description);
+            assertEquals(res.body.firstName, dataUpdate.firstName);
         } catch(error) {
             console.log('ERROR: ', error);
         }
@@ -145,7 +146,7 @@ Deno.test("PUT /api/projects/:id", async () => {
     }
 });
 
-Deno.test("DELETE /api/projects/:id", async () => {
+Deno.test(`DELETE ${routePath}/:id`, async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -153,7 +154,7 @@ Deno.test("DELETE /api/projects/:id", async () => {
         const request = await superoak(app);
 
         try {
-            const res = await request.delete(`/api/projects/${testModelId}`);
+            const res = await request.delete(`${routePath}/${testModelId}`);
 
             assertEquals(res.status, 200);
             assertEquals(typeof res.body.message, "string");
