@@ -1,6 +1,5 @@
 import { assert, assertEquals, assertThrows } from "std/testing/asserts.ts";
 import { connectToDatabase } from "../../../database/db.ts";
-import { User } from "../../user/models/user.model.ts";
 import UpdatedFile from "./updated-file.model.ts";
 
 //Save id
