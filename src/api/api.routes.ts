@@ -6,6 +6,7 @@ import userProfileRoutes from '../modules/user-profile/routes/user-profile.route
 import userAccountRoutes from '../modules/user-account/routes/user-account.routes.ts'
 import teamRoutes from '../modules/team/routes/team.routes.ts'
 import teamMemberRoutes from '../modules/team-member/routes/team-member.routes.ts'
+import propertyRoutes from '../modules/property/routes/property.routes.ts'
 
 const app = new Application();
 // Configure CORS
@@ -29,5 +30,8 @@ app.use(teamRoutes.allowedMethods());
 
 app.use(teamMemberRoutes.routes());
 app.use(teamMemberRoutes.allowedMethods());
+
+app.use(propertyRoutes.routes());
+app.use(propertyRoutes.allowedMethods());
 
 export default app;

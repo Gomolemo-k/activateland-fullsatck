@@ -1,6 +1,6 @@
 import { assert, assertEquals, assertThrows } from "std/testing/asserts.ts";
 import { connectToDatabase } from "../../../database/db.ts";
-import UpdatedFile from "./updated-file.model.ts";
+import UploadedFile from "./uploaded-file.model.ts";
 
 //Save id
 let testModelId: any = null;
@@ -11,12 +11,12 @@ let dataNew: any = {
 	url: 'http://test.com/img/first.png',  
 };
 
-Deno.test("Create a new UpdatedFile", async () => {
+Deno.test("Create a new UploadedFile", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const record = new UpdatedFile(dataNew);
+        const record = new UploadedFile(dataNew);
         await record.save();
         //Save id
         testModelId = record?._id;
@@ -28,12 +28,12 @@ Deno.test("Create a new UpdatedFile", async () => {
     }
 });
 
-Deno.test("Read an existing UpdatedFile", async () => {
+Deno.test("Read an existing UploadedFile", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await UpdatedFile.findOne(testModelId);
+        const found = await UploadedFile.findOne(testModelId);
         assertEquals(found?.name, dataNew?.name);
         assertEquals(found?.type, dataNew?.type);
         assertEquals(found?.url, dataNew?.url);
@@ -41,47 +41,47 @@ Deno.test("Read an existing UpdatedFile", async () => {
     }
 });
 
-Deno.test("Update an existing UpdatedFile", async () => {
+Deno.test("Update an existing UploadedFile", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await UpdatedFile.findOne(testModelId);
+        const found = await UploadedFile.findOne(testModelId);
         const nameUpdated = "Updated"
         if (found) {
             found.name = nameUpdated;
             await found.save();
         }
     
-        const updated = await UpdatedFile.findOne({ name: nameUpdated });
+        const updated = await UploadedFile.findOne({ name: nameUpdated });
         assertEquals(updated?.name, nameUpdated);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Delete an existing UpdatedFile", async () => {
+Deno.test("Delete an existing UploadedFile", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await UpdatedFile.findOne(testModelId);
+        const found = await UploadedFile.findOne(testModelId);
         if (found) {
-            await UpdatedFile.deleteOne({ _id: found._id });
+            await UploadedFile.deleteOne({ _id: found._id });
         }
     
-        const deleted = await UpdatedFile.findOne(testModelId);
+        const deleted = await UploadedFile.findOne(testModelId);
         assertEquals(deleted, null);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Remove all UpdatedFile collection", async () => {
+Deno.test("Remove all UploadedFile collection", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        UpdatedFile.deleteMany({});
-        const deleted = await UpdatedFile.find();
+        UploadedFile.deleteMany({});
+        const deleted = await UploadedFile.find();
         assertEquals(Array.isArray(deleted), true);
         await mongoose.disconnect();
     }

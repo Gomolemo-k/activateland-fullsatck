@@ -12,9 +12,9 @@ let testModelId: any = null;
 // Data
 let dataNew: any = null;
 // Path
-const routePath = "/api/teams";
+const routePath = "/api/properties";
 
-Deno.test("Get parent Team", async () => {
+Deno.test("Get parent Property", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -30,7 +30,7 @@ Deno.test("Get parent Team", async () => {
         }
 
         //Get project
-        const projectName = "New Project";
+        const projectName = "New Project for Teams";
         let foundProject = await Project.findOne({ user: foundUser._id, name: projectName });
         if (!foundProject) {
             //Create Project
@@ -45,8 +45,13 @@ Deno.test("Get parent Team", async () => {
         //Create new data record
         dataNew = {
             project: testProjectId,
-            name: "New Team",
-            description: "Description of New Team.",
+            title: "New Property",
+            propertyType: 'LAND',
+            bedrooms: 3,
+            bathrooms: 2,
+            size: 75,
+            price: 135000,
+            description: "New property in the beach.",
         };
         // console.log('dataNew: ', dataNew);
 
@@ -70,7 +75,12 @@ Deno.test(`POST ${routePath}`, async () => {
 
             assertEquals(res.status, 201);
             assertEquals(res.body.project, testProjectId);
-            assertEquals(res.body.name, dataNew.name);
+            assertEquals(res.body.title, dataNew.title);
+            assertEquals(res.body.propertyType, dataNew.propertyType);
+            assertEquals(res.body.bedrooms, dataNew.bedrooms);
+            assertEquals(res.body.bathrooms, dataNew.bathrooms);
+            assertEquals(res.body.size, dataNew.size);
+            assertEquals(res.body.price, dataNew.price);
             assertEquals(res.body.description, dataNew.description);
         
             testModelId = res.body._id;
@@ -97,7 +107,8 @@ Deno.test(`GET ${routePath}`, async () => {
         
             assertEquals(res.status, 200);
             assertEquals(typeof res.body[0]._id, "string");
-            assertEquals(typeof res.body[0].name, "string");
+            assertEquals(typeof res.body[0].title, "string");
+            assertEquals(typeof res.body[0].bedrooms, "number");
         } catch(error) {
             console.log('ERROR: ', error)
         }
@@ -120,7 +131,8 @@ Deno.test(`GET ${routePath}/:id`, async () => {
 
             assertEquals(res.status, 200);
             assertEquals(typeof res.body._id, "string");
-            assertEquals(typeof res.body.name, "string");
+            assertEquals(typeof res.body.title, "string");
+            assertEquals(typeof res.body.bedrooms, "number");
             assertEquals(res.body._id, testModelId);
         } catch(error) {
             console.log('ERROR: ', error);
@@ -141,14 +153,22 @@ Deno.test(`PUT ${routePath}/:id`, async () => {
         
         try {
             const dataUpdate = {
-                name: "updated Team"
+                title: "Updated Property",
+                propertyType: "FARM",
+                price: 180000,
             };
             
             const res = await request.put(`${routePath}/${testModelId}`).send(dataUpdate);
         
             assertEquals(res.status, 200);
             assertEquals(res.body._id, testModelId);
-            assertEquals(res.body.name, dataUpdate.name);
+            assertEquals(res.body.title, dataUpdate.title);
+            assertEquals(res.body.propertyType, dataUpdate.propertyType);
+            assertEquals(res.body.bedrooms, dataNew.bedrooms);
+            assertEquals(res.body.bathrooms, dataNew.bathrooms);
+            assertEquals(res.body.size, dataNew.size);
+            assertEquals(res.body.price, dataUpdate.price);
+            assertEquals(res.body.description, dataNew.description);
         } catch(error) {
             console.log('ERROR: ', error);
         }

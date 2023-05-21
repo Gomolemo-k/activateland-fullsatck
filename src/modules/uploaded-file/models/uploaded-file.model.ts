@@ -1,6 +1,6 @@
 import { mongoose}  from "../../../../deps.ts";
 
-const updatedFileSchema  = new mongoose.Schema({
+const uploadedFileSchema  = new mongoose.Schema({
 	name: String,
 	type: String,
 	url: String,  
@@ -9,4 +9,4 @@ const updatedFileSchema  = new mongoose.Schema({
 });
 
 
-export default mongoose.model("UpdatedFile", updatedFileSchema);
+export default mongoose.model("UploadedFile", uploadedFileSchema);

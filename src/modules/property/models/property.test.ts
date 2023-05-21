@@ -2,7 +2,7 @@ import { assert, assertEquals, assertThrows } from "std/testing/asserts.ts";
 import { connectToDatabase } from "../../../database/db.ts";
 import { User } from "../../user/models/user.model.ts";
 import Project from "../../project/models/project.model.ts";
-import Team from "./team.model.ts";
+import { Property, propertyType } from "./property.model.ts";
 
 //Save ids
 let testUserId: any = null;
@@ -11,7 +11,7 @@ let testModelId: any = null;
 // Data
 let dataNew: any = null;
 
-Deno.test("Get parent Team", async () => {
+Deno.test("Get parent Property", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -40,88 +40,108 @@ Deno.test("Get parent Team", async () => {
         //Save data
         dataNew = {
             project: testProjectId,
-            name: "New Team",
-            description: "Description of New Team.",
+            title: "New Property",
+            propertyType: propertyType.LAND,
+            bedrooms: 3,
+            bathrooms: 2,
+            size: 75,
+            price: 135000,
+            description: "New property in the beach.",
         };
         assertEquals(dataNew?.project, testProjectId);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Create a new Team", async () => {
+Deno.test("Create a new Property", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const record = new Team(dataNew);
+        const record = new Property(dataNew);
         await record.save();
         //Save id
         testModelId = record?._id;
 
         assertEquals(record?.project, dataNew?.project);
-        assertEquals(record?.name, dataNew?.name);
+        assertEquals(record?.title, dataNew?.title);
+        assertEquals(record?.propertyType, dataNew?.propertyType);
+        assertEquals(record?.bedrooms, dataNew?.bedrooms);
+        assertEquals(record?.bathrooms, dataNew?.bathrooms);
+        assertEquals(record?.size, dataNew?.size);
+        assertEquals(record?.price, dataNew?.price);
         assertEquals(record?.description, dataNew?.description);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Read an existing Team", async () => {
+Deno.test("Read an existing Property", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const record = await Team.findOne(testModelId);
+        const record = await Property.findOne(testModelId);
 
         assertEquals(record?.project, dataNew?.project);
-        assertEquals(record?.name, dataNew?.name);
-        assertEquals(record?.description, dataNew?.description)
+        assertEquals(record?.title, dataNew?.title);
+        assertEquals(record?.propertyType, dataNew?.propertyType);
+        assertEquals(record?.bedrooms, dataNew?.bedrooms);
+        assertEquals(record?.bathrooms, dataNew?.bathrooms);
+        assertEquals(record?.size, dataNew?.size);
+        assertEquals(record?.price, dataNew?.price);
+        assertEquals(record?.description, dataNew?.description);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Update an existing Team", async () => {
+Deno.test("Update an existing Property", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await Team.findOne(testModelId);
-        const updated = 'Updated Team'
+        const found = await Property.findOne(testModelId);
+        const updated = 'Updated Property'
         if (found) {
-            found.name = updated;
+            found.title = updated;
             await found.save();
         }
-        const record = await Team.findOne({ name: updated });
+        const record = await Property.findOne({ title: updated });
         
         assertEquals(record?.project, dataNew?.project);
-        assertEquals(record?.name, updated);
-        assertEquals(record?.description, dataNew?.description)
+        assertEquals(record?.title, updated);
+        assertEquals(record?.propertyType, dataNew?.propertyType);
+        assertEquals(record?.bedrooms, dataNew?.bedrooms);
+        assertEquals(record?.bathrooms, dataNew?.bathrooms);
+        assertEquals(record?.size, dataNew?.size);
+        assertEquals(record?.price, dataNew?.price);
+        assertEquals(record?.description, dataNew?.description);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Delete an existing Team", async () => {
+Deno.test("Delete an existing Property", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await Team.findOne(testModelId);
+        const found = await Property.findOne(testModelId);
         if (found) {
-            await Team.deleteOne({ _id: found._id });
+            await Property.deleteOne({ _id: found._id });
         }
     
-        const deleted = await Team.findOne(testModelId);
+        const deleted = await Property.findOne(testModelId);
         assertEquals(deleted, null);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Remove all Team collection", async () => {
+Deno.test("Remove all Property collection", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        Team.deleteMany({});
-        const deleted = await Team.find();
+        Property.deleteMany({});
+        const deleted = await Property.find();
         assertEquals(Array.isArray(deleted), true);
         await mongoose.disconnect();
     }
