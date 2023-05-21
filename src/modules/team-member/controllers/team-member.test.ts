@@ -10,7 +10,7 @@ let testModelId: any = null;
 // Data
 let dataNew: any = null;
 // Path
-const routePath = "/api/user-profiles";
+const routePath = "/api/team-members";
 
 Deno.test("Get parent User", async () => {
     const mongoose = await connectToDatabase();
@@ -31,9 +31,7 @@ Deno.test("Get parent User", async () => {
         testUserId = foundUser?._id.toString();
         dataNew = {
             user: testUserId,
-            firstName: "Foo",
-            lastName: "Baa Boo",
-            bio: "Bio description.",
+            role: 'NONE'
         };
         assertEquals(dataNew?.user, testUserId);
         
@@ -55,9 +53,7 @@ Deno.test(`POST ${routePath}`, async () => {
 
             assertEquals(res.status, 201);
             assertEquals(res.body.user, testUserId);
-            assertEquals(res.body.firstName, dataNew.firstName);
-            assertEquals(res.body.lastName, dataNew.lastName);
-            assertEquals(res.body.bio, dataNew.bio);
+            assertEquals(res.body.role, dataNew.role);
         
             testModelId = res.body._id;
         } catch(error) {
@@ -83,7 +79,6 @@ Deno.test(`GET ${routePath}`, async () => {
         
             assertEquals(res.status, 200);
             assertEquals(typeof res.body[0]._id, "string");
-            assertEquals(typeof res.body[0].firstName, "string");
         } catch(error) {
             console.log('ERROR: ', error)
         }
@@ -106,7 +101,6 @@ Deno.test(`GET ${routePath}/:id`, async () => {
 
             assertEquals(res.status, 200);
             assertEquals(typeof res.body._id, "string");
-            assertEquals(typeof res.body.firstName, "string");
             assertEquals(res.body._id, testModelId);
         } catch(error) {
             console.log('ERROR: ', error);
@@ -127,14 +121,14 @@ Deno.test(`PUT ${routePath}/:id`, async () => {
         
         try {
             const dataUpdate = {
-                firstName: "Updated Name"
+                role: "ALL"
             };
             
             const res = await request.put(`${routePath}/${testModelId}`).send(dataUpdate);
         
             assertEquals(res.status, 200);
             assertEquals(res.body._id, testModelId);
-            assertEquals(res.body.firstName, dataUpdate.firstName);
+            assertEquals(res.body.role, dataUpdate.role);
         } catch(error) {
             console.log('ERROR: ', error);
         }

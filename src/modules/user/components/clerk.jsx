@@ -26,7 +26,7 @@ export async function handleSubmit(emailClerk, passwordClerk) {
         }
         const { data: res } = await axios.post(url, data);
         //navigate("/login");
-        console.log(res.message);
+        //console.log(res.message);
         window.location = "/dashboard";
     } catch (error) {
         console.log(error);

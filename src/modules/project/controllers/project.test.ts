@@ -24,7 +24,7 @@ Deno.test("Get parent User", async () => {
             foundUser = new User({ email: userEmail });
             await foundUser.save();
         }
-        console.log('foundUser._id: ', foundUser?._id.toString());
+        //console.log('foundUser._id: ', foundUser?._id.toString());
         //Save user id
         testUserId = foundUser?._id.toString();
         dataNew = {
@@ -32,7 +32,6 @@ Deno.test("Get parent User", async () => {
             name: "New Project",
             description: "Description of the new project.",
         };
-        assertEquals(testUserId, testUserId);
         assertEquals(dataNew?.user, testUserId);
         
         // Disconnect services

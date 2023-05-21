@@ -30,7 +30,6 @@ Deno.test("Get parent UserSession", async () => {
             token: "15ser6g46ar4h1.arger4adfer.5a4d5ga5fg",
 	        expiresAt: Date.now(), 
         };
-        assertEquals(testUserId, testUserId);
         assertEquals(dataNew?.user, testUserId);
         await mongoose.disconnect();
     }

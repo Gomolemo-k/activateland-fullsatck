@@ -92,7 +92,7 @@ Deno.test("PUT /api/users/:id", async () => {
             };
             
             const res = await request.put(`/api/users/${testUserId}`).send(updatedUser);
-
+            // console.log('res: ', res);
             // console.log('PUT BODY: ', res.body);
             // console.log('updatedUser.email', updatedUser.email);
             // console.log('res.body.email', res.body.email);

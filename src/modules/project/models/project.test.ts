@@ -30,7 +30,6 @@ Deno.test("Get parent User", async () => {
             name: "New Project",
             description: "Description of the new project.",
         };
-        assertEquals(testUserId, testUserId);
         assertEquals(dataNew?.user, testUserId);
         await mongoose.disconnect();
     }
