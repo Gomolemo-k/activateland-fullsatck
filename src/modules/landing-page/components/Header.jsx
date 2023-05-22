@@ -14,7 +14,6 @@ import {
 } from "@clerk/clerk-react";
 // TODO: Improve get .env variables.
 import { REACT_APP_CLERK_PUBLISHABLE_KEY } from "../../../assets/js/user/clerk.js";
-
 // CLERK SOO
 const clerkPubKey = REACT_APP_CLERK_PUBLISHABLE_KEY;
 //const { isLoaded, isSignedIn, user } = useUser();
