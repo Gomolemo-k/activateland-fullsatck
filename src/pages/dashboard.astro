@@ -1,13 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import App from '../modules/landing-page/App';
+import "../modules/dashboard/index"
 import i18next, { t } from "i18next";
 import { Trans, HeadHrefLangs } from "astro-i18next/components";
+import Index from "../modules/dashboard/index"
 ---
 
 <Layout title={t("site.title")}>
 	<main>
-		<h1>Dashboard</h1>
+		<Index client:only="react" />
+		<!-- <div id="root-dashboard"></div> -->
+		<!-- <App client:load /> -->
+		<!-- <React.StrictMode> -->
+			<!-- <ContextProvider client:load > -->
+				<!-- <App  client:only="react" /> -->
+			<!-- </ContextProvider> -->
+		<!-- </React.StrictMode> -->
 	</main>
 </Layout>
-
