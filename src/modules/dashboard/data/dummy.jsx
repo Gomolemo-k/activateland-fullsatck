@@ -1,17 +1,78 @@
 import React from 'react';
-import { AiOutlineCalendar } from 'react-icons/ai';
-import { FiShoppingBag, FiEdit, FiBarChart, FiCreditCard, FiStar } from 'react-icons/fi';
-import { BsKanban, BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft } from 'react-icons/bs';
-import { IoMdContacts } from 'react-icons/io';
-import { RiContactsLine } from 'react-icons/ri';
-import { MdOutlineSupervisorAccount } from 'react-icons/md';
+import { AiOutlineProject } from 'react-icons/ai';
+import { FiUserCheck, FiBarChart, FiCreditCard, FiStar } from 'react-icons/fi';
+import { BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft } from 'react-icons/bs';
+import { GiOrganigram } from 'react-icons/gi';
+import { RiTeamLine } from 'react-icons/ri';
+import { MdOutlineSupervisorAccount, MdOutlineDashboardCustomize } from 'react-icons/md';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
 import { GrLocation } from 'react-icons/gr';
+import { TbHomeCheck, TbHomeSignal } from 'react-icons/tb'
 import avatar from './avatar.jpg';
 import avatar2 from './avatar2.jpg';
 import avatar3 from './avatar3.png';
 import avatar4 from './avatar4.jpg';
+
+
+export const links = [
+  {
+    title: 'Resume',
+    links: [
+      {
+        name: 'dashboard',
+        path: 'dashboard',
+        icon: <MdOutlineDashboardCustomize />,
+      },
+    ],
+  },
+
+  {
+    title: 'User',
+    links: [
+      {
+        name: 'Profile',
+        path: 'users/show',
+        icon: <FiUserCheck />,
+      }
+    ],
+  },
+  {
+    title: 'Projects',
+    links: [
+      {
+        name: 'Projects',
+        path: 'projects/index',
+        icon: <AiOutlineProject />,
+      },
+      {
+        name: 'Teams',
+        path: 'teams/index',
+        icon: <GiOrganigram />,
+      },
+      {
+        name: 'Team Members',
+        path: 'team-memebers/index',
+        icon: <RiTeamLine />,
+      },
+    ],
+  },
+  {
+    title: 'Properties',
+    links: [
+      {
+        name: 'Properties',
+        path: 'properties/index',
+        icon: <TbHomeCheck />,
+      },
+      {
+        name: 'Property Analysis',
+        path: 'property-analysis/index',
+        icon: <TbHomeSignal />,
+      },
+    ],
+  },
+];
 
 export const kanbanGrid = [
   { headerText: 'To Do',
@@ -349,49 +410,6 @@ export const customersGrid = [
 
 ];
 
-export const links = [
-  {
-    title: 'Dashboard',
-    links: [
-      {
-        name: 'ecommerce',
-        icon: <FiShoppingBag />,
-      },
-    ],
-  },
-
-  {
-    title: 'Pages',
-    links: [
-      {
-        name: 'employees',
-        icon: <IoMdContacts />,
-      },
-      {
-        name: 'customers',
-        icon: <RiContactsLine />,
-      },
-    ],
-  },
-  {
-    title: 'Apps',
-    links: [
-      {
-        name: 'calendar',
-        icon: <AiOutlineCalendar />,
-      },
-      {
-        name: 'kanban',
-        icon: <BsKanban />,
-      },
-      {
-        name: 'editor',
-        icon: <FiEdit />,
-      },
-    ],
-  },
-];
-
 export const chatData = [
   {
     image:
@@ -584,6 +602,10 @@ export const medicalproBranding = {
 
 export const themeColors = [
   {
+    color: '#FF7235',
+    name: 'orange-theme',
+  },
+  {
     name: 'blue-theme',
     color: '#1A97F5',
   },
@@ -602,10 +624,6 @@ export const themeColors = [
   {
     name: 'indigo-theme',
     color: '#1E4DB7',
-  },
-  {
-    color: '#FB9678',
-    name: 'orange-theme',
   },
 ];
 

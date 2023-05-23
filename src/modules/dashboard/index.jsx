@@ -7,11 +7,13 @@ import { ContextProvider } from './contexts/ContextProvider';
 
 const Index = () => {
   return (
-    <div className='overflow-hidden'>
-     <ContextProvider>
-       <App/>
-     </ContextProvider>
-    </div>
+    <>
+      <div className='overflow-hidden'>
+        <ContextProvider>
+          <App/>
+        </ContextProvider>
+      </div>
+    </>
   );
 };
 
