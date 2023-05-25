@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { Kanban } from './pages';
 import { useStateContext } from './contexts/ContextProvider';
 import './App.css';
+
+//Routes
+import { Kanban } from './pages';
+import ShowUserProfile from '../user-profile/components/show.jsx';
+import EditUserProfile from '../user-profile/components/edit.jsx';
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
@@ -62,12 +66,12 @@ const App = () => {
 
               <Routes>
                 {/* dashboard  */}
-                {/* <Route path="/" element={(<Ecommerce />)} />
-                <Route path="/ecommerce" element={(<Ecommerce />)} /> */}
+                <Route path="/" element={(<Navigate to='/' />)} />
+                <Route path="/dashboard" element={(<Navigate to='/dashboard' />)} />
 
-                {/* pages  */}
-                {/* <Route path="/employees" element={<Employees />} />
-                <Route path="/customers" element={<Customers />} /> */}
+                {/* user  */}
+                <Route path="/users/show" element={(<ShowUserProfile />)} />
+                <Route path="/users/edit" element={(<EditUserProfile />)} />
 
                 {/* apps  */}
                 {/* <Route path="/kanban" element={<Kanban />} />
