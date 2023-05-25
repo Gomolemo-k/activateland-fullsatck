@@ -4,7 +4,7 @@ import { SiShopware } from 'react-icons/si';
 import { MdOutlineCancel } from 'react-icons/md';
 
 
-import { links } from '../data/dummy';
+import { links } from '../../../assets/data/dashboard/data';
 import { useStateContext } from '../contexts/ContextProvider';
 import { header } from '../../../assets/data/landing-page/data';
 

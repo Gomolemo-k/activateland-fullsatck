@@ -3,10 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
 import { useStateContext } from './contexts/ContextProvider';
-import './App.css';
+import "../../assets/css/dashboard/App.css";
 
 //Routes
-import { Kanban } from './pages';
 import ShowUserProfile from '../user-profile/components/show.jsx';
 import EditUserProfile from '../user-profile/components/edit.jsx';
 
@@ -24,7 +23,7 @@ const App = () => {
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : 'light'}>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
             {/* <TooltipComponent
@@ -83,7 +82,7 @@ const App = () => {
             <Footer />
           </div>
         </div>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </div>
   );
 };

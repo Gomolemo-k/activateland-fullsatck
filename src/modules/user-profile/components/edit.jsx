@@ -2,7 +2,7 @@ import FormUserProfile from "./form.jsx";
 
 function EditUserProfile() {
     return (
-        <FormUserProfile disabled='' />
+        <FormUserProfile disabled={false} />
     );
 }
 

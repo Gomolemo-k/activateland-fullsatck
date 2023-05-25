@@ -24,7 +24,14 @@ export async function handleSubmit(emailClerk, passwordClerk) {
             email: emailClerk,
             password: passwordClerk,
         }
-        const { data: res } = await axios.post(url, data);
+        const { data: res } = await axios.get(url);
+        //Save User Id in Local Storage
+        if (res.id) {
+            localStorage.setItem('themeMode', res.id);
+        } else {
+            console.log('UserId cannot save in local storage.');
+        }
+        
         //navigate("/login");
         //console.log(res.message);
         window.location = "/dashboard";
@@ -48,6 +55,7 @@ function PublicPage() {
 }
 
 function ProtectedPage() {
+    let pathTo = "/";
     //Register User.
     const { isLoaded, isSignedIn, user } = useUser();
     //console.log('user.', user)
@@ -55,14 +63,9 @@ function ProtectedPage() {
     if (isLoaded && isSignedIn && email) {
         console.log('Init handle submit user.')
         handleSubmit(email, '');
+        pathTo = "/dashboard"
     }
-
-    return (
-        <>
-        <h1>Protected page</h1>
-        <UserButton routing="path" path="/" redirectUrl='/'/>
-        </>
-    );
+    window.location = pathTo;
 }
 
 function ClerkProviderWithRoutes() {

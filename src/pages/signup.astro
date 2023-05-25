@@ -6,7 +6,5 @@ import { Trans, HeadHrefLangs } from "astro-i18next/components";
 ---
 
 <Layout title={t("site.title")}>
-	<main>
-		<Clerk client:only="react" />
-	</main>
+	<Clerk client:only="react" />
 </Layout>
