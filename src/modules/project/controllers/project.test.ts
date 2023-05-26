@@ -24,9 +24,9 @@ Deno.test("Get parent User", async () => {
             foundUser = new User({ email: userEmail });
             await foundUser.save();
         }
-        //console.log('foundUser._id: ', foundUser?._id.toString());
+        // console.log('foundUser._id: ', foundUser?._id.toString());
         //Save user id
-        testUserId = foundUser?._id.toString();
+        testUserId = foundUser._id.toString();
         dataNew = {
             user: testUserId,
             name: "New Project",
@@ -75,7 +75,7 @@ Deno.test("GET /api/projects", async () => {
 
         try {
             const res = await request.get("/api/projects");
-            //console.log('GET BODY: ', res.body);
+            // console.log('GET BODY: ', res.body);
         
             assertEquals(res.status, 200);
             assertEquals(typeof res.body[0]._id, "string");
@@ -106,6 +106,30 @@ Deno.test("GET /api/projects/:id", async () => {
             assertEquals(res.body._id, testModelId);
         } catch(error) {
             console.log('ERROR: ', error);
+        }
+
+        // Disconnect services
+        request.delete;
+        await mongoose.disconnect();
+    }
+});
+
+Deno.test("GET /api/projects-user/:user", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        const request = await superoak(app);
+
+        try {
+            const res = await request.get(`/api/projects-user/${testUserId}`);
+            // console.log('GET BODY: ', res);
+        
+            assertEquals(res.status, 200);
+            // assertEquals(typeof res.body[0]._id, "string");
+            // assertEquals(typeof res.body[0].name, "string");
+        } catch(error) {
+            console.log('ERROR: ', error)
         }
 
         // Disconnect services

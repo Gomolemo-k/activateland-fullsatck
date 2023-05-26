@@ -52,6 +52,21 @@ Deno.test("Create a new project", async () => {
     }
 });
 
+Deno.test("List existing projects by user", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        // console.log('testUserId: ', testUserId.toString());
+        const found = await Project.find({user: testUserId.toString()});
+        // console.log('found: ', found);
+        assertEquals(found[0].user, dataNew?.user);
+        assertEquals(found[0].name, dataNew?.name);
+        assertEquals(found[0].description, dataNew?.description);
+        await mongoose.disconnect();
+    }
+});
+
 Deno.test("Read an existing project", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;

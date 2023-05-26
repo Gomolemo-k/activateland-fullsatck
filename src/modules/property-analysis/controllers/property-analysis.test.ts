@@ -32,7 +32,7 @@ Deno.test("Get parent Property Analysis", async () => {
         }
 
         //Get project
-        const projectName = "New Project for Teams";
+        const projectName = "New Project";
         let foundProject = await Project.findOne({ user: foundUser._id, name: projectName });
         if (!foundProject) {
             //Create Project
