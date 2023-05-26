@@ -6,6 +6,10 @@ import Joi from "npm:joi@17.9.2";
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
+  userProfile: { type: mongoose.Schema.Types.ObjectId, ref: 'UserProfile' },
+  userAccount: { type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount' },
+  userSession: { type: mongoose.Schema.Types.ObjectId, ref: 'UserSession' },
 }, {
 	timestamps: true
 });

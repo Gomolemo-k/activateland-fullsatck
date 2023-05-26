@@ -142,6 +142,26 @@ Deno.test("GET /api/properties-project/:projectId", async () => {
     }
 });
 
+Deno.test("GET /api/property-references/:id", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        const request = await superoak(app);
+        try {
+            const res = await request.get(`/api/property-references/${testModelId}`);
+            // console.log(res.body);
+
+            assertEquals(res.status, 200);
+            // assertEquals(typeof res.body._id, "string");
+        } catch(error) {
+            console.log('ERROR: ', error);
+        }
+        request.delete;
+        await mongoose.disconnect();
+    }
+});
+
 Deno.test(`GET ${routePath}/:id`, async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;

@@ -39,6 +39,7 @@ const propertySchema  = new mongoose.Schema({
 	constructionYear: { type: Number },
 	isFurnished: { type: Boolean, default: false },
 	isAvailable: { type: Boolean, default: true },
+	propertyAnalysis: { type: mongoose.Schema.Types.ObjectId, ref: 'PropertyAnalysis' },
 }, {
 	timestamps: true
 });

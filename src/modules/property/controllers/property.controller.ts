@@ -83,3 +83,20 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
         ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };
+
+export const getPropertyReferences = async (ctx: RouterContext<any, any>) => {
+    try {
+        const property = await Property.find({_id: ctx.params?.id})
+        .populate(
+            {
+                path: 'propertyAnalysis',
+                model: 'PropertyAnalysis'
+            });
+      
+        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%getUserReferences: ', user)
+        ctx.response.body = property;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+    }
+};

@@ -6,6 +6,7 @@ import {
 	create,
 	update,
 	destroy,
+	getPropertyReferences,
 } from "../controllers/property.controller.ts";
 
 const router = new Router();
@@ -18,5 +19,6 @@ router.put(`${routePath}/:id`, async (context) => { await update(context) });
 router.delete(`${routePath}/:id`, async (context) => { await destroy(context) });
 
 router.get(`/api/properties-project/:projectId`, async (context) => { await listByProject(context) });
+router.get(`/api/property-references/:id`, async (context) => { await getPropertyReferences(context) });
 
 export default router;

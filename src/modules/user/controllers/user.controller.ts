@@ -100,3 +100,59 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
         ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };
+
+export const getUserReferences = async (ctx: RouterContext<any, any>) => {
+    try {
+        const user = await User.find({_id: ctx.params?.id})
+        .populate(
+            {
+                path: 'userAccount', 
+                model: 'UserAccount',
+            })
+        .populate(
+            {
+                path: 'userProfile', 
+                model: 'UserProfile',
+            })
+        .populate(
+            {
+                path: 'userSession', 
+                model: 'UserSession',
+            })
+        .populate(
+            {
+                path: 'projects', 
+                model: 'Project',
+                populate: {
+                    path: 'teams',
+                    model: 'Team',
+                    populate: {
+                        path: 'teamMembers',
+                        model: 'TeamMembers',
+                    }
+                }
+            })
+        .populate(
+            {
+                path: 'projects', 
+                model: 'Project',
+                populate: {
+                     path: 'properties',
+                     model: 'Property',
+                     populate: {
+                        path: 'propertyAnalysis',
+                        model: 'PropertyAnalysis'
+                   }
+                }
+            });
+        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%getUserReferences: ', user)
+        if (!user) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: userNotFoundMessage };
+        }
+        ctx.response.body = user;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+    }
+};

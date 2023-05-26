@@ -6,6 +6,7 @@ import {
 	create,
 	update,
 	destroy,
+	getProjectReferences
 } from "../controllers/project.controller.ts";
 
 const router = new Router();
@@ -18,5 +19,6 @@ router.put(`${routePath}/:id`, async (context) => { await update(context) });
 router.delete(`${routePath}/:id`, async (context) => { await destroy(context) });
 
 router.get(`/api/projects-user/:userId`, async (context) => { await listByUser(context) });
+router.get(`/api/project-references/:id`, async (context) => { await getProjectReferences(context) });
 
 export default router;

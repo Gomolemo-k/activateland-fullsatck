@@ -27,6 +27,35 @@ export const listByUser = async (ctx: RouterContext<any, any>) => {
     }
 };
 
+export const getProjectReferences = async (ctx: RouterContext<any, any>) => {
+    try {
+        const project = await Project.find({_id: ctx.params?.id})
+        .populate(
+            {
+                path: 'teams',
+                    model: 'Team',
+                    populate: {
+                        path: 'teamMembers',
+                        model: 'TeamMembers',
+                    }
+            })
+        .populate(
+            {
+                path: 'properties',
+                     model: 'Property',
+                     populate: {
+                        path: 'propertyAnalysis',
+                        model: 'PropertyAnalysis'
+                   }
+            });
+        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%getProjectReferences: ', project)
+        ctx.response.body = project;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+    }
+};
+
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
         const record = await Project.findById(ctx.params?.id);

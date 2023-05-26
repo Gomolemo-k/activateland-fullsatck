@@ -72,3 +72,20 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
         ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };
+
+export const getTeamReferences = async (ctx: RouterContext<any, any>) => {
+    try {
+        const team = await Team.find({_id: ctx.params?.id})
+        .populate(
+            {
+                path: 'teamMembers',
+                model: 'TeamMember'
+            });
+      
+        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%getUserReferences: ', user)
+        ctx.response.body = team;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+    }
+};
