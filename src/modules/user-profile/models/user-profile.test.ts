@@ -80,7 +80,7 @@ Deno.test("Update an existing UserProfile", async () => {
             found.firstName = nameUpdated;
             await found.save();
         }
-        const record = await UserProfile.findOne({ firstName: nameUpdated });
+        const record = await UserProfile.findOne(testModelId);
         
         assertEquals(record?.user, dataNew?.user);
         assertEquals(record?.firstName, nameUpdated);

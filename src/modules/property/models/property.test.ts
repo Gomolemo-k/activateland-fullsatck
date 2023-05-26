@@ -105,7 +105,7 @@ Deno.test("Update an existing Property", async () => {
             found.title = updated;
             await found.save();
         }
-        const record = await Property.findOne({ title: updated });
+        const record = await Property.findOne(testModelId);
         
         assertEquals(record?.project, dataNew?.project);
         assertEquals(record?.title, updated);

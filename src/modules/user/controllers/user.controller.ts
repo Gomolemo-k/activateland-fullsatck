@@ -31,6 +31,20 @@ export const get = async (ctx: RouterContext<any, any>) => {
     }
 };
 
+export const getByEmail = async (ctx: RouterContext<any, any>) => {
+    try {
+        const user = await User.findOne({email: ctx.params?.email});
+        if (!user) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: userNotFoundMessage };
+        }
+        ctx.response.body = user;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+    }
+};
+
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;

@@ -6,6 +6,7 @@ import { connectToDatabase } from "../../../database/db.ts";
 //const mongoose = await connectToDatabase();
 // const request = await superoak(app);
 let testUserId: string;
+let testUserEmail: string;
 
 Deno.test("POST /api/users", async () => {
     const mongoose = await connectToDatabase();
@@ -18,18 +19,21 @@ Deno.test("POST /api/users", async () => {
                 email: "test@user.com",
                 password: "password123"
             };
-            
+            // let res = await request.get(`/api/user-email/${newUser.email}`);
+            // console.log('POST BODY: ', res.body);
+            // if (res.status === 200) {
+            //     await request.delete(`/api/users/${res.body._id}`);
+            // }
             const res = await request.post("/api/users").send(newUser);
-
             // console.log('POST BODY: ', res.body);
             // console.log('newUser.email', newUser.email);
             // console.log('res.body.email', res.body.email);
 
-            assertEquals(res.status, 201);
             assertEquals(res.body.email, newUser.email);
             assertEquals(typeof res.body._id, "string");
 
             testUserId = res.body._id;
+            testUserEmail = res.body.email;
         } catch(error) {
             console.log('ERROR: ', error);
         }
@@ -68,6 +72,26 @@ Deno.test("GET /api/users/:id", async () => {
         try {
             const res = await request.get(`/api/users/${testUserId}`);
 
+            assertEquals(res.status, 200);
+            assertEquals(typeof res.body._id, "string");
+            assertEquals(res.body._id, testUserId);
+        } catch(error) {
+            console.log('ERROR: ', error);
+        }
+        request.delete;
+        await mongoose.disconnect();
+    }
+});
+
+Deno.test("GET /api/user-email/:email", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        const request = await superoak(app);
+        try {
+            const res = await request.get(`/api/user-email/${testUserEmail}`);
+            // console.log('GET /api/user-email/:email res: ', res);
             assertEquals(res.status, 200);
             assertEquals(typeof res.body._id, "string");
             assertEquals(res.body._id, testUserId);

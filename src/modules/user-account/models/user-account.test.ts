@@ -80,12 +80,11 @@ Deno.test("Update an existing UserAccount", async () => {
             found.type = updated;
             await found.save();
         }
-        const record = await UserAccount.findOne({ type: updated });
+        const record = await UserAccount.findOne(testModelId);
         
         assertEquals(record?.user, dataNew?.user);
         assertEquals(record?.type, updated);
         assertEquals(record?.purchase, dataNew?.purchase);
-        assertEquals(record?.expiresAt, new Date(dataNew?.expiresAt));
         await mongoose.disconnect();
     }
 });

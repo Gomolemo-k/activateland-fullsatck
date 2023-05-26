@@ -74,7 +74,7 @@ Deno.test("Update an existing TeamMember", async () => {
             found.role = updated;
             await found.save();
         }
-        const record = await TeamMember.findOne({ role: updated });
+        const record = await TeamMember.findOne(testModelId);
         
         assertEquals(record?.user, dataNew?.user);
         assertEquals(record?.role, updated);
