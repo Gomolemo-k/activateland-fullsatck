@@ -51,7 +51,7 @@ Deno.test("Get parent Property", async () => {
             bathrooms: 2,
             size: 75,
             price: 135000,
-            description: "New property in the beach.",
+            description: "New Property description.",
         };
         // console.log('dataNew: ', dataNew);
 
@@ -109,6 +109,29 @@ Deno.test(`GET ${routePath}`, async () => {
             assertEquals(typeof res.body[0]._id, "string");
             assertEquals(typeof res.body[0].title, "string");
             assertEquals(typeof res.body[0].bedrooms, "number");
+        } catch(error) {
+            console.log('ERROR: ', error)
+        }
+
+        // Disconnect services
+        request.delete;
+        await mongoose.disconnect();
+    }
+});
+
+Deno.test("GET /api/properties-project/:projectId", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        const request = await superoak(app);
+
+        try {
+            const res = await request.get(`/api/properties-project/${testProjectId}`);
+            // console.log('GET BODY: ', res);
+        
+            assertEquals(res.status, 200);
+            assertEquals(res.body[0].project, testProjectId);
         } catch(error) {
             console.log('ERROR: ', error)
         }

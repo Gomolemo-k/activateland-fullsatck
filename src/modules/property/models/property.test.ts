@@ -46,7 +46,7 @@ Deno.test("Get parent Property", async () => {
             bathrooms: 2,
             size: 75,
             price: 135000,
-            description: "New property in the beach.",
+            description: "New Property description.",
         };
         assertEquals(dataNew?.project, testProjectId);
         await mongoose.disconnect();
@@ -71,6 +71,17 @@ Deno.test("Create a new Property", async () => {
         assertEquals(record?.size, dataNew?.size);
         assertEquals(record?.price, dataNew?.price);
         assertEquals(record?.description, dataNew?.description);
+        await mongoose.disconnect();
+    }
+});
+
+Deno.test("List existing Property by Project", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        const found = await Property.find({project: testProjectId.toString()});
+        assertEquals(found[0].project, dataNew?.project);
         await mongoose.disconnect();
     }
 });

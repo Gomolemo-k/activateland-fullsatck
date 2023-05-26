@@ -16,6 +16,17 @@ export const list = async (ctx: RouterContext<any, any>) => {
     }
 };
 
+export const listByProject = async (ctx: RouterContext<any, any>) => {
+    try {
+        const record = await Property.find({project: ctx.params?.projectId});
+        // console.log('record: ', record)
+        ctx.response.body = record;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+    }
+};
+
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
         const record = await Property.findById(ctx.params?.id);

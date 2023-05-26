@@ -40,7 +40,7 @@ Deno.test("Get parent Property Analysis", async () => {
             await foundProject.save();
         }
         //Get property
-        const propertyTitle = "New property";
+        const propertyTitle = "New Property";
         let foundProperty = await Property.findOne({ project: foundProject._id, name: propertyTitle });
         if (!foundProperty) {
             //Create Project
@@ -55,8 +55,8 @@ Deno.test("Get parent Property Analysis", async () => {
         //Create new data record
         dataNew = {
             property: testPropertyId,
-            title: "New property analysis",
-            description: "New property analysis description.",
+            title: "New Property",
+            description: "New Property description.",
             rentalIncome: 765.35,
         };
         // console.log('dataNew: ', dataNew);

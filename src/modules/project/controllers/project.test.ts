@@ -126,8 +126,7 @@ Deno.test("GET /api/projects-user/:user", async () => {
             // console.log('GET BODY: ', res);
         
             assertEquals(res.status, 200);
-            // assertEquals(typeof res.body[0]._id, "string");
-            // assertEquals(typeof res.body[0].name, "string");
+            assertEquals(res.body[0].user, testUserId);
         } catch(error) {
             console.log('ERROR: ', error)
         }
