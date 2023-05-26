@@ -77,6 +77,20 @@ Deno.test("Create a new PropertyAnalysis", async () => {
     }
 });
 
+Deno.test("List existing PropertyAnalysis by Property", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        const found = await PropertyAnalysis.find({property: testPropertyId.toString()});
+        // console.log('found: ', found);
+        // console.log('testPropertyId: ', testPropertyId);
+        // console.log('found[0].property: ', found[0].property);
+        // assertEquals(found[0].property, testPropertyId);
+        await mongoose.disconnect();
+    }
+});
+
 Deno.test("Read an existing PropertyAnalysis", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;

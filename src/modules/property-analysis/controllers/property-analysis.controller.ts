@@ -16,6 +16,16 @@ export const list = async (ctx: RouterContext<any, any>) => {
     }
 };
 
+export const listPropertyAnalysisByProperty = async (ctx: RouterContext<any, any>) => {
+    try {
+        const record = await PropertyAnalysis.find({property: ctx.params?.propertyId});
+        ctx.response.body = record;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+    }
+};
+
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
         const record = await PropertyAnalysis.findById(ctx.params?.id);
