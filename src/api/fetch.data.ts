@@ -29,15 +29,33 @@ const getSuspender = (promise: { then: (arg0: (res: any) => void,arg1: (err: any
 
 
   
-export function fetchData(url: RequestInfo|URL, method: string = "GET", body?: any) {
-  const fetchBody = body ? body.json() : null;
+// export async function fetchData(url: RequestInfo|URL, method: string = "GET", body?: any) {
+//   const fetchBody = body ? body : null;
   
-  const promise = fetch(url, 
-    {   method: method, 
-        body: fetchBody, 
-    })
-    .then((response: { json: () => any; }) => response.json())
-    .then((json: any) => json);
+//   const promise = await fetch(url, 
+//     {   method: method, 
+//         body: fetchBody, 
+//     })
+//     .then((response: { json: () => any; }) => response.json())
+//     .then((json: any) => json);
 
-  return getSuspender(promise);
+//   return getSuspender(promise);
+// }
+
+export async function fetchData(url: RequestInfo|URL, method: string = "GET", body?: any) {
+    try {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    const result = await response.json();
+    // console.log("Success:", result);
+    return result;
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }

@@ -7,6 +7,10 @@ import { connectToDatabase } from "../../../database/db.ts";
 // const request = await superoak(app);
 let testUserId: string;
 let testUserEmail: string;
+const newUser = {
+    email: "test@user.com",
+    password: "password123"
+};
 
 Deno.test("POST /api/users", async () => {
     const mongoose = await connectToDatabase();
@@ -15,10 +19,6 @@ Deno.test("POST /api/users", async () => {
     if (mongoose && isConnected) {
         const request = await superoak(app);
         try {
-            const newUser = {
-                email: "test@user.com",
-                password: "password123"
-            };
             // let res = await request.get(`/api/user-email/${newUser.email}`);
             // console.log('POST BODY: ', res.body);
             // if (res.status === 200) {
@@ -116,6 +116,29 @@ Deno.test("GET /api/user-references/:id", async () => {
             // assertEquals(res.status, 200);
             // assertEquals(typeof res.body._id, "string");
             // assertEquals(res.body._id, testUserId);
+        } catch(error) {
+            console.log('ERROR: ', error);
+        }
+        request.delete;
+        await mongoose.disconnect();
+    }
+});
+
+Deno.test("POST /api/users/:id existing user return user", async () => {
+    const mongoose = await connectToDatabase();
+    const isConnected = mongoose.connections[0].readyState === 1;
+    assert(isConnected, "Database is connected");
+    if (mongoose && isConnected) {
+        const request = await superoak(app);
+        try {
+            const res = await request.post("/api/users").send(newUser);
+            // console.log('POST BODY: ', res.body);
+            // console.log('newUser.email', newUser.email);
+            // console.log('res.body.email', res.body.email);
+        
+            assertEquals(res.status, 201);
+            assertEquals(res.body._id, testUserId);
+            assertEquals(res.body.email, newUser.email);
         } catch(error) {
             console.log('ERROR: ', error);
         }

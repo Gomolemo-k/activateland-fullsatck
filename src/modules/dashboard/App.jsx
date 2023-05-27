@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
 import { useStateContext } from './contexts/ContextProvider';
+import { useUser } from "@clerk/clerk-react";
 import "../../assets/css/dashboard/App.css";
 
 //Routes
@@ -10,12 +11,23 @@ import ShowUserProfile from '../user-profile/components/show.jsx';
 import EditUserProfile from '../user-profile/components/edit.jsx';
 
 const App = () => {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const { setUserId, setCurrentUserId, setCurrentColor, setCurrentMode, currentUserId, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   useEffect(() => {
+    //Get userId
+    if (isLoaded && isSignedIn && user) {
+      const email = user.primaryEmailAddress.emailAddress;
+      if (email) {
+        setUserId(email);
+      }
+    }
+    //Get values
+    const currentUserId = localStorage.getItem('userId');
     const currentThemeColor = localStorage.getItem('colorMode');
     const currentThemeMode = localStorage.getItem('themeMode');
-    if (currentThemeColor && currentThemeMode) {
+    if (currentUserId && currentThemeColor && currentThemeMode) {
+      setCurrentUserId(currentUserId);
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }

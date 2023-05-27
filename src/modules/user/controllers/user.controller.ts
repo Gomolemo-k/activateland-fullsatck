@@ -58,10 +58,14 @@ export const create = async (ctx: RouterContext<any, any>) => {
         //Save new user.
         // await new User({ ...formData.fields }).save();
 
-        //Create User
-        const user = new User(reqBody);
-        await user.save();
-
+        //Find user if exist
+        let user = await User.findOne({email: reqBody.email});
+        if (!user) {
+            //Create User
+            user = new User(reqBody);
+            await user.save();
+        }
+    
         ctx.response.status = 201;
         ctx.response.body = user;
     } catch (error) {
