@@ -3,7 +3,7 @@ import { MdOutlineCancel } from 'react-icons/md';
 
 import { Button } from '.';
 import { chatData } from '../../../assets/data/dashboard/data';
-import { useStateContext } from '../contexts/ContextProvider';
+import { useStateContext } from '../../../contexts/dashboard/ContextProvider';
 
 const Notification = () => {
   const { currentColor } = useStateContext();

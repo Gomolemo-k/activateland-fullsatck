@@ -1,16 +1,16 @@
-import {UsersApiClient} from "../fetch.functions";
+import {UsersApiClient} from "../../api/fetch.functions";
 import axios from "axios";
 
-export async function getUserId(email) {
+export async function getUserId(email: string) {
   let apiUserId;
   if (email) {
     apiUserId = await handleSubmit(email, '');
   }
   return apiUserId;
 }
-// Create user after signup
 
-export async function handleSubmit(email, password) {
+// Create user after signup
+export async function handleSubmit(email: string, password: string) {
   let apiUserId = '';
   try {
     const response = await UsersApiClient.postApiUsers({
@@ -40,4 +40,13 @@ export async function handleSubmit(email, password) {
   }
   // console.log('apiUserId: ', apiUserId);
   return apiUserId;
+}
+
+//Get User including references
+export async function getUserReferences(userId: string) {
+  let userReferences;
+  if (userId) {
+    userReferences = await UsersApiClient.getUserReferences(userId);
+  }
+  return userReferences;
 }

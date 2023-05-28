@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { useStateContext } from './contexts/ContextProvider';
+import { useStateContext } from '../../contexts/dashboard/ContextProvider';
 import { useUser } from "@clerk/clerk-react";
 import "../../assets/css/dashboard/App.css";
 
@@ -11,26 +11,36 @@ import ShowUserProfile from '../user-profile/components/show.jsx';
 import EditUserProfile from '../user-profile/components/edit.jsx';
 
 const App = () => {
-  const { setUserId, setCurrentUserId, setCurrentColor, setCurrentMode, currentUserId, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const { setUserByEmail, setCurrentUser, currentUser, setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
   const { isLoaded, isSignedIn, user } = useUser();
 
   useEffect(() => {
-    //Get userId
-    if (isLoaded && isSignedIn && user) {
-      const email = user.primaryEmailAddress.emailAddress;
-      if (email) {
-        setUserId(email);
+
+    const chargeData = async () => {
+      try {
+        //Get user
+        if (isLoaded && isSignedIn && user) {
+          const email = user.primaryEmailAddress.emailAddress;
+          if (email) {
+            await setUserByEmail(email);
+          }
+        }
+
+        //Get values
+        const currentThemeColor = await localStorage.getItem('colorMode');
+        const currentThemeMode = await localStorage.getItem('themeMode');
+        if ( currentThemeColor && currentThemeMode) {
+          setCurrentColor(currentThemeColor);
+          setCurrentMode(currentThemeMode);
+        }
+      } catch (error) {
+        console.error("Error chargeData:", error);
       }
-    }
-    //Get values
-    const currentUserId = localStorage.getItem('userId');
-    const currentThemeColor = localStorage.getItem('colorMode');
-    const currentThemeMode = localStorage.getItem('themeMode');
-    if (currentUserId && currentThemeColor && currentThemeMode) {
-      setCurrentUserId(currentUserId);
-      setCurrentColor(currentThemeColor);
-      setCurrentMode(currentThemeMode);
-    }
+    };
+    
+    // Execute asyncron function
+    chargeData();
+
   }, []);
 
   return (

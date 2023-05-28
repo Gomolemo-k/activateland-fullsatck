@@ -43,13 +43,14 @@ const getSuspender = (promise: { then: (arg0: (res: any) => void,arg1: (err: any
 // }
 
 export async function fetchData(url: RequestInfo|URL, method: string = "GET", body?: any) {
-    try {
+  try {
+    const data = (method === "GET" || method === "HEAD") ? null : JSON.stringify(body);
     const response = await fetch(url, {
       method: method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: data,
     });
 
     const result = await response.json();

@@ -17,9 +17,10 @@ import { REACT_APP_CLERK_PUBLISHABLE_KEY } from "../../assets/js/user/clerk.js";
 
 import "../../assets/css/dashboard/Index.css";
 import App from './App';
-import { ContextProvider } from './contexts/ContextProvider';
+import { ContextProvider, useStateContext } from "../../contexts/dashboard/ContextProvider.jsx";
 
 const Index = () => {
+
   return (
     <>
       <div className='overflow-hidden'>

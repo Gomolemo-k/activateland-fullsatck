@@ -3,7 +3,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { BsChatLeft } from 'react-icons/bs';
 import { RiNotification3Line } from 'react-icons/ri';
 import { Chat, Notification } from '.';
-import { useStateContext } from '../contexts/ContextProvider';
+import { useStateContext } from '../../../contexts/dashboard/ContextProvider';
 import {
   SignedIn,
   SignedOut,

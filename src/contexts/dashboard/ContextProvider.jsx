@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { getUserId } from '../../../api/functions/setLocalStorageUserId';
+import { getUserId, getUserReferences } from './setLocalStorageUserId';
 
 const StateContext = createContext();
 
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const ContextProvider = ({ children }) => {
-  const [currentUserId, setCurrentUserId] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined);
   const [screenSize, setScreenSize] = useState(undefined);
   const [currentColor, setCurrentColor] = useState('#FF7235');
   const [currentMode, setCurrentMode] = useState('Light');
@@ -18,17 +18,21 @@ export const ContextProvider = ({ children }) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
-  const setUserId = async (email) => {
-    // console.log('setUserId: Start');
+  const setUserByEmail = async (email) => {
+    // console.log('setUserByEmail: Start');
     let userId;
     if (email) {
       userId = await getUserId(email);
     }
 
+    //Get User with references
+    let userReferences;
     if (userId) {
-      setCurrentUserId(userId);
       localStorage.setItem('userId', userId);
+      userReferences = await getUserReferences(userId);
     }
+
+    if (userReferences) setCurrentUser(userReferences);
   };
 
   const setMode = (e) => {
@@ -46,7 +50,10 @@ export const ContextProvider = ({ children }) => {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <StateContext.Provider value={{ setUserId, currentUserId, setCurrentUserId, currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, setColor, themeSettings, setThemeSettings }}>
+    <StateContext.Provider value={{setUserByEmail, currentUser, setCurrentUser, 
+      currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, 
+      isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, 
+      setColor, themeSettings, setThemeSettings }}>
       {children}
     </StateContext.Provider>
   );
