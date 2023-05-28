@@ -14,30 +14,29 @@ const App = () => {
   const { setUserByEmail, setCurrentUser, currentUser, setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
   const { isLoaded, isSignedIn, user } = useUser();
 
-  useEffect(() => {
-
-    const chargeData = async () => {
-      try {
-        //Get user
-        if (isLoaded && isSignedIn && user) {
-          const email = user.primaryEmailAddress.emailAddress;
-          if (email) {
-            await setUserByEmail(email);
-          }
+  const chargeData = async () => {
+    try {
+      //Get user
+      if (isLoaded && isSignedIn && user) {
+        const email = user.primaryEmailAddress.emailAddress;
+        if (email) {
+          await setUserByEmail(email);
         }
-
-        //Get values
-        const currentThemeColor = await localStorage.getItem('colorMode');
-        const currentThemeMode = await localStorage.getItem('themeMode');
-        if ( currentThemeColor && currentThemeMode) {
-          setCurrentColor(currentThemeColor);
-          setCurrentMode(currentThemeMode);
-        }
-      } catch (error) {
-        console.error("Error chargeData:", error);
       }
-    };
-    
+
+      //Get values
+      const currentThemeColor = await localStorage.getItem('colorMode');
+      const currentThemeMode = await localStorage.getItem('themeMode');
+      if ( currentThemeColor && currentThemeMode) {
+        setCurrentColor(currentThemeColor);
+        setCurrentMode(currentThemeMode);
+      }
+    } catch (error) {
+      console.error("Error chargeData:", error);
+    }
+  };
+
+  useEffect(() => {
     // Execute asyncron function
     chargeData();
 
@@ -91,13 +90,8 @@ const App = () => {
                 <Route path="/dashboard" element={(<Navigate to='/dashboard' />)} />
 
                 {/* user  */}
-                <Route path="/users/show" element={(<ShowUserProfile />)} />
-                <Route path="/users/edit" element={(<EditUserProfile />)} />
-
-                {/* apps  */}
-                {/* <Route path="/kanban" element={<Kanban />} />
-                <Route path="/editor" element={<Editor />} />
-                <Route path="/calendar" element={<Calendar />} /> */}
+                <Route path="/users/show" element={currentUser && (<ShowUserProfile currentUser={currentUser} />)} />
+                <Route path="/users/edit" element={currentUser && (<EditUserProfile currentUser={currentUser} />)} />
 
               </Routes>
             </div>

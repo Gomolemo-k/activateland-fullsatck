@@ -1,8 +1,8 @@
 import FormUserProfile from "./form.jsx";
 
-function ShowUserProfile() {
+function ShowUserProfile(currentUser) {
     return (
-        <FormUserProfile disabled={true} />
+        <FormUserProfile disabled={true} currentUser={currentUser} />
     );
 }
 

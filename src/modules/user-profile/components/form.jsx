@@ -4,63 +4,41 @@ import { Link } from 'react-router-dom'
 import { UsersApiClient, UserProfilesApiClient } from "../../../api/fetch.functions.ts"
 import { useStateContext } from "../../../contexts/dashboard/ContextProvider.jsx"
 
-const FormUserProfile = ({disabled}) => {
-    const { setUserByEmail, setCurrentUser, currentUser } = useStateContext();
-    console.log('currentUser: ', currentUser);
 
+const FormUserProfile = ({disabled, currentUser}) => {
+    const { setUserByEmail, setCurrentUser } = useStateContext();
     const [userProfile, setUserProfile] = useState(undefined)
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [bio, setBio] = useState('')
     const [isPending, setIsPending] = useState(false)
-    
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-    //             // Get User Profile from API
-    //             const idUser = user._id;
-    //             const user = await UsersApiClient.getUserReferences(idUser);
-    //             // const apiUser = await fetch(`http://localhost:3001/api/users/${idUser}`);
-    //             console.log('user :', user)
-    //             // Get User Profile from API
-    //             let userProfileApi;
-    //             if (user) {
-    //                 userProfileApi = getUserProfile(user);
-    //             }
-    //             setUserProfile(userProfileApi);
-    //             console.log('user: ', user)
-    //             console.log('userProfile: ', userProfile)
-    //         } catch (error) {
-    //             console.log("Error charging data:", error);
-    //         }
-    //     }
-    //     fetchData().catch(console.error);
-    // }, []);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-                // Update currentUser in React State
-                if (currentUser?.email) {
-                    await setCurrentUser(currentUser?.email)
-                }
-                // Get User Profile from currentUser
-                let userProfileApi;
-                if (currentUser) {
-                    userProfileApi = getUserProfile(currentUser);
-                }
-                setUserProfile(userProfileApi);
-                console.log('currentUser: ', currentUser)
-                console.log('userProfile: ', userProfile)
-            } catch (error) {
-                console.log("Error charging data:", error);
-            }
-        }
-        fetchData().catch(console.error);
+        setTimeout(() => {
+            const idUser = currentUser.currentUser[0]._id;
+            fetchData(idUser).catch(console.error);
+        }, 2000);
     }, []);
 
+    const fetchData = async (idUser) => {
+        let userProfileApi;
+        try {
+            console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+            // Get User Profile from API
+            const user = await UsersApiClient.getUserReferences(idUser);
+            console.log('currentUser 2:', user)
+            // Get User Profile from API
+            if (user) {
+                userProfileApi = getUserProfile(user);
+            }
+            setUserProfile(userProfileApi);
+            console.log('currentUser 3: ', user)
+            console.log('userProfile: ', userProfile)
+        } catch (error) {
+            console.log("Error charging data:", error);
+        }
+        return userProfileApi;
+    }
     
     function getUserProfile(user) {
         let profile = {
@@ -102,6 +80,7 @@ const FormUserProfile = ({disabled}) => {
     // }
 
     // After charging data
+    // console.log('currentUser FormUserProfile: ', currentUser);
     return (
         <div className="flex flex-col w-full p-10 space-y-4 bg-white rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-800">
             <form onSubmit={handleSubmitUserProfile}>
@@ -125,7 +104,7 @@ const FormUserProfile = ({disabled}) => {
                                                 id="email"
                                                 autoComplete="email"
                                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                                placeholder={currentUser?.email} />
+                                                placeholder={currentUser.currentUser[0].email} />
                                         </div>
                                     </div>
                                 </div>
