@@ -1,77 +1,102 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { Link } from 'react-router-dom'
-import { UsersApiClient, UserProfilesApiClient } from "../../../api/fetch.functions.ts"
-import { useStateContext } from "../../../contexts/dashboard/ContextProvider.jsx"
+import { Link, useNavigate } from 'react-router-dom'
+import { UsersApiClient, UserProfilesApiClient } from "../../../api/fetch.functions"
+import { useStateContext } from "../../../contexts/dashboard/ContextProvider"
 
 
 const FormUserProfile = ({disabled, currentUser}) => {
+    const queryParameters = new URLSearchParams(window.location.search)
+
     const { setUserByEmail, setCurrentUser } = useStateContext();
-    const [userProfile, setUserProfile] = useState(undefined)
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [bio, setBio] = useState('')
+    // const [userProfile, setUserProfile] = useState(undefined)
+    const [firstName, setFirstName] = useState(queryParameters.get("firstName") || '')
+    const [lastName, setLastName] = useState(queryParameters.get("lastName") || '')
+    const [bio, setBio] = useState(queryParameters.get("bio") || '')
     const [isPending, setIsPending] = useState(false)
 
+    const navigate = useNavigate();
+    const user = currentUser?.currentUser[0];
+    let userApi = user;
+    let userProfile = user.userProfile;
+    console.log('const user: ', user)
+    console.log('let userProfile: ', userProfile)
+
     useEffect(() => {
-        setTimeout(() => {
-            const idUser = currentUser.currentUser[0]._id;
-            fetchData(idUser).catch(console.error);
-        }, 2000);
+        fetchData().catch(console.error);
     }, []);
 
-    const fetchData = async (idUser) => {
-        let userProfileApi;
+    const fetchData = async () => {
         try {
-            console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
             // Get User Profile from API
-            const user = await UsersApiClient.getUserReferences(idUser);
-            console.log('currentUser 2:', user)
+            userApi = await UsersApiClient.getUserReferences(userApi._id);
             // Get User Profile from API
-            if (user) {
-                userProfileApi = getUserProfile(user);
+            if (userApi) {
+                userProfile = getUserProfile(userApi);
             }
-            setUserProfile(userProfileApi);
-            console.log('currentUser 3: ', user)
-            console.log('userProfile: ', userProfile)
+            console.log('userProfile fetch: ', userProfile)
+            if (userProfile._id) {
+                //Update form values
+                setFirstName(userProfile.firstName)
+                setLastName(userProfile.lastName)
+                setBio(userProfile.bio)
+            }
+            
         } catch (error) {
-            console.log("Error charging data:", error);
+            console.log("Error charging data: ", error);
         }
-        return userProfileApi;
+        return userProfile;
     }
     
-    function getUserProfile(user) {
+    function getUserProfile(userApi) {
         let profile = {
-            user: user._id,
+            user: userApi._id,
             firstName: firstName,
             lastName: lastName,
             bio: bio
         }
-        if (user?.userProfile) {
-            profile = user.userProfile; 
+        if (userApi?.userProfile) {
+            profile = userApi.userProfile; 
         }
         return profile;
     }
 
-    async function handleSubmitUserProfile(e) {
-        e.proeventDefault();
-        setIsPending(true);
-        const userProfileData = {
-            user: user._id,
-            firstName: firstName,
-            lastName: lastName,
-            bio: bio
+    async function handleSubmitUserProfile(event) {
+        try {
+            console.log('userProfile handle: ', userProfile)
+            // event?.proeventDefault();
+            setIsPending(true);
+            const userProfileData = {
+                user: user._id,
+                firstName: firstName,
+                lastName: lastName,
+                bio: bio
+            }
+            let userProfileSaved;
+            if (userProfile?._id) {
+                // Update existing User Profile
+                console.log('putApiUserProfiles');
+                userProfileSaved = await UserProfilesApiClient.putApiUserProfiles(userProfile._id, userProfileData);
+            } else {
+                //Create new User Profile
+                console.log('postApiUserProfiles');
+                userProfileSaved = await UserProfilesApiClient.postApiUserProfiles(userProfileData);
+            }
+            console.log('userProfileSaved 1:', userProfileSaved)
+            if (userProfileSaved?._id) {
+                setUserProfile(userProfileSaved);
+            }
+            setTimeout(() => {
+                console.log('userProfileSaved 2:', userProfileSaved)
+              }, 200000);
+            console.log('userProfileSaved 3:', userProfileSaved)
+    
+            navigate("/users/show");
+        } catch (error) {
+            console.error("Error saving: ", error);
+        } finally {
+            setIsPending(false);
         }
-        
-        if (userProfile?._id) {
-            // Update existing User Profile
-            const userProfileUpdated = await UserProfilesApiClient.putApiUserProfiles(userProfile._id, userProfileData);
-        } else {
-            //Create new User Profile
-            const userProfileCreated = await UserProfilesApiClient.postApiUserProfiles(userProfileData);
-        }
-
-        setIsPending(false);
     }
 
     // Before charging data
@@ -104,7 +129,7 @@ const FormUserProfile = ({disabled, currentUser}) => {
                                                 id="email"
                                                 autoComplete="email"
                                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                                placeholder={currentUser.currentUser[0].email} />
+                                                placeholder={user.email} />
                                         </div>
                                     </div>
                                 </div>
@@ -122,14 +147,15 @@ const FormUserProfile = ({disabled, currentUser}) => {
                                                 id="firstName"
                                                 autoComplete="firstName"
                                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                                placeholder={userProfile?.firstName} />
+                                                value={firstName} 
+                                                onChange={(e) => setFirstName(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="sm:col-span-4">
                                     <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
-                                        First Name
+                                        Last Name
                                     </label>
                                     <div className="mt-2">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -140,7 +166,8 @@ const FormUserProfile = ({disabled, currentUser}) => {
                                                 id="lastName"
                                                 autoComplete="lastName"
                                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                                placeholder={userProfile?.lastName} />
+                                                value={lastName} 
+                                                onChange={(e) => setLastName(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +182,8 @@ const FormUserProfile = ({disabled, currentUser}) => {
                                             name="bio"
                                             rows={3}
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            defaultValue={userProfile?.bio} />
+                                            value={bio} 
+                                            onChange={(e) => setBio(e.target.value)} />
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
                                 </div>

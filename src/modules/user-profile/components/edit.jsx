@@ -1,8 +1,8 @@
-import FormUserProfile from "./form.jsx";
+import FormUserProfile from "./edit.form.jsx";
 
-function EditUserProfile() {
+function EditUserProfile(currentUser) {
     return (
-        <FormUserProfile disabled={false} />
+        <FormUserProfile disabled={false} currentUser={currentUser} />
     );
 }
 

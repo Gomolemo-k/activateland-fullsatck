@@ -1,4 +1,4 @@
-import FormUserProfile from "./form.jsx";
+import FormUserProfile from "./show.form.jsx";
 
 function ShowUserProfile(currentUser) {
     return (
