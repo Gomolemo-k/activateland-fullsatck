@@ -1,12 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import i18next, { t } from "i18next";
 import { Trans, HeadHrefLangs } from "astro-i18next/components";
-import Index from "../../modules/dashboard/index"
+import Index from "../../modules/dashboard/Index"
 ---
 
-<Layout title={t("site.title")}>
+<DashboardLayout title={t("site.title")}>
 	<main>
 		<Index client:only="react" />
 	</main>
-</Layout>
+</DashboardLayout>
