@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { Link, useNavigate } from 'react-router-dom'
-import { UsersApiClient, UserProfilesApiClient } from "../../../api/fetch.functions"
-import { useStateContext } from "../../../contexts/dashboard/ContextProvider"
+import { UsersApiClient, UserProfilesApiClient } from "../../../../api/fetch.functions"
+import { useStateContext } from "../../../../contexts/dashboard/ContextProvider"
 
 
-const ShowFormProject = ({disabled, currentUser}) => {
+const EditFormProject = ({disabled, currentUser}) => {
     const queryParameters = new URLSearchParams(window.location.search)
 
     const { setUserByEmail, setCurrentUser } = useStateContext();
@@ -19,8 +19,7 @@ const ShowFormProject = ({disabled, currentUser}) => {
     const user = currentUser?.currentUser[0];
     let userApi = user;
     let userProfile = user.userProfile;
-    console.log('const user: ', user)
-    console.log('let userProfile: ', userProfile)
+    console.log('userProfile: ', userProfile)
 
     useEffect(() => {
         fetchData().catch(console.error);
@@ -209,4 +208,4 @@ const ShowFormProject = ({disabled, currentUser}) => {
     )
 }
 
-export default ShowFormProject;
+export default EditFormProject;

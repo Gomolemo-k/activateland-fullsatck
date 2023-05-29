@@ -76,20 +76,14 @@ const FormUserProfile = ({disabled, currentUser}) => {
             if (userProfile?._id) {
                 // Update existing User Profile
                 console.log('putApiUserProfiles');
-                userProfileSaved = await UserProfilesApiClient.putApiUserProfiles(userProfile._id, userProfileData);
+                // userProfileSaved = await UserProfilesApiClient.putApiUserProfiles(userProfile._id, userProfileData);
             } else {
                 //Create new User Profile
                 console.log('postApiUserProfiles');
-                userProfileSaved = await UserProfilesApiClient.postApiUserProfiles(userProfileData);
+                // userProfileSaved = await UserProfilesApiClient.postApiUserProfiles(userProfileData);
             }
             console.log('userProfileSaved 1:', userProfileSaved)
-            if (userProfileSaved?._id) {
-                setUserProfile(userProfileSaved);
-            }
-            setTimeout(() => {
-                console.log('userProfileSaved 2:', userProfileSaved)
-              }, 200000);
-            console.log('userProfileSaved 3:', userProfileSaved)
+            setUserProfile(userProfileSaved);
     
             navigate("/users/show");
         } catch (error) {

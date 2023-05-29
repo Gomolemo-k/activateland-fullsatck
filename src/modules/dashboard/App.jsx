@@ -10,9 +10,10 @@ import "../../assets/css/dashboard/App.css";
 import ShowUserProfile from '../user-profile/components/show.jsx';
 import EditUserProfile from '../user-profile/components/edit.jsx';
 //Routes project
-import IndexProject from '../project/components/index.jsx';
-import ShowProject from '../project/components/show.jsx';
-import EditProject from '../project/components/edit.jsx';
+import IndexProject from '../project/components/index/index';
+import NewProject from '../project/components/new/new';
+import ShowProject from '../project/components/show/show';
+import EditProject from '../project/components/edit/edit';
 //Routes team
 import IndexTeam from '../team/components/index.jsx';
 import ShowTeam from '../team/components/show.jsx';
@@ -115,6 +116,7 @@ const App = () => {
 
                 {/* projects  */}
                 <Route path="/projects/index" element={currentUser && (<IndexProject currentUser={currentUser} />)} />
+                <Route path="/projects/new" element={currentUser && (<NewProject currentUser={currentUser} />)} />
                 <Route path="/projects/show" element={currentUser && (<ShowProject currentUser={currentUser} />)} />
                 <Route path="/projects/edit" element={currentUser && (<EditProject currentUser={currentUser} />)} />
 

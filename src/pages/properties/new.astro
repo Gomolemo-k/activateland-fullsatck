@@ -1,0 +1,12 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import i18next, { t } from "i18next";
+import { Trans, HeadHrefLangs } from "astro-i18next/components";
+import Index from "../../modules/dashboard/Index"
+---
+
+<DashboardLayout title={t("site.title")}>
+	<main>
+		<Index client:only="react" />
+	</main>
+</DashboardLayout>

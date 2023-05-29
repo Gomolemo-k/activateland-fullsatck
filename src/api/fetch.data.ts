@@ -54,7 +54,7 @@ export async function fetchData(url: RequestInfo|URL, method: string = "GET", bo
     });
 
     const result = await response.json();
-    // console.log("Success:", result);
+    console.log("result:", result);
     return result;
   } catch (error) {
     console.error("Error:", error);

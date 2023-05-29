@@ -135,28 +135,20 @@ export const getUserReferences = async (ctx: RouterContext<any, any>) => {
                         model: 'TeamMembers',
                     }
                 }
-                populate: {
-                    path: 'properties',
-                    model: 'Property',
-                    populate: {
-                       path: 'propertyAnalysis',
-                       model: 'PropertyAnalysis'
-                  }
-               }
             })
-        // .populate(
-        //     {
-        //         path: 'projects', 
-        //         model: 'Project',
-        //         populate: {
-        //              path: 'properties',
-        //              model: 'Property',
-        //              populate: {
-        //                 path: 'propertyAnalysis',
-        //                 model: 'PropertyAnalysis'
-        //            }
-        //         }
-        //     });
+        .populate(
+            {
+                path: 'projects', 
+                model: 'Project',
+                populate: {
+                     path: 'properties',
+                     model: 'Property',
+                     populate: {
+                        path: 'propertyAnalysis',
+                        model: 'PropertyAnalysis'
+                   }
+                }
+            });
         // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%getUserReferences: ', user)
         if (!user) {
             ctx.response.status = 404;
