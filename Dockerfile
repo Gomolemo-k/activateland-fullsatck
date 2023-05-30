@@ -1,20 +1,49 @@
 # Imatge base
-FROM node:14
+FROM ubuntu:22.04
 
-# Instal·la Astro
+# Install Ubuntu dependencies
+RUN apt-get update && apt-get install -y curl && apt-get install -y curl unzip
+
+# Expose ports
+EXPOSE 3000
+EXPOSE 3001
+EXPOSE 8080
+
+# Install Node.js and NPM
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+
+# Astro global install
 RUN npm install -g astro@2.3.3
 
-# Estableix el directori de treball
+# Deno install
+RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+
+# Set DENO_INSTALL and add to PATH
+ENV DENO_INSTALL="/root/.deno"
+ENV PATH="$DENO_INSTALL/bin:$PATH"
+
+# Check versions
+RUN node --version
+RUN npm --version
+RUN astro --version
+RUN deno --version
+
+# Go to working directory of the Docker container
 WORKDIR /app
 
-# Copia el fitxer package.json i package-lock.json al contenidor
-COPY package*.json ./
-
-# Instal·la les dependències del projecte
-RUN npm install
-
-# Copia els fitxers del projecte al contenidor
+# Copy files of the project to the container
 COPY . .
 
-# Inicia Astro
-CMD ["astro", "dev"]
+# Copy files of the project to the container
+COPY .env.example .env
+
+# Install aplication Node dependencies
+RUN npm install
+
+# Install aplication Deno dependencies
+RUN rm -rf /app/node_modules/.deno/*
+RUN ["deno", "task", "dev:cache"]
+
+# Start Deno Backend && Astro Frontend
+CMD ["deno", "task", "dev:api", "tail", "-f"]

@@ -8,6 +8,6 @@
         "dev:api": "deno run --allow-net --allow-read --allow-env --allow-sys ./src/api/api.service.ts",
         "dev:test": "DENO_ENV=test deno test --allow-net --allow-read --allow-env --allow-sys",
         "dev:cache": "deno cache -r ./deps.ts",
-        "dev": "deno task dev:cache & deno task dev:astro & deno task dev:api &"
+        "dev": "deno task dev:api & deno task dev:astro &"
     }
 }
