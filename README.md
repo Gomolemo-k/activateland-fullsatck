@@ -1,12 +1,13 @@
-# Astro Starter Kit: Basics
+# Activate Land Project Starter Kit: Basics
 
 ```
-npm create astro@latest -- --template basics
-```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+```
+### Dependencies
+node
+npm
+astro
+deno
 
 > 🧑‍🚀 **Seasoned astronaut?** Follow this steps in your Ubuntu... Have fun!
 # Exposed ports
@@ -15,49 +16,49 @@ Astro API: 3001
 Deno SSR:  8080
 MongoDB:   27017
 
-# Operative Sistem
+### Operative Sistem
 S.O.: ubuntu:22.04
 
-# Install Ubuntu dependencies
+### Install Ubuntu dependencies
 $ apt-get update && apt-get install -y curl && apt-get install -y curl unzip
 
-# Install Node.js and NPM
+### Install Node.js and NPM
 $ curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 $ apt-get install -y nodejs
 
 # Astro global install
 $ npm install -g astro@2.3.3
 
-# Deno install
+### Deno install
 $ curl -fsSL https://deno.land/x/install/install.sh | sh
 
-# Set DENO_INSTALL and add to PATH (.bashrc)
+### Set DENO_INSTALL and add to PATH (.bashrc)
 DENO_INSTALL="/root/.deno"
 PATH="$DENO_INSTALL/bin:$PATH"
 
-# Check versions
+### Check versions
 $ node --version
 $ npm --version
 $ astro --version
 $ deno --version
 
-# Go to working directory of the project
+### Go to working directory of the project
 $ cd ../activateland-fullstack
 
-# Copy required files of the project and
+### Copy required files of the project and
 $ cp .env.example .env
 
-# Install aplication Node dependencies
+### Install aplication Node dependencies
 $ npm install
 
-# Install aplication Deno dependencies
+### Install aplication Deno dependencies
 $ rm -rf /app/node_modules/.deno/*
 $ deno task dev:cache
 
-# Start Deno Backend && Astro Frontend
+### Start Deno Backend && Astro Frontend
 $ deno task dev
 
-# Is working!! Open browser and navigate to...
+### Is working!! Open browser and navigate to...
 http://localhost:3000
 
 
