@@ -20,9 +20,9 @@ Deno SSR:  8080
 MongoDB:   27017
 ```
 
-### Operative Sistem
+### OS
 ```
-S.O.: ubuntu:22.04
+ubuntu:22.04
 ```
 
 ### Install Ubuntu dependencies
@@ -78,6 +78,11 @@ $ npm install
 ```
 $ rm -rf /app/node_modules/.deno/*
 $ deno task dev:cache
+```
+
+### Start MongoDB Docker container
+```
+$ docker-compose up
 ```
 
 ### Start Deno Backend && Astro Frontend
@@ -198,12 +203,6 @@ Inside of Activate Land project, you'll see the following folders and files:
 └── ...
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
 ## 🧞 Development Commands
 
 All commands are run from the root of the project, from a terminal:
@@ -251,7 +250,7 @@ Custom commands (see file deno.json) are run from the root of the project, from 
 | `dockerd`                                                    | Docker Deamon Init                        |
 | :----------------------------------------------------------- | :---------------------------------------- |
 
-### Docker restore services process (caution)
+### Docker restore services process (caution!!)
 ```
 docker-compose down
 docker stop $(docker ps -a -q)
