@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y curl && apt-get install -y curl unzip
 EXPOSE 3000
 EXPOSE 3001
 EXPOSE 8080
+EXPOSE 22
 
 # Install Node.js and NPM
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
@@ -19,7 +20,7 @@ RUN npm install -g astro@2.3.3
 # Deno install
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
-# Set DENO_INSTALL and add to PATH
+# Set DENO_INSTALL and add to PATH (.bashrc)
 ENV DENO_INSTALL="/root/.deno"
 ENV PATH="$DENO_INSTALL/bin:$PATH"
 
@@ -46,4 +47,4 @@ RUN rm -rf /app/node_modules/.deno/*
 RUN ["deno", "task", "dev:cache"]
 
 # Start Deno Backend && Astro Frontend
-CMD ["deno", "task", "dev:api", "tail", "-f"]
+CMD ["deno", "task", "dev"]
