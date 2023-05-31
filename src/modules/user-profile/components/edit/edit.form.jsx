@@ -5,7 +5,7 @@ import { UsersApiClient, UserProfilesApiClient } from "../../../../api/fetch.fun
 import { useStateContext } from "../../../../contexts/dashboard/ContextProvider"
 
 
-const EditFormProject = ({disabled, currentUser}) => {
+const FormUserProfile = ({disabled, currentUser}) => {
     const queryParameters = new URLSearchParams(window.location.search)
 
     const { setUserByEmail, setCurrentUser } = useStateContext();
@@ -75,20 +75,14 @@ const EditFormProject = ({disabled, currentUser}) => {
             if (userProfile?._id) {
                 // Update existing User Profile
                 console.log('putApiUserProfiles');
-                userProfileSaved = await UserProfilesApiClient.putApiUserProfiles(userProfile._id, userProfileData);
+                // userProfileSaved = await UserProfilesApiClient.putApiUserProfiles(userProfile._id, userProfileData);
             } else {
                 //Create new User Profile
                 console.log('postApiUserProfiles');
-                userProfileSaved = await UserProfilesApiClient.postApiUserProfiles(userProfileData);
+                // userProfileSaved = await UserProfilesApiClient.postApiUserProfiles(userProfileData);
             }
             console.log('userProfileSaved 1:', userProfileSaved)
-            if (userProfileSaved?._id) {
-                setUserProfile(userProfileSaved);
-            }
-            setTimeout(() => {
-                console.log('userProfileSaved 2:', userProfileSaved)
-              }, 200000);
-            console.log('userProfileSaved 3:', userProfileSaved)
+            setUserProfile(userProfileSaved);
     
             navigate("/users/show");
         } catch (error) {
@@ -208,4 +202,4 @@ const EditFormProject = ({disabled, currentUser}) => {
     )
 }
 
-export default EditFormProject;
+export default FormUserProfile;

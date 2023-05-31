@@ -3,7 +3,7 @@
 function EditTeam(currentUser) {
     return (
         <div></div>
-        // <EditFormProperty disabled={false} currentUser={currentUser} />
+        // <EditFormTeam disabled={false} currentUser={currentUser} />
     );
 }
 

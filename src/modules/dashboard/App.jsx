@@ -7,29 +7,33 @@ import { useUser } from "@clerk/clerk-react";
 import "../../assets/css/dashboard/App.css";
 
 //Routes user profile
-import ShowUserProfile from '../user-profile/components/show.jsx';
-import EditUserProfile from '../user-profile/components/edit.jsx';
+import ShowUserProfile from '../user-profile/components/show/show';
+import EditUserProfile from '../user-profile/components/edit/edit';
 //Routes project
 import IndexProject from '../project/components/index/index';
 import NewProject from '../project/components/new/new';
 import ShowProject from '../project/components/show/show';
 import EditProject from '../project/components/edit/edit';
 //Routes team
-import IndexTeam from '../team/components/index.jsx';
-import ShowTeam from '../team/components/show.jsx';
-import EditTeam from '../team/components/edit.jsx';
+import IndexTeam from '../team/components/index/index';
+import NewTeam from '../team/components/new/new';
+import ShowTeam from '../team/components/show/show';
+import EditTeam from '../team/components/edit/edit';
 //Routes team member
-import IndexTeamMember from '../team-member/components/index.jsx';
-import ShowTeamMember from '../team-member/components/show.jsx';
-import EditTeamMember from '../team-member/components/edit.jsx';
+import IndexTeamMember from '../team-member/components/index/index';
+import NewTeamMember from '../team-member/components/new/new';
+import ShowTeamMember from '../team-member/components/show/show';
+import EditTeamMember from '../team-member/components/edit/edit';
 //Routes property
-import IndexProperty from '../property/components/index.jsx';
-import ShowProperty from '../property/components/show.jsx';
-import EditProperty from '../property/components/edit.jsx';
+import IndexProperty from '../property/components/index/index';
+import NewProperty from '../property/components/new/new';
+import ShowProperty from '../property/components/show/show';
+import EditProperty from '../property/components/edit/edit';
 //Routes property-analysis
-import IndexPropertyAnalysis from '../property-analysis/components/index.jsx';
-import ShowPropertyAnalysis from '../property-analysis/components/show.jsx';
-import EditPropertyAnalysis from '../property-analysis/components/edit.jsx';
+import IndexPropertyAnalysis from '../property-analysis/components/index/index';
+import NewPropertyAnalysis from '../property-analysis/components/new/new';
+import ShowPropertyAnalysis from '../property-analysis/components/show/show';
+import EditPropertyAnalysis from '../property-analysis/components/edit/edit';
 
 const App = () => {
   const { setUserByEmail, setCurrentUser, currentUser, setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
@@ -122,21 +126,25 @@ const App = () => {
 
                 {/* teams  */}
                 <Route path="/teams/index" element={currentUser && (<IndexTeam currentUser={currentUser} />)} />
+                <Route path="/teams/new" element={currentUser && (<NewTeam currentUser={currentUser} />)} />
                 <Route path="/teams/show" element={currentUser && (<ShowTeam currentUser={currentUser} />)} />
                 <Route path="/teams/edit" element={currentUser && (<EditTeam currentUser={currentUser} />)} />
 
                 {/* team-members  */}
                 <Route path="/team-members/index" element={currentUser && (<IndexTeamMember currentUser={currentUser} />)} />
+                <Route path="/team-members/new" element={currentUser && (<NewTeamMember currentUser={currentUser} />)} />
                 <Route path="/team-members/show" element={currentUser && (<ShowTeamMember currentUser={currentUser} />)} />
                 <Route path="/team-members/edit" element={currentUser && (<EditTeamMember currentUser={currentUser} />)} />
 
                 {/* properties  */}
                 <Route path="/properties/index" element={currentUser && (<IndexProperty currentUser={currentUser} />)} />
+                <Route path="/properties/new" element={currentUser && (<NewProperty currentUser={currentUser} />)} />
                 <Route path="/properties/show" element={currentUser && (<ShowProperty currentUser={currentUser} />)} />
                 <Route path="/properties/edit" element={currentUser && (<EditProperty currentUser={currentUser} />)} />
 
                 {/* property-analysis  */}
                 <Route path="/property-analysis/index" element={currentUser && (<IndexPropertyAnalysis currentUser={currentUser} />)} />
+                <Route path="/property-analysis/new" element={currentUser && (<NewPropertyAnalysis currentUser={currentUser} />)} />
                 <Route path="/property-analysis/show" element={currentUser && (<ShowPropertyAnalysis currentUser={currentUser} />)} />
                 <Route path="/property-analysis/edit" element={currentUser && (<EditPropertyAnalysis currentUser={currentUser} />)} />
 

@@ -1,8 +1,9 @@
-import EditFormProject from "./edit.form.jsx";
+// import EditFormProject from "./edit.form.jsx";
 
 function EditProject(currentUser) {
     return (
-        <EditFormProject disabled={false} currentUser={currentUser} />
+        <div></div>
+        // <EditFormProject disabled={false} currentUser={currentUser} />
     );
 }
 

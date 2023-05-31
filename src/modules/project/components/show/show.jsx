@@ -1,8 +1,9 @@
-import ShowFormProject from "./show.form.jsx";
+// import ShowFormProject from "./show.form.jsx";
 
 function ShowProject(currentUser) {
     return (
-        <ShowFormProject disabled={true} currentUser={currentUser} />
+        <div></div>
+        // <ShowFormProject disabled={true} currentUser={currentUser} />
     );
 }
 
