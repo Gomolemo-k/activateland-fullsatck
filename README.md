@@ -1,65 +1,94 @@
-# Activate Land Project Starter Kit: Basics
+# Activate Land Project: Starter Kit Basics
 
 ```
-
+Experimental project for the use of different web development technologies, such as: Astro, Deno, React...
 ```
 ### Dependencies
+```
 node
 npm
 astro
 deno
+```
 
 > 🧑‍🚀 **Seasoned astronaut?** Follow this steps in your Ubuntu... Have fun!
-# Exposed ports
+###Exposed ports
+```
 Astro WEB: 3000
 Astro API: 3001
 Deno SSR:  8080
 MongoDB:   27017
+```
 
 ### Operative Sistem
+```
 S.O.: ubuntu:22.04
+```
 
 ### Install Ubuntu dependencies
+```
 $ apt-get update && apt-get install -y curl && apt-get install -y curl unzip
+```
 
 ### Install Node.js and NPM
+```
 $ curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 $ apt-get install -y nodejs
+```
 
 # Astro global install
+```
 $ npm install -g astro@2.3.3
+```
 
 ### Deno install
+```
 $ curl -fsSL https://deno.land/x/install/install.sh | sh
+```
 
 ### Set DENO_INSTALL and add to PATH (.bashrc)
+```
 DENO_INSTALL="/root/.deno"
 PATH="$DENO_INSTALL/bin:$PATH"
+```
 
 ### Check versions
+```
 $ node --version
 $ npm --version
 $ astro --version
 $ deno --version
+```
 
 ### Go to working directory of the project
+```
 $ cd ../activateland-fullstack
+```
 
 ### Copy required files of the project and
+```
 $ cp .env.example .env
+```
 
 ### Install aplication Node dependencies
+```
 $ npm install
-
+```
 ### Install aplication Deno dependencies
+```
 $ rm -rf /app/node_modules/.deno/*
 $ deno task dev:cache
+```
 
 ### Start Deno Backend && Astro Frontend
+```
 $ deno task dev
+```
 
 ### Is working!! Open browser and navigate to...
+```
 http://localhost:3000
+```
 
 
 ## 🚀 Project Structure
@@ -222,6 +251,8 @@ Custom commands (see file deno.json) are run from the root of the project, from 
 | `dockerd`                                                    | Docker Deamon Init                        |
 | :----------------------------------------------------------- | :---------------------------------------- |
 
+### Docker restore services process (caution)
+```
 docker-compose down
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
@@ -229,3 +260,4 @@ docker rmi $(docker images -q)
 docker volume rm $(docker volume ls -q)
 docker-compose build --no-cache
 docker-compose up
+```
