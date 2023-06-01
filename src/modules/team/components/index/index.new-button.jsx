@@ -27,20 +27,10 @@ const IndexNewButton = (currentUser) => {
                             </div>
                             <span> Trending</span>
                         </li>
-                        {/* <li className="flex items-center mt-4 md:mt-0">
-                            <div className="mr-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-plane-departure" width={16} height={16} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" />
-                                    <path d="M15 12h5a2 2 0 0 1 0 4h-15l-3 -6h3l2 2h3l-2 -7h3z" transform="rotate(-15 12 12) translate(0 -1)" />
-                                    <line x1={3} y1={21} x2={21} y2={21} />
-                                </svg>
-                            </div>
-                            <span>Started on 29 Jan 2020</span>
-                        </li> */}
                     </ul>
                 </div>
                 <div className="mt-6 md:mt-0">
-                    {/* <Link to="/teams/new" type="button" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">New</Link> */}
+                    <Link to="#" type="button" className="rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">New</Link>
                 </div>
             </div>
         </div>

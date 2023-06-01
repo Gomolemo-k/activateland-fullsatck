@@ -27,40 +27,29 @@ const IndexTableProperty = ({currentUser}) => {
                             header: 'Type',
                         },
                         {
-                            accessorKey: 'bedrooms',
-                            header: 'Bedrooms',
-                        },
-                        {
-                            accessorKey: 'bathrooms',
-                            header: 'Bathrooms',
-                        },
-                        {
                             accessorKey: 'size',
                             header: 'Size',
-                        },
-                        {
-                            accessorKey: 'price',
-                            header: 'Price',
                         },
                     ];
 
     // const { userPropertyes, setUserProperties } = useStateContext();
     let $userProperties = useStore(userProperties);
-    console.log('START $userProperties IndexTableProperty: ', userProperties);
+    console.log('START $userProperties IndexTableProperty: ', $userProperties);
 
     const fetchData = async () => {
         try {
-            console.log('currentUser IndexTableProperty: ', userProperties);
-            let properties = currentUser.currentUser[0].properties;
+            console.log('currentUser IndexTableProperty: ', $userProperties);
+            // let properties = currentUser.currentUser[0].projects[0].properties;
+            let properties = [];
             // console.log('projects IndexProject 0: ', projects);
             let userApi = await UsersApiClient.getUserReferences(currentUser.currentUser[0]._id);
             if (userApi) {
                 // console.log('userApi IndexTableProperty: ', userApi);
-                properties = userApi[0].properties;
+                // properties = userApi[0].properties;
             }
             // setUserProjects(projects);
-            userProjects.set(properties);
-            console.log('UPDATE $userProperties IndexTableProperty: ', userProperties);
+            // userProjects.set(properties);
+            console.log('UPDATE $userProperties IndexTableProperty: ', $userProperties);
             return properties;
         } catch (error) {
             console.log("Error charging data: ", error);

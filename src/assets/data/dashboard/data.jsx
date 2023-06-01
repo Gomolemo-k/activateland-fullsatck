@@ -52,7 +52,7 @@ export const links = [
       },
       {
         name: 'Team Members',
-        path: 'team-memebers/index',
+        path: 'team-members/index',
         icon: <RiTeamLine />,
       },
     ],

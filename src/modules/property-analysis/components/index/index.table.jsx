@@ -23,24 +23,12 @@ const IndexTablePropertyAnalysis = ({currentUser}) => {
                             header: 'Title',
                         },
                         {
-                            accessorKey: 'rentalIncome',
-                            header: 'Rental Income',
-                        },
-                        {
-                            accessorKey: 'netIncome',
-                            header: 'Net Income',
-                        },
-                        {
                             accessorKey: 'returnOnInvestment',
                             header: 'Return On Investment',
                         },
                         {
                             accessorKey: 'purchasePrice',
                             header: 'Purchase Price',
-                        },
-                        {
-                            accessorKey: 'annualCosts',
-                            header: 'Annual Costs',
                         },
                     ];
 
@@ -51,7 +39,8 @@ const IndexTablePropertyAnalysis = ({currentUser}) => {
     const fetchData = async () => {
         try {
             console.log('currentUser IndexTablePropertyAnalysis: ', $userPropertyAnalysis);
-            let propertyAnalysis = currentUser.currentUser[0].propertyAnalysis;
+            // let propertyAnalysis = currentUser.currentUser[0].projects[0].properties[0].propertyAnalysis;
+            let propertyAnalysis = [];
             // console.log('PropertyAnalysis IndexPropertyAnalysis 0: ', propertyAnalysis);
             let userApi = await UsersApiClient.getUserReferences(currentUser.currentUser[0]._id);
             if (userApi) {
@@ -59,7 +48,7 @@ const IndexTablePropertyAnalysis = ({currentUser}) => {
                 propertyAnalysis = userApi[0].propertyAnalysis;
             }
             // setUserPropertyAnalysis(propertyAnalysis);
-            userPropertyAnalysis.set(propertyAnalysis);
+            // userPropertyAnalysis.set(propertyAnalysis);
             console.log('UPDATE $userPropertyAnalysis IndexPropertyAnalysis: ', $userPropertyAnalysis);
             return propertyAnalysis;
         } catch (error) {

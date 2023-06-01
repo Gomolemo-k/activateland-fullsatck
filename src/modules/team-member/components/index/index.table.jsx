@@ -27,15 +27,16 @@ const IndexTableTeamMember = ({currentUser}) => {
     const fetchData = async () => {
         try {
             console.log('currentUser IndexTableTeamMember: ', $userTeamMembers);
-            let teamMembers = currentUser.currentUser[0].teamMembers;
+            // let teamMembers = currentUser.currentUser[0].projects[0].team[0].teamMembers;
+            let teamMembers = [];
             // console.log('teamMembers IndexTeamMember 0: ', teamMembers);
             let userApi = await UsersApiClient.getUserReferences(currentUser.currentUser[0]._id);
             if (userApi) {
                 // console.log('userApi IndexTableTeamMember: ', userApi);
-                teamMembers = userApi[0].teamMembers;
+                // teamMembers = userApi[0].teamMembers;
             }
             // setUserTeamMembers(teamMembers);
-            userTeamMembers.set(teamMembers);
+            // userTeamMembers.set(teamMembers);
             console.log('UPDATE $userTeamMembers IndexTeamMember: ', $userTeamMembers);
             return teamMembers;
         } catch (error) {
