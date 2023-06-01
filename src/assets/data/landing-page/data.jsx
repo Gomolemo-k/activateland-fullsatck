@@ -1,7 +1,8 @@
 // import images
 import LogoImg from '../../img/logo/logo.svg';
 import HeroImg from '../../img/landing-page/hero/image.svg';
-import OverviewProductImg from '../../img/landing-page/overview/product.svg';
+// import OverviewProductImg from '../../img/landing-page/overview/product.svg';
+import OverviewProductImg from '../../img/landing-page/overview/dashboard-image.jpg';
 import FacebookImg from '../../img/landing-page/overview/brands/facebook.svg';
 import GoogleImg from '../../img/landing-page/overview/brands/google.svg';
 import CocaColaImg from '../../img/landing-page/overview/brands/coca-cola.svg';
