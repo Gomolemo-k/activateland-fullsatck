@@ -4,8 +4,8 @@ import { SiShopware } from 'react-icons/si';
 import { MdOutlineCancel } from 'react-icons/md';
 
 
-import { links } from '../../../assets/data/dashboard/data';
-import { useStateContext } from '../../../contexts/dashboard/ContextProvider';
+import { links } from '../../../assets/data/dashboard-routes/data';
+import { useStateContext } from '../../../contexts/dashboard-routes/ContextProvider';
 import { header } from '../../../assets/data/landing-page/data';
 
 const Sidebar = () => {

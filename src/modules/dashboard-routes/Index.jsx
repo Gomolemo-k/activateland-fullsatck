@@ -15,9 +15,9 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 // TODO: Improve get .env variables.
 import { REACT_APP_CLERK_PUBLISHABLE_KEY } from "../../assets/js/user/clerk.js";
 
-import "../../assets/css/dashboard/Index.css";
+import "../../assets/css/dashboard-routes/Index.css";
 import App from './App';
-import { ContextProvider, useStateContext } from "../../contexts/dashboard/ContextProvider.jsx";
+import { ContextProvider, useStateContext } from "../../contexts/dashboard-routes/ContextProvider.jsx";
 
 const Index = () => {
 

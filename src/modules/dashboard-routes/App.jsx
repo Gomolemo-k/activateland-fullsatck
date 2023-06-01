@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { useStateContext } from '../../contexts/dashboard/ContextProvider';
+import { useStateContext } from '../../contexts/dashboard-routes/ContextProvider';
 import { useUser } from "@clerk/clerk-react";
-import "../../assets/css/dashboard/App.css";
+import "../../assets/css/dashboard-routes/App.css";
 
+//Routes dashboard
+import IndexDashboard from '../dashboard/components/index/index';
 //Routes user profile
 import ShowUserProfile from '../user-profile/components/show/show';
 import EditUserProfile from '../user-profile/components/edit/edit';
@@ -112,7 +114,7 @@ const App = () => {
               <Routes>
                 {/* dashboard  */}
                 <Route path="/" element={(<Navigate to='/' />)} />
-                <Route path="/dashboard" element={(<Navigate to='/dashboard' />)} />
+                <Route path="/dashboard" element={currentUser && (<IndexDashboard currentUser={currentUser} />)} />
 
                 {/* user  */}
                 <Route path="/users/show" element={currentUser && (<ShowUserProfile currentUser={currentUser} />)} />

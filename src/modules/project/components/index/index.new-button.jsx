@@ -6,7 +6,7 @@ const IndexNewButton = (currentUser) => {
         <div>
             <div className="my-6 lg:my-12 container px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between pb-4 border-b border-gray-300">
                 <div>
-                    <h4 className="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">New Project</h4>
+                    <h4 className="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">Projects</h4>
                     <ul className="flex flex-col md:flex-row items-start md:items-center text-gray-600 dark:text-gray-400 text-sm mt-3">
                         <li className="flex items-center mr-4">
                             <div className="mr-1">

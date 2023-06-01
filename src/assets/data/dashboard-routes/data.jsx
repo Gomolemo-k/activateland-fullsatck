@@ -9,10 +9,10 @@ import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
 import { GrLocation } from 'react-icons/gr';
 import { TbHomeCheck, TbHomeSignal } from 'react-icons/tb'
-import avatar from '../../img/dashboard/avatar.jpg';
-import avatar2 from '../../img/dashboard/avatar2.jpg';
-import avatar3 from '../../img/dashboard/avatar3.png';
-import avatar4 from '../../img/dashboard/avatar4.jpg';
+import avatar from '../../img/dashboard-routes/avatar.jpg';
+import avatar2 from '../../img/dashboard-routes/avatar2.jpg';
+import avatar3 from '../../img/dashboard-routes/avatar3.png';
+import avatar4 from '../../img/dashboard-routes/avatar4.jpg';
 
 
 export const links = [

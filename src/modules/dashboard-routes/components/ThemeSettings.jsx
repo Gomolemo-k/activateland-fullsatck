@@ -1,8 +1,8 @@
 import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { BsCheck } from 'react-icons/bs';
-import { themeColors } from '../../../assets/data/dashboard/data';
-import { useStateContext } from '../../../contexts/dashboard/ContextProvider';
+import { themeColors } from '../../../assets/data/dashboard-routes/data';
+import { useStateContext } from '../../../contexts/dashboard-routes/ContextProvider';
 
 const ThemeSettings = () => {
   const { setColor, setMode, currentMode, currentColor, setThemeSettings } = useStateContext();

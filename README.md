@@ -73,6 +73,7 @@ $ cp .env.example .env
 ### Install aplication Node dependencies
 ```
 $ npm install
+npm ERR! Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps
 ```
 ### Install aplication Deno dependencies
 ```

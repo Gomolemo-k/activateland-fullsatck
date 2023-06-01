@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import MaterialReactTable from 'material-react-table';
 import { Link, useNavigate } from 'react-router-dom'
 import { UsersApiClient, PropertiesApiClient } from "../../../../api/fetch.functions"
-import { useStateContext } from "../../../../contexts/dashboard/ContextProvider"
+import { useStateContext } from "../../../../contexts/dashboard-routes/ContextProvider"
 import { useStore } from '@nanostores/react';
 import { userProperties } from "../../../../stores/property.store"
 
