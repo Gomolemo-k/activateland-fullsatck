@@ -1,114 +1,29 @@
-import { ResponsiveLine } from "@nivo/line";
-import { useTheme } from "@mui/material";
-import { mockLineData as data } from "../../../../assets/data/dashboard/data";
+import React from 'react';
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, LineSeries, DateTime, Legend, Tooltip } from '@syncfusion/ej2-react-charts';
 
-const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
-  const theme = useTheme();
+import { lineCustomSeries, LinePrimaryXAxis, LinePrimaryYAxis } from '../../../../assets/data/dashboard-routes/data';
+import { useStateContext } from '../../../../contexts/dashboard-routes/ContextProvider';
+
+const LineChart = () => {
+  const { currentMode } = useStateContext();
 
   return (
-    <ResponsiveLine
-      data={data}
-      theme={{
-        axis: {
-          domain: {
-            line: {
-              stroke: "#e0e0e0",
-            },
-          },
-          legend: {
-            text: {
-              fill: "#e0e0e0",
-            },
-          },
-          ticks: {
-            line: {
-              stroke: "#e0e0e0",
-              strokeWidth: 1,
-            },
-            text: {
-              fill: "#e0e0e0",
-            },
-          },
-        },
-        legends: {
-          text: {
-            fill: "#e0e0e0",
-          },
-        },
-        tooltip: {
-          container: {
-            color: "#141b2d",
-          },
-        },
-      }}
-      colors={isDashboard ? { datum: "color" } : { scheme: "nivo" }} // added
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-      xScale={{ type: "point" }}
-      yScale={{
-        type: "linear",
-        min: "auto",
-        max: "auto",
-        stacked: true,
-        reverse: false,
-      }}
-      yFormat=" >-.2f"
-      curve="catmullRom"
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        orient: "bottom",
-        tickSize: 0,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: isDashboard ? undefined : "transportation", // added
-        legendOffset: 36,
-        legendPosition: "middle",
-      }}
-      axisLeft={{
-        orient: "left",
-        tickValues: 5, // added
-        tickSize: 3,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: isDashboard ? undefined : "count", // added
-        legendOffset: -40,
-        legendPosition: "middle",
-      }}
-      enableGridX={false}
-      enableGridY={false}
-      pointSize={8}
-      pointColor={{ theme: "background" }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: "serieColor" }}
-      pointLabelYOffset={-12}
-      useMesh={true}
-      legends={[
-        {
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 100,
-          translateY: 0,
-          itemsSpacing: 0,
-          itemDirection: "left-to-right",
-          itemWidth: 80,
-          itemHeight: 20,
-          itemOpacity: 0.75,
-          symbolSize: 12,
-          symbolShape: "circle",
-          symbolBorderColor: "rgba(0, 0, 0, .5)",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemBackground: "rgba(0, 0, 0, .03)",
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
-    />
+    <ChartComponent
+      id="line-chart"
+      height="420px"
+      primaryXAxis={LinePrimaryXAxis}
+      primaryYAxis={LinePrimaryYAxis}
+      chartArea={{ border: { width: 0 } }}
+      tooltip={{ enable: true }}
+      background={currentMode === 'Dark' ? '#33373E' : '#fff'}
+      legendSettings={{ background: 'white' }}
+    >
+      <Inject services={[LineSeries, DateTime, Legend, Tooltip]} />
+      <SeriesCollectionDirective>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        {lineCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
+      </SeriesCollectionDirective>
+    </ChartComponent>
   );
 };
 
