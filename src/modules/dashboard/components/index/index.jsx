@@ -5,7 +5,7 @@ import { IoIosMore } from 'react-icons/io';
 // import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 
 import Stacked from './Stacked';
-import Pie from './Pie';
+import PieDoughnut from './Pie';
 import Button from './Button';
 import LineChart from './LineChart';
 import SparkLine from './SparkLine';
@@ -107,7 +107,7 @@ const IndexDashboard = () => {
               </div>
 
               <div className="mt-5">
-                <SparkLine currentColor={currentColor} id="line-sparkLine" type="Line" height="80px" width="250px" data={SparklineAreaData} color={currentColor} />
+                {/* <SparkLine currentColor={currentColor} id="line-sparkLine" type="Line" height="80px" width="250px" data={SparklineAreaData} color={currentColor} /> */}
               </div>
               <div className="mt-10">
                 <Button
@@ -149,7 +149,7 @@ const IndexDashboard = () => {
             </div>
 
             <div className="w-40">
-              <Pie id="pie-chart" data={ecomPieChartData} legendVisiblity={false} height="160px" />
+              <PieDoughnut id="pie-chart" data={ecomPieChartData} legendVisiblity={false} height="160px" />
             </div>
           </div>
         </div>

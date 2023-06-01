@@ -1,37 +1,57 @@
 import React from 'react';
-import { SparklineComponent, Inject, SparklineTooltip } from '@syncfusion/ej2-react-charts';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-class SparkLine extends React.PureComponent {
-  render() {
-    const { id, height, width, color, data, type, currentColor } = this.props;
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-    return (
-      <SparklineComponent
-        id={id}
-        height={height}
-        width={width}
-        lineWidth={1}
-        valueType="Numeric"
-        fill={color}
-        border={{ color: currentColor, width: 2 }}
-        tooltipSettings={{
-          visible: true,
-          // eslint-disable-next-line no-template-curly-in-string
-          format: '${x} : data ${yval}',
-          trackLineSettings: {
-            visible: true,
-          },
-        }}
-        markerSettings={{ visible: ['All'], size: 2.5, fill: currentColor }}
-        dataSource={data}
-        xName="x"
-        yName="yval"
-        type={type}
-      >
-        <Inject services={[SparklineTooltip]} />
-      </SparklineComponent>
-    );
-  }
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Incomes vs Expenses',
+    },
+  },
+};
+
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+export const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Incomes',
+      data: labels.map(() => {22000, 33000, 15000, 25000, 44000, 46000, 39000, 11000}),
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    },
+    {
+      label: 'Expenses',
+      data: labels.map(() => {12000, 23000, 25000, 35000, 14000, 16000, 19000, 21000}),
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    },
+  ],
+};
+
+const SparkLine = () => {
+  return <Bar options={options} data={data} />;
 }
 
 export default SparkLine;

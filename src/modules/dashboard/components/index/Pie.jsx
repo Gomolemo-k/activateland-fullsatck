@@ -1,46 +1,30 @@
 import React from 'react';
-import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, AccumulationLegend, PieSeries, AccumulationDataLabel, Inject, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
-import { useStateContext } from '../../../../contexts/dashboard-routes/ContextProvider';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Doughnut = ({ id, data, legendVisiblity, height }) => {
-  const { currentMode } = useStateContext();
-
-  return (
-    <AccumulationChartComponent
-      id={id}
-      legendSettings={{ visible: legendVisiblity, background: 'white' }}
-      height={height}
-      background={currentMode === 'Dark' ? '#33373E' : '#fff'}
-      tooltip={{ enable: true }}
-    >
-      <Inject services={[AccumulationLegend, PieSeries, AccumulationDataLabel, AccumulationTooltip]} />
-      <AccumulationSeriesCollectionDirective>
-        <AccumulationSeriesDirective
-          name="Sale"
-          dataSource={data}
-          xName="x"
-          yName="y"
-          innerRadius="40%"
-          startAngle={0}
-          endAngle={360}
-          radius="70%"
-          explode
-          explodeOffset="10%"
-          explodeIndex={2}
-          dataLabel={{
-            visible: true,
-            name: 'text',
-            position: 'Inside',
-            font: {
-              fontWeight: '600',
-              color: '#fff',
-            },
-          }}
-        />
-      </AccumulationSeriesCollectionDirective>
-    </AccumulationChartComponent>
-  );
+export const data = {
+  labels: ['Vacational', 'Rent'],
+  datasets: [
+    {
+      label: '# of Income',
+      data: [22000, 12000,],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+      ],
+      borderWidth: 1,
+    },
+  ],
 };
 
-export default Doughnut;
+const PieDoughnut = ({ width, height }) => {
+  return <Doughnut data={data} />;
+}
+
+export default PieDoughnut;
