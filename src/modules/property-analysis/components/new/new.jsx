@@ -1,10 +1,9 @@
-// import NewFormPropertyAnalysis from "./new.form.jsx";
+import NewFormPropertyAnalysis from "./new.form.jsx";
 
-function NewFormPropertyAnalysis(currentUser) {
+function NewPropertyAnalysis(currentUser) {
     return (
-        <div></div>
-        // <NewFormPropertyAnalysis currentUser={currentUser} />
+        <NewFormPropertyAnalysis currentUser={currentUser} />
     );
 }
 
-export default NewFormPropertyAnalysis;
+export default NewPropertyAnalysis;

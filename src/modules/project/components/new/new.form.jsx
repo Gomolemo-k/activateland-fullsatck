@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { Link, useNavigate } from 'react-router-dom'
 import { ProjectsApiClient } from "../../../../api/fetch.functions"
 import { useStateContext } from "../../../../contexts/dashboard-routes/ContextProvider"

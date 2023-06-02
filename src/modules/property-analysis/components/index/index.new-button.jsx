@@ -30,7 +30,7 @@ const IndexNewButton = (currentUser) => {
                     </ul>
                 </div>
                 <div className="mt-6 md:mt-0">
-                    <Link to="#" type="button" className="rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">New</Link>
+                    <Link to="/property-analysis/new" type="button" className="rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">New</Link>
                 </div>
             </div>
         </div>
