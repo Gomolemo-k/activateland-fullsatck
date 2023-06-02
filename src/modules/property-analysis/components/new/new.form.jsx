@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { PropertyAnalysisApiClient } from "../../../../api/fetch.functions"
+import { Chart as ChartJS, RadialLinearScale, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut, PolarArea } from 'react-chartjs-2';
+
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
 
 const NewFormPropertyAnalysis = ({currentUser}) => {
@@ -9,32 +13,31 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
     const [title, setTitle] = useState(Number(queryParameters.get("title")) || '')
     const [isPending, setIsPending] = useState(false)
     // Buy Cost
-    const [tax, setTax] = useState(Number(queryParameters.get("tax")) || 0)
-    const [price, setPrice] = useState(Number(queryParameters.get("price")) || 0)
-    const [registrationCost, setRegistrationCost] = useState(Number(queryParameters.get("registrationCost")) || 0)
-    const [mortgageCost, setMortgageCost] = useState(Number(queryParameters.get("mortgageCost")) || 0)
-    const [rehabCost, setRehabCost] = useState(Number(queryParameters.get("rehabCost")) || 0)
-    const [buyCommission, setBuyCommission] = useState(Number(queryParameters.get("buyCommission")) || 0)
-    const [equipmentCost, setEquipmentCost] = useState(Number(queryParameters.get("equipmentCost")) || 0)
-    const [otherFixCosts, setOtherFixCosts] = useState(Number(queryParameters.get("otherFixCosts")) || 0)
+    const [tax, setTax] = useState(Number(queryParameters.get("tax")) || 10)
+    const [price, setPrice] = useState(Number(queryParameters.get("price")) || 60000)
+    const [registrationCost, setRegistrationCost] = useState(Number(queryParameters.get("registrationCost")) || 1200)
+    const [mortgageCost, setMortgageCost] = useState(Number(queryParameters.get("mortgageCost")) || 350)
+    const [rehabCost, setRehabCost] = useState(Number(queryParameters.get("rehabCost")) || 10000)
+    const [buyCommission, setBuyCommission] = useState(Number(queryParameters.get("buyCommission")) || 300)
+    const [equipmentCost, setEquipmentCost] = useState(Number(queryParameters.get("equipmentCost")) || 5000)
+    const [otherFixCosts, setOtherFixCosts] = useState(Number(queryParameters.get("otherFixCosts")) || 1000)
     // Rent incomes
-    const [monthRentIncome, setMonthRentIncome] = useState(Number(queryParameters.get("monthRentIncome")) || 0)
+    const [monthRentIncome, setMonthRentIncome] = useState(Number(queryParameters.get("monthRentIncome")) || 570)
     // % Value increase expected
     const [increaseValueExpected, setIncreaseValueExpected] = useState(Number(queryParameters.get("increaseValueExpected")) || 2)
     // Anual Expenses
-    const [yearTaxes, setYearTaxes] = useState(Number(queryParameters.get("yearTaxes")) || 0)
-    const [yearInsurance, setYearInsurance] = useState(Number(queryParameters.get("yearInsurance")) || 0)
-    const [yearCommunityOwners, setYearCommunityOwners] = useState(Number(queryParameters.get("yearCommunityOwners")) || 0)
-    const [yearMantenance, setYearMantenance] = useState(Number(queryParameters.get("yearMantenance")) || 0)
-    const [yearEmptyPeiods, setYearEmptyPeiods] = useState(Number(queryParameters.get("yearEmptyPeiods")) || 0)
+    const [yearTaxes, setYearTaxes] = useState(Number(queryParameters.get("yearTaxes")) || 450)
+    const [yearInsurance, setYearInsurance] = useState(Number(queryParameters.get("yearInsurance")) || 350)
+    const [yearCommunityOwners, setYearCommunityOwners] = useState(Number(queryParameters.get("yearCommunityOwners")) || 250)
+    const [yearMantenance, setYearMantenance] = useState(Number(queryParameters.get("yearMantenance")) || 150)
+    const [yearEmptyPeiods, setYearEmptyPeiods] = useState(Number(queryParameters.get("yearEmptyPeiods")) || 50)
     // financement
-    const [mortgagePercentage, setMortgagePercentage] = useState(Number(queryParameters.get("mortgagePercentage")) || 0)
-    const [mortgageYears, setMortgageYears] = useState(Number(queryParameters.get("mortgageYears")) || 0)
-    const [mortgageInterest, setMortgageInterest] = useState(Number(queryParameters.get("mortgageInterest")) || 0)
+    const [mortgagePercentage, setMortgagePercentage] = useState(Number(queryParameters.get("mortgagePercentage")) || 70)
+    const [mortgageYears, setMortgageYears] = useState(Number(queryParameters.get("mortgageYears")) || 30)
+    const [mortgageInterest, setMortgageInterest] = useState(Number(queryParameters.get("mortgageInterest")) || 3)
     // Calculate
     const taxAmount = Number(price) / Number(tax) || 0;
-    const totalBuyAmount = Number(price) + Number(taxAmount) + Number(registrationCost) + Number(mortgageCost) + Number(rehabCost) + 
-    Number(buyCommission) + Number(equipmentCost) + Number(otherFixCosts) || 0;
+    const totalBuyAmount = Number(price) + Number(taxAmount) + Number(registrationCost) + Number(mortgageCost) + Number(rehabCost) + Number(buyCommission) + Number(equipmentCost) + Number(otherFixCosts) || 0;
     const yearRentIncome = Number(monthRentIncome) * 12 || 0;
     const yearExpenses = Number(yearTaxes) + Number(yearInsurance) + Number(yearCommunityOwners) + Number(yearMantenance) + Number(yearEmptyPeiods) || 0;
     const monthExpenses = Number(yearExpenses / 12) || 0;
@@ -67,6 +70,63 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
       
         return payment;
     }
+
+    const dataPolarProfitRates = {
+        labels: ['Gross Profit', 'Net Profit', 'Mortgage / Rent', 'CashFlow / Rent', 'ROCE', 'Return of Investment'],
+        datasets: [
+          {
+            label: '# of %',
+            data: [grossProfit, netProfit, mortgageVSrent, cashFlowVSrent, roce, totalReturnInvestment],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+    };
+
+    const dataDoughnutIncomeVSCosts = {
+        labels: ['Incomes', 'Expenses'],
+        datasets: [
+          {
+            label: '# of Month',
+            data: [monthRentIncome, monthExpenses],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const dataDoughnutMortgage = {
+        labels: ['Month Interest Cost', 'Month Amortization'],
+        datasets: [
+          {
+            label: '# of Mortgage',
+            data: [monthInterestCost, monthAmortization],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
 
     async function handleSubmitNewPropertyAnalysis(event) {
         try {
@@ -142,7 +202,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="price"
                                         id="price"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={price.toFixed(2)} 
+                                        value={price} 
                                         onChange={(e) => setPrice(e.target.value)} 
                                     />
                                 </div>
@@ -161,7 +221,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="tax"
                                         id="tax"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={tax.toFixed(2)} 
+                                        value={tax} 
                                         onChange={(e) => setTax(e.target.value)} 
                                     />
                                 </div>
@@ -180,7 +240,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="registrationCost"
                                         id="registrationCost"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={registrationCost.toFixed(2)} 
+                                        value={registrationCost} 
                                         onChange={(e) => setRegistrationCost(e.target.value)} 
                                     />
                                 </div>
@@ -199,7 +259,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="mortgageCost"
                                         id="mortgageCost"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={mortgageCost.toFixed(2)} 
+                                        value={mortgageCost} 
                                         onChange={(e) => setMortgageCost(e.target.value)} 
                                     />
                                 </div>
@@ -218,7 +278,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="rehabCost"
                                         id="rehabCost"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={rehabCost.toFixed(2)} 
+                                        value={rehabCost} 
                                         onChange={(e) => setRehabCost(e.target.value)} 
                                     />
                                 </div>
@@ -237,7 +297,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="buyCommission"
                                         id="buyCommission"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={buyCommission.toFixed(2)} 
+                                        value={buyCommission} 
                                         onChange={(e) => setBuyCommission(e.target.value)} 
                                     />
                                 </div>
@@ -256,7 +316,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="equipmentCost"
                                         id="equipmentCost"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={equipmentCost.toFixed(2)} 
+                                        value={equipmentCost} 
                                         onChange={(e) => setEquipmentCost(e.target.value)} 
                                     />
                                 </div>
@@ -275,7 +335,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="otherFixCosts"
                                         id="otherFixCosts"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={otherFixCosts.toFixed(2)} 
+                                        value={otherFixCosts} 
                                         onChange={(e) => setOtherFixCosts(e.target.value)} 
                                     />
                                 </div>
@@ -301,7 +361,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="monthRentIncome"
                                         id="monthRentIncome"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={monthRentIncome.toFixed(2)} 
+                                        value={monthRentIncome} 
                                         onChange={(e) => setMonthRentIncome(e.target.value)} 
                                     />
                                 </div>
@@ -320,7 +380,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="increaseValueExpected"
                                         id="increaseValueExpected"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={increaseValueExpected.toFixed(2)} 
+                                        value={increaseValueExpected} 
                                         onChange={(e) => setIncreaseValueExpected(e.target.value)} 
                                     />
                                 </div>
@@ -344,7 +404,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="yearTaxes"
                                         id="yearTaxes"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={yearTaxes.toFixed(2)} 
+                                        value={yearTaxes} 
                                         onChange={(e) => setYearTaxes(e.target.value)} 
                                     />
                                 </div>
@@ -363,7 +423,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="yearInsurance"
                                         id="yearInsurance"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        value={yearInsurance.toFixed(2)} 
+                                        value={yearInsurance} 
                                         onChange={(e) => setYearInsurance(e.target.value)} 
                                     />
                                 </div>
@@ -381,7 +441,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 name="yearCommunityOwners"
                                 id="yearCommunityOwners"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={yearCommunityOwners.toFixed(2)} 
+                                value={yearCommunityOwners} 
                                 onChange={(e) => setYearCommunityOwners(e.target.value)} 
                                 />
                             </div>
@@ -398,7 +458,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 name="yearMantenance"
                                 id="yearMantenance"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={yearMantenance.toFixed(2)} 
+                                value={yearMantenance} 
                                 onChange={(e) => setYearMantenance(e.target.value)} 
                                 />
                             </div>
@@ -415,7 +475,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 name="yearEmptyPeiods"
                                 id="yearEmptyPeiods"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={yearEmptyPeiods.toFixed(2)} 
+                                value={yearEmptyPeiods} 
                                 onChange={(e) => setYearEmptyPeiods(e.target.value)} 
                                 />
                             </div>
@@ -438,7 +498,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 name="mortgagePercentage"
                                 id="mortgagePercentage"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={mortgagePercentage.toFixed(2)} 
+                                value={mortgagePercentage} 
                                 onChange={(e) => setMortgagePercentage(e.target.value)} 
                                 />
                             </div>
@@ -455,7 +515,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 name="mortgageYears"
                                 id="mortgageYears"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={mortgageYears.toFixed(2)} 
+                                value={mortgageYears} 
                                 onChange={(e) => setMortgageYears(e.target.value)} 
                                 />
                             </div>
@@ -472,7 +532,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 name="mortgageInterest"
                                 id="mortgageInterest"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={mortgageInterest.toFixed(2)} 
+                                value={mortgageInterest} 
                                 onChange={(e) => setMortgageInterest(e.target.value)} 
                                 />
                             </div>
@@ -486,6 +546,15 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                             This is the report generated. Feel free to analyse it!
                         </p>
 
+                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                            <div className="sm:col-span-3">
+                                <Doughnut data={dataDoughnutIncomeVSCosts} />
+                            </div>
+                            <div className="sm:col-span-3">
+                                <Doughnut data={dataDoughnutMortgage} />
+                            </div>
+                        </div>
+                        
                         <div className="mt-10 space-y-10">
                             <fieldset>
                                 <legend className="text-sm font-semibold leading-6 text-gray-900">Data Calculated</legend>
@@ -501,7 +570,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="taxAmount"
                                         id="taxAmount"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={taxAmount.toFixed(2)}
+                                        value={Number(taxAmount).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -518,7 +587,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="totalBuyAmount"
                                         id="totalBuyAmount"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={totalBuyAmount.toFixed(2)}
+                                        value={Number(totalBuyAmount).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -535,7 +604,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="yearExpenses"
                                         id="yearExpenses"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={yearExpenses.toFixed(2)}
+                                        value={Number(yearExpenses).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -552,7 +621,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="yearRentIncome"
                                         id="yearRentIncome"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={yearRentIncome.toFixed(2)}
+                                        value={Number(yearRentIncome).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -569,7 +638,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="mortgageAmount"
                                         id="mortgageAmount"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={mortgageAmount.toFixed(2)}
+                                        value={Number(mortgageAmount).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -586,7 +655,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="ownCapital"
                                         id="ownCapital"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={ownCapital.toFixed(2)}
+                                        value={Number(ownCapital).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -603,7 +672,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="monthMortgagePayment"
                                         id="monthMortgagePayment"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={monthMortgagePayment.toFixed(2)}
+                                        value={Number(monthMortgagePayment).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -620,7 +689,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="monthInterestCost"
                                         id="monthInterestCost"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={monthInterestCost.toFixed(2)}
+                                        value={Number(monthInterestCost).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -637,7 +706,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="monthAmortization"
                                         id="monthAmortization"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={monthAmortization.toFixed(2)}
+                                        value={Number(monthAmortization).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -654,7 +723,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="mortgageMonths"
                                         id="mortgageMonths"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={mortgageMonths.toFixed(2)}
+                                        value={Number(mortgageMonths).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -665,6 +734,10 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                             <fieldset>
                                 <legend className="text-sm font-semibold leading-6 text-gray-900">Profitability Rates</legend>
                                 <p className="mt-1 text-sm leading-6 text-gray-600">These are the most important profitability rates.</p>
+
+                                <div className="sm:col-span-3">
+                                    <PolarArea data={dataPolarProfitRates} />
+                                </div>
                                 
                                 <div className="sm:col-span-2 sm:col-start-1">
                                     <label htmlFor="monthCashFlow" className="block text-sm font-medium leading-6 text-gray-900">
@@ -677,7 +750,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="monthCashFlow"
                                         id="monthCashFlow"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={monthCashFlow.toFixed(2)}
+                                        value={Number(monthCashFlow).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -694,7 +767,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="grossProfit"
                                         id="grossProfit"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={grossProfit.toFixed(2)}
+                                        value={Number(grossProfit).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -711,7 +784,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="netProfit"
                                         id="netProfit"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={netProfit.toFixed(2)}
+                                        value={Number(netProfit).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -728,7 +801,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="mortgageVSrent"
                                         id="mortgageVSrent"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={mortgageVSrent.toFixed(2)}
+                                        value={Number(mortgageVSrent).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -745,7 +818,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="cashFlowVSrent"
                                         id="cashFlowVSrent"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={cashFlowVSrent.toFixed(2)}
+                                        value={Number(cashFlowVSrent).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -762,7 +835,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="cashOnCash"
                                         id="cashOnCash"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={cashOnCash.toFixed(2)}
+                                        value={Number(cashOnCash).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -779,7 +852,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="roce"
                                         id="roce"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={roce.toFixed(2)}
+                                        value={Number(roce).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
@@ -796,7 +869,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         name="totalReturnInvestment"
                                         id="totalReturnInvestment"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={totalReturnInvestment.toFixed(2)}
+                                        value={Number(totalReturnInvestment).toFixed(2)}
                                         disabled={true}
                                         />
                                     </div>
