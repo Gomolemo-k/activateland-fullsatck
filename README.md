@@ -20,14 +20,24 @@ Deno SSR:  8080
 MongoDB:   27017
 ```
 
-### OS
+### OS & Containers
 ```
 ubuntu:22.04
+docker 
+docker-compose
 ```
 
 ### Install Ubuntu dependencies
 ```
 $ apt-get update && apt-get install -y curl && apt-get install -y curl unzip
+```
+
+### Install Docker $ Docker-Compose
+```
+Chosse your favorite option and follow the official documentation:
+
+Docker Engine (Include Docker and Docker-Compose for Terminal Commands) [https://docs.docker.com/engine/]
+Docker Desktop (Include Docker Engine and more for Desktop Application) [https://docs.docker.com/desktop/]
 ```
 
 ### Install Node.js and NPM
@@ -54,6 +64,8 @@ PATH="$DENO_INSTALL/bin:$PATH"
 
 ### Check versions
 ```
+$ docker --version
+$ docker-compose --version
 $ node --version
 $ npm --version
 $ astro --version
