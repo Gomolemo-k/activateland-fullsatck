@@ -3,8 +3,21 @@
 ```
 Experimental project for the use of different web development technologies, such as: Astro, Deno, React...
 ```
-### Dependencies
+
+## Visit our Website: [ActivateLand](http://activateland.com/)
+
+## Server setup and deploy
+
+```text
+Follow instructions of the document:
+server-setup-deploy.md
 ```
+
+## Development and test setup
+
+### Dependencies
+
+```text
 node
 npm
 astro
@@ -12,8 +25,10 @@ deno
 ```
 
 > 🧑‍🚀 **Seasoned astronaut?** Follow this steps in your Ubuntu... Have fun!
-###Exposed ports
-```
+>
+### Exposed ports
+
+```text
 Astro WEB: 3000
 Astro API: 3001
 Deno SSR:  8080
@@ -21,19 +36,22 @@ MongoDB:   27017
 ```
 
 ### OS & Containers
-```
+
+```text
 ubuntu:22.04
 docker 
 docker-compose
 ```
 
 ### Install Ubuntu dependencies
-```
-$ apt-get update && apt-get install -y curl && apt-get install -y curl unzip
+
+```bash
+sudo apt-get update && sudo apt-get install -y curl unzip
 ```
 
 ### Install Docker $ Docker-Compose
-```
+
+```text
 Chosse your favorite option and follow the official documentation:
 
 Docker Engine (Include Docker and Docker-Compose for Terminal Commands) [https://docs.docker.com/engine/]
@@ -41,79 +59,90 @@ Docker Desktop (Include Docker Engine and more for Desktop Application) [https:/
 ```
 
 ### Install Node.js and NPM
-```
-$ curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-$ apt-get install -y nodejs
+
+```bash
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
 ```
 
-# Astro global install
-```
-$ npm install -g astro@2.3.3
+### Astro global install
+
+```bash
+npm install -g astro@2.3.3
 ```
 
 ### Deno install
-```
-$ curl -fsSL https://deno.land/x/install/install.sh | sh
+
+```bash
+curl -fsSL https://deno.land/x/install/install.sh | sh
 ```
 
 ### Set DENO_INSTALL and add to PATH (.bashrc)
-```
+
+```text
 DENO_INSTALL="/root/.deno"
 PATH="$DENO_INSTALL/bin:$PATH"
 ```
 
 ### Check versions
-```
-$ docker --version
-$ docker-compose --version
-$ node --version
-$ npm --version
-$ astro --version
-$ deno --version
+
+```bash
+docker --version
+docker-compose --version #or docker compose version
+node --version
+npm --version
+astro --version
+deno --version
 ```
 
 ### Go to working directory of the project
-```
-$ cd ../activateland-fullstack
+
+```bash
+cd ../activateland-fullstack
 ```
 
 ### Copy required files of the project and
-```
-$ cp .env.example .env
+
+```bash
+cp .env.example .env
 ```
 
 ### Install aplication Node dependencies
+
+```bash
+npm install
 ```
-$ npm install
-npm ERR! Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps
-```
+
 ### Install aplication Deno dependencies
-```
-$ rm -rf /app/node_modules/.deno/*
-$ deno task dev:cache
+
+```bash
+rm -rf /app/node_modules/.deno/*
+deno task dev:cache
 ```
 
 ### Start MongoDB Docker container
-```
-$ docker-compose up
+
+```bash
+docker-compose up #or docker compose up
 ```
 
 ### Start Deno Backend && Astro Frontend
-```
-$ deno task dev
+
+```bash
+deno task dev
 ```
 
-### Is working!! Open browser and navigate to...
-```
+### Is working!! Open browser and navigate to the web app
+
+```bash
 http://localhost:3000
 ```
-
 
 ## 🚀 Project Structure
 
 Inside of Activate Land project, you'll see the following folders and files:
 
-```
+```text
 /
 ├── public/
 │   └── favicon.svg
@@ -264,7 +293,8 @@ Custom commands (see file deno.json) are run from the root of the project, from 
 | :----------------------------------------------------------- | :---------------------------------------- |
 
 ### Docker restore services process (caution!!)
-```
+
+```bash
 docker-compose down
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
