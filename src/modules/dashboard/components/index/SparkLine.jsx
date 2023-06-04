@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { faker } from '@faker-js/faker';
 
 ChartJS.register(
   CategoryScale,
@@ -39,12 +40,12 @@ export const data = {
   datasets: [
     {
       label: 'Incomes',
-      data: labels.map(() => {22000, 33000, 15000, 25000, 44000, 46000, 39000, 11000}),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      data: labels.map(() => faker.datatype.number({ min: 50000, max: 100000 })),
+      backgroundColor: 'rgba(255, 206, 86, 0.5)',
     },
     {
       label: 'Expenses',
-      data: labels.map(() => {12000, 23000, 25000, 35000, 14000, 16000, 19000, 21000}),
+      data: labels.map(() => faker.datatype.number({ min: 10000, max: 30000 })),
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ],

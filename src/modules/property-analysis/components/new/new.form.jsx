@@ -52,7 +52,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
     const monthCashFlow = Number(monthRentIncome) - Number(monthMortgagePayment) - Number(monthExpenses) || 0;
     const grossProfit = Number(yearRentIncome) / Number(totalBuyAmount) * 100 || 0;
     const netProfit = (Number(yearRentIncome) - Number(yearExpenses) - (Number(monthInterestCost) * 12)) / Number(totalBuyAmount) * 100 || 0;
-    const mortgageVSrent = Number(mortgageMonths) / Number(monthRentIncome) * 100 || 0;
+    const mortgageVSrent = Number(monthMortgagePayment) / Number(monthRentIncome) * 100 || 0;
     const cashFlowVSrent = Number(monthCashFlow) / Number(monthRentIncome) * 100 || 0;
     const cashOnCash = (Number(monthCashFlow) * 12) / Number(ownCapital) * 100 || 0;
     const roce = ((Number(monthCashFlow) * 12) + (Number(monthAmortization) * 12)) / Number(ownCapital) * 100 || 0;
@@ -71,11 +71,68 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
         return payment;
     }
 
+    const dataDoughnutBuyCost = {
+        labels: ['Buy Tax', 'Price', 'Registration Cost', 'Mortgage Cost', 'Rehab. Cost', 'BuyCommission', 'Equipment Cost', 'Other Fix Costs'],
+        datasets: [
+          {
+            label: '# $',
+            data: [tax, price, registrationCost, mortgageCost, rehabCost, buyCommission, equipmentCost, otherFixCosts],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 25, 12, 0.2)',
+                'rgba(48, 159, 120, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 25, 12, 1)',
+                'rgba(48, 159, 120, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+    };
+
+    const dataDoughnutAnnualExpenses = {
+        labels: ['Taxes', 'Insurance', 'Community Owners', 'Mantenance', 'Empty Peiods'],
+        datasets: [
+          {
+            label: '# $/year',
+            data: [yearTaxes, yearInsurance, yearCommunityOwners, yearMantenance, yearEmptyPeiods],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+    };
+
+
     const dataPolarProfitRates = {
         labels: ['Gross Profit', 'Net Profit', 'Mortgage / Rent', 'CashFlow / Rent', 'ROCE', 'Return of Investment'],
         datasets: [
           {
-            label: '# of %',
+            label: '# %',
             data: [grossProfit, netProfit, mortgageVSrent, cashFlowVSrent, roce, totalReturnInvestment],
             backgroundColor: [
               'rgba(255, 99, 132, 0.5)',
@@ -90,12 +147,14 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
         ],
     };
 
-    const dataDoughnutIncomeVSCosts = {
-        labels: ['Incomes', 'Expenses'],
+
+
+      const dataDoughnutIncomeVSCosts = {
+        labels: ['Expenses', 'Incomes'],
         datasets: [
           {
-            label: '# of Month',
-            data: [monthRentIncome, monthExpenses],
+            label: '# $/Month',
+            data: [monthExpenses, monthRentIncome],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -107,13 +166,32 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
             borderWidth: 1,
           },
         ],
-      };
+    };
+
+    const dataDoughnutMortgageVsCapital = {
+        labels: ['Mortgage Amount', 'Own Capital'],
+        datasets: [
+          {
+            label: '# $',
+            data: [mortgageAmount, ownCapital],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+    };
 
       const dataDoughnutMortgage = {
         labels: ['Month Interest Cost', 'Month Amortization'],
         datasets: [
           {
-            label: '# of Mortgage',
+            label: '# $ of Mortgage',
             data: [monthInterestCost, monthAmortization],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -126,7 +204,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
             borderWidth: 1,
           },
         ],
-      };
+    };
 
     async function handleSubmitNewPropertyAnalysis(event) {
         try {
@@ -430,54 +508,60 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                             </div>
                         </div>
 
-                        <div className="sm:col-span-4">
+                        <div className="sm:col-span-3">
                             <label htmlFor="yearCommunityOwners" className="block text-sm font-medium leading-6 text-gray-900">
                                 Annual Community Owners
                             </label>
                             <div className="mt-2">
-                                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                <input
-                                type="number"
-                                name="yearCommunityOwners"
-                                id="yearCommunityOwners"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={yearCommunityOwners} 
-                                onChange={(e) => setYearCommunityOwners(e.target.value)} 
-                                />
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                    <input
+                                    type="number"
+                                    name="yearCommunityOwners"
+                                    id="yearCommunityOwners"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={yearCommunityOwners} 
+                                    onChange={(e) => setYearCommunityOwners(e.target.value)} 
+                                    />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="sm:col-span-4">
+                        <div className="sm:col-span-3">
                             <label htmlFor="yearMantenance" className="block text-sm font-medium leading-6 text-gray-900">
                                 Annual mantenance
                             </label>
                             <div className="mt-2">
-                                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                <input
-                                type="number"
-                                name="yearMantenance"
-                                id="yearMantenance"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={yearMantenance} 
-                                onChange={(e) => setYearMantenance(e.target.value)} 
-                                />
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                    <input
+                                    type="number"
+                                    name="yearMantenance"
+                                    id="yearMantenance"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={yearMantenance} 
+                                    onChange={(e) => setYearMantenance(e.target.value)} 
+                                    />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="sm:col-span-4">
+                        <div className="sm:col-span-3">
                             <label htmlFor="yearEmptyPeiods" className="block text-sm font-medium leading-6 text-gray-900">
                                 Annual Expected Empty Periods Cost
                             </label>
                             <div className="mt-2">
-                                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                <input
-                                type="number"
-                                name="yearEmptyPeiods"
-                                id="yearEmptyPeiods"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={yearEmptyPeiods} 
-                                onChange={(e) => setYearEmptyPeiods(e.target.value)} 
-                                />
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                    <input
+                                    type="number"
+                                    name="yearEmptyPeiods"
+                                    id="yearEmptyPeiods"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={yearEmptyPeiods} 
+                                    onChange={(e) => setYearEmptyPeiods(e.target.value)} 
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -489,18 +573,20 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
 
                         <div className="sm:col-span-2 sm:col-start-1">
                             <label htmlFor="mortgagePercentage" className="block text-sm font-medium leading-6 text-gray-900">
-                                Mortgage Percentage of Property Price.
+                                Mortgage Percentage of Property Price
                             </label>
                             <div className="mt-2">
-                                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                <input
-                                type="number"
-                                name="mortgagePercentage"
-                                id="mortgagePercentage"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={mortgagePercentage} 
-                                onChange={(e) => setMortgagePercentage(e.target.value)} 
-                                />
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                    <input
+                                    type="number"
+                                    name="mortgagePercentage"
+                                    id="mortgagePercentage"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={mortgagePercentage} 
+                                    onChange={(e) => setMortgagePercentage(e.target.value)} 
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -509,15 +595,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 Mortgage Years Duration
                             </label>
                             <div className="mt-2">
-                                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                <input
-                                type="number"
-                                name="mortgageYears"
-                                id="mortgageYears"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={mortgageYears} 
-                                onChange={(e) => setMortgageYears(e.target.value)} 
-                                />
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                    <input
+                                    type="number"
+                                    name="mortgageYears"
+                                    id="mortgageYears"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={mortgageYears} 
+                                    onChange={(e) => setMortgageYears(e.target.value)} 
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -526,15 +614,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 Mortgage Interest Percentage
                             </label>
                             <div className="mt-2">
-                                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                <input
-                                type="number"
-                                name="mortgageInterest"
-                                id="mortgageInterest"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                value={mortgageInterest} 
-                                onChange={(e) => setMortgageInterest(e.target.value)} 
-                                />
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                    <input
+                                    type="number"
+                                    name="mortgageInterest"
+                                    id="mortgageInterest"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    value={mortgageInterest} 
+                                    onChange={(e) => setMortgageInterest(e.target.value)} 
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -546,9 +636,12 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                             This is the report generated. Feel free to analyse it!
                         </p>
 
-                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-9">
                             <div className="sm:col-span-3">
                                 <Doughnut data={dataDoughnutIncomeVSCosts} />
+                            </div>
+                            <div className="sm:col-span-3">
+                                <Doughnut data={dataDoughnutMortgageVsCapital} />
                             </div>
                             <div className="sm:col-span-3">
                                 <Doughnut data={dataDoughnutMortgage} />
@@ -564,15 +657,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Taxes Amount
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="taxAmount"
-                                        id="taxAmount"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(taxAmount).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">    
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="taxAmount"
+                                            id="taxAmount"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(taxAmount).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -581,15 +676,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Total Buy Cost Amount
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="totalBuyAmount"
-                                        id="totalBuyAmount"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(totalBuyAmount).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="totalBuyAmount"
+                                            id="totalBuyAmount"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(totalBuyAmount).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -598,15 +695,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Year Expenses
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="yearExpenses"
-                                        id="yearExpenses"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(yearExpenses).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="yearExpenses"
+                                            id="yearExpenses"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(yearExpenses).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -615,15 +714,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Annual Incomes
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="yearRentIncome"
-                                        id="yearRentIncome"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(yearRentIncome).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="yearRentIncome"
+                                            id="yearRentIncome"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(yearRentIncome).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -632,15 +733,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Total Mortgage Amount
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="mortgageAmount"
-                                        id="mortgageAmount"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(mortgageAmount).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="mortgageAmount"
+                                            id="mortgageAmount"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(mortgageAmount).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -649,15 +752,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Own Capital
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="ownCapital"
-                                        id="ownCapital"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(ownCapital).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="ownCapital"
+                                            id="ownCapital"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(ownCapital).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -666,15 +771,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Month Mortgage Payment
                                     </label>
                                     <div className="mt-2">
-                                        <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="monthMortgagePayment"
-                                        id="monthMortgagePayment"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(monthMortgagePayment).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="monthMortgagePayment"
+                                            id="monthMortgagePayment"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(monthMortgagePayment).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -683,15 +790,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Month Interest Cost
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="monthInterestCost"
-                                        id="monthInterestCost"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(monthInterestCost).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="monthInterestCost"
+                                            id="monthInterestCost"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(monthInterestCost).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -700,15 +809,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Month Amortization
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="monthAmortization"
-                                        id="monthAmortization"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(monthAmortization).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="monthAmortization"
+                                            id="monthAmortization"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(monthAmortization).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -717,15 +828,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Mortgage Months
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">No. Months/</span>
-                                        <input
-                                        type="number"
-                                        name="mortgageMonths"
-                                        id="mortgageMonths"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(mortgageMonths).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">No. Months/</span>
+                                            <input
+                                            type="number"
+                                            name="mortgageMonths"
+                                            id="mortgageMonths"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(mortgageMonths).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -735,8 +848,16 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                 <legend className="text-sm font-semibold leading-6 text-gray-900">Profitability Rates</legend>
                                 <p className="mt-1 text-sm leading-6 text-gray-600">These are the most important profitability rates.</p>
 
-                                <div className="sm:col-span-3">
-                                    <PolarArea data={dataPolarProfitRates} />
+                                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-9">
+                                    <div className="sm:col-span-3">
+                                        <PolarArea data={dataDoughnutBuyCost} />
+                                    </div>
+                                    <div className="sm:col-span-3">
+                                        <PolarArea data={dataDoughnutAnnualExpenses} />
+                                    </div>
+                                    <div className="sm:col-span-3">
+                                        <PolarArea data={dataPolarProfitRates} />
+                                    </div>
                                 </div>
                                 
                                 <div className="sm:col-span-2 sm:col-start-1">
@@ -744,15 +865,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Month Cash-Flow
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
-                                        <input
-                                        type="number"
-                                        name="monthCashFlow"
-                                        id="monthCashFlow"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(monthCashFlow).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">$/</span>
+                                            <input
+                                            type="number"
+                                            name="monthCashFlow"
+                                            id="monthCashFlow"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(monthCashFlow).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -761,15 +884,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Gross Profit
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                        <input
-                                        type="number"
-                                        name="grossProfit"
-                                        id="grossProfit"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(grossProfit).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                            <input
+                                            type="number"
+                                            name="grossProfit"
+                                            id="grossProfit"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(grossProfit).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -778,15 +903,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Net Profit
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                        <input
-                                        type="number"
-                                        name="netProfit"
-                                        id="netProfit"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(netProfit).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                            <input
+                                            type="number"
+                                            name="netProfit"
+                                            id="netProfit"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(netProfit).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -795,15 +922,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Mortgage / Rent
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                        <input
-                                        type="number"
-                                        name="mortgageVSrent"
-                                        id="mortgageVSrent"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(mortgageVSrent).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                            <input
+                                            type="number"
+                                            name="mortgageVSrent"
+                                            id="mortgageVSrent"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(mortgageVSrent).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -812,15 +941,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Cash-Flow / Rent
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                        <input
-                                        type="number"
-                                        name="cashFlowVSrent"
-                                        id="cashFlowVSrent"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(cashFlowVSrent).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                            <input
+                                            type="number"
+                                            name="cashFlowVSrent"
+                                            id="cashFlowVSrent"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(cashFlowVSrent).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -829,15 +960,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Cash-On-Cash
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                        <input
-                                        type="number"
-                                        name="cashOnCash"
-                                        id="cashOnCash"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(cashOnCash).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                            <input
+                                            type="number"
+                                            name="cashOnCash"
+                                            id="cashOnCash"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(cashOnCash).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -846,15 +979,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         ROCE
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                        <input
-                                        type="number"
-                                        name="roce"
-                                        id="roce"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(roce).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                            <input
+                                            type="number"
+                                            name="roce"
+                                            id="roce"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(roce).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -863,15 +998,17 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
                                         Return of Investment
                                     </label>
                                     <div className="mt-2">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
-                                        <input
-                                        type="number"
-                                        name="totalReturnInvestment"
-                                        id="totalReturnInvestment"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        value={Number(totalReturnInvestment).toFixed(2)}
-                                        disabled={true}
-                                        />
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">%/</span>
+                                            <input
+                                            type="number"
+                                            name="totalReturnInvestment"
+                                            id="totalReturnInvestment"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={Number(totalReturnInvestment).toFixed(2)}
+                                            disabled={true}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 

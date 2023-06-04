@@ -9,6 +9,7 @@ import PieDoughnut from './Pie';
 import Button from './Button';
 import LineChart from './LineChart';
 import SparkLine from './SparkLine';
+import PolarAreaChart from './PolarAreaChart';
 import { earningData, medicalproBranding, recentTransactions, weeklyStats, dropdownData, SparklineAreaData, ecomPieChartData } from '../../../../assets/data/dashboard-routes/data';
 import { useStateContext } from '../../../../contexts/dashboard-routes/ContextProvider';
 import housePicture from '../../../../assets/img/dashboard-routes/housePicture.jpg';
@@ -107,7 +108,7 @@ const IndexDashboard = () => {
               </div>
 
               <div className="mt-5">
-                {/* <SparkLine currentColor={currentColor} id="line-sparkLine" type="Line" height="80px" width="250px" data={SparklineAreaData} color={currentColor} /> */}
+                <PolarAreaChart />
               </div>
               <div className="mt-10">
                 <Button

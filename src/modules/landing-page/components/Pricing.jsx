@@ -14,7 +14,7 @@ const Pricing = () => {
       <div className='container mx-auto'>
         {/* title */}
         <h2
-          className='h2 mb-10 lg:mb-20 text-center text-2xl text-white'
+          className='h2 mb-10 lg:mb-20 text-center text-2xl text-accent'
           data-aos='fade-up'
           data-aos-delay='200'
         >
