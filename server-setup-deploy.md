@@ -614,19 +614,19 @@ sudo systemctl daemon-reload
 Start the service:
 
 ```bash
-sudo systemctl start mi-servicio
+sudo systemctl start activateland.service
 ```
 
 Check the service status:
 
 ```bash
-sudo systemctl status mi-servicio
+sudo systemctl status activateland.service
 ```
 
 If it is required, stop the servide, restart it or check the logs:
 
 ```bash
-sudo systemctl stop mi-servicio
-sudo systemctl restart mi-servicio
+sudo systemctl stop activateland.service
+sudo systemctl restart activateland.service
 sudo journalctl -u activateland.service
 ```
