@@ -539,15 +539,12 @@ Like I said, it may take a few hours, but we should be all set. we have now depl
 
 if we want to make changes to the app, just push to github and run a **git pull** on the server. There are other tools to help automate the deployments, but I will go over that another time.
 
-## Set Up SSL (Not used yet!)
+## Set Up SSL
 
-We can purchase an SSL and set it with the domain registrar or we can use Let's Encrypt and set one up for free using the following commands:
+We can purchase an SSL and set it with the domain registrar or we can use Let's Encrypt and set one up for free using the following this website:
 
 ```bash
-sudo add-apt-repository ppa:certbot/certbot
-sudo apt-get update
-sudo apt-get install python-certbot-nginx
-sudo certbot --nginx -d thedomain.com -d www.thedomain.com
+https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal
 
 # Only valid for 90 days, test the renewal process with
 certbot renew --dry-run
