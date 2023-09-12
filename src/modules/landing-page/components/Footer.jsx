@@ -63,7 +63,7 @@ const Footer = () => {
               {newsletter.title}
             </div>
             <div className='text-xl text-light mb-[18px]'>
-              {newsletter.subtitle}
+              {/* {newsletter.subtitle} */}
             </div>
             {/* form */}
             <form className='max-w-[349px] mb-[10px]'>

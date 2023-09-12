@@ -322,7 +322,7 @@ deno task dev
 http://localhost:3000
 ```
 
-## Get files on the server
+## Get files on the server side
 
 We want to get our application files onto the server. We will use **Git** for this.
 
@@ -374,7 +374,7 @@ npm install
 
 Install frontend deps:
 
-```
+```bash
 cd frontend
 npm install
 ```
@@ -581,6 +581,7 @@ Please note that modifying the sudoers file requires administrative privileges, 
 Setup a systemd configuration in Ubuntu Server to manage the web service. If the service stops for any reason, systemd will automatically restart it and execute the command in the correct directory.With this configuration, the command will be executed from the specified directory every time the service starts.
 
 Open the service unit file:
+
 ```bash
 sudo nano /etc/systemd/system/activateland.service
 ```

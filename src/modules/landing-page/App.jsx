@@ -38,7 +38,7 @@ const App = () => {
       <Feature3 />
       <Cta />
       <Pricing />
-      <Brands />
+      {/* <Brands /> */}
       <Footer />
       <CookieConsent />
     </div>

@@ -51,7 +51,7 @@ const Header = () => {
           <Nav />
         </div>
         {/* cta button - initially - show on desktop mode */}
-        <ClerkProvider
+        {/* <ClerkProvider
           publishableKey={clerkPubKey}
           navigate={(to) => navigate(to)}
           >
@@ -87,7 +87,7 @@ const Header = () => {
                     </button>
                   </a>
             </SignedOut>
-        </ClerkProvider>
+        </ClerkProvider> */}
         {/* mobile nav trigger btn - hidden on desktop */}
         <button className='lg:hidden' onClick={() => setMobileNav(!mobileNav)}>
           {mobileNav ? (

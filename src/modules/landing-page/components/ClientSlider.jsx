@@ -46,7 +46,7 @@ const ClientSlider = ({ clients }) => {
               <div className='mb-[30px]'>{message}</div>
               {/* person name, img & position */}
               <div className='flex gap-x-[10px]'>
-                <img src={image} alt='' />
+                {/* <img src={image} alt='' /> */}
                 <div className='font-bold'>{name}</div>
                 <div className='text-light'>{position}</div>
               </div>
