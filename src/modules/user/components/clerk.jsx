@@ -9,16 +9,17 @@ import {
     UserButton,
     useAuth  } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-// TODO: Improve get .env variables.
-import { REACT_APP_CLERK_PUBLISHABLE_KEY } from "../../../assets/js/user/clerk.js";
 import { ProtectedPage, PublicPage } from "./ProtectedPage.jsx";
+
+const clerkPuplichableKey = await import.meta.env.PUBLIC_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 function ClerkProviderWithRoutes() {
 const navigate = useNavigate();
 
+
 return (
     <ClerkProvider
-    publishableKey={REACT_APP_CLERK_PUBLISHABLE_KEY}
+    publishableKey={clerkPuplichableKey}
     navigate={(to) => navigate(to)}
     >
         <Routes>
