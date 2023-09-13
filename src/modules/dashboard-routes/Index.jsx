@@ -12,12 +12,11 @@ import {
   useUser
 } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-// TODO: Improve get .env variables.
-import { REACT_APP_CLERK_PUBLISHABLE_KEY } from "../../assets/js/user/clerk.js";
-
 import "../../assets/css/dashboard-routes/Index.css";
 import App from './App';
 import { ContextProvider, useStateContext } from "../../contexts/dashboard-routes/ContextProvider.jsx";
+
+const clerkPubKey = await import.meta.env.PUBLIC_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 const Index = () => {
 
@@ -25,7 +24,7 @@ const Index = () => {
     <>
       <div className='overflow-hidden'>
         <BrowserRouter>
-          <ClerkProvider publishableKey={REACT_APP_CLERK_PUBLISHABLE_KEY} >
+          <ClerkProvider publishableKey={clerkPubKey} >
               <Routes>
                 <Route
                 path="/*"

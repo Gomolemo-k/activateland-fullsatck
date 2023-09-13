@@ -11,7 +11,7 @@ import {
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { ProtectedPage, PublicPage } from "./ProtectedPage.jsx";
 
-const clerkPuplichableKey = await import.meta.env.PUBLIC_REACT_APP_CLERK_PUBLISHABLE_KEY;
+const clerkPubKey = await import.meta.env.PUBLIC_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 function ClerkProviderWithRoutes() {
 const navigate = useNavigate();
@@ -19,7 +19,7 @@ const navigate = useNavigate();
 
 return (
     <ClerkProvider
-    publishableKey={clerkPuplichableKey}
+    publishableKey={clerkPubKey}
     navigate={(to) => navigate(to)}
     >
         <Routes>
