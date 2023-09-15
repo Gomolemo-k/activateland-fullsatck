@@ -44,7 +44,7 @@ const Pricing = () => {
                 >
                   {/* card icon */}
                   <div className='mb-8'>
-                    <img src={icon} alt='' />
+                    <img src={icon.src} alt='' />
                   </div>
                   {/* card title */}
                   <div className='text-[32px] font-semibold mb-8'>{title}</div>

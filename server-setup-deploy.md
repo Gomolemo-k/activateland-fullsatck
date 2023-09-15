@@ -229,6 +229,11 @@ sudo usermod -aG docker deployer
 
 ```bash
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+or
+curl -k https://deb.nodesource.com/setup_18.x | sudo -E bash -
+```
+
+```bash
 sudo apt-get install -y nodejs
 ```
 
@@ -236,12 +241,16 @@ sudo apt-get install -y nodejs
 
 ```bash
 sudo npm install -g astro@2.3.3
+or
+sudo npm install -g astro@latest
 ```
 
-### Deno install
+### Deno global install (Best practice -> use DVM)
 
 ```bash
 curl -fsSL https://deno.land/x/install/install.sh | sh
+or
+curl -k https://deno.land/x/install/install.sh | sh
 ```
 
 ### Set DENO_INSTALL and add to PATH (.bashrc)
@@ -249,6 +258,28 @@ curl -fsSL https://deno.land/x/install/install.sh | sh
 ```text
 DENO_INSTALL="/root/.deno"
 PATH="$DENO_INSTALL/bin:$PATH"
+```
+
+### Deno Version Manager (DVM) install
+
+With Shell:
+
+```bash
+curl -fsSL https://dvm.deno.dev | sh
+or 
+curl -k https://dvm.deno.dev | sh
+```
+
+With Powershell:
+
+```bash
+irm https://dvm.deno.dev | iex
+```
+
+See the documentation to install, use, list or upgrade Deno versions.
+
+```bash
+dvm
 ```
 
 ### Check versions
@@ -319,7 +350,7 @@ deno task dev
 ### Is working!! Open browser and navigate to the web app
 
 ```bash
-http://localhost:3000
+http://localhost:4321
 ```
 
 ## Get files on the server side
@@ -478,7 +509,7 @@ Find the **location /** area and replace with this
 
 ```text
 location / {
-    proxy_pass http://localhost:3000;    # or which other port the app runs on
+    proxy_pass http://localhost:4321;    # or which other port the app runs on
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';

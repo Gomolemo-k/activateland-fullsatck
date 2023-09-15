@@ -1,6 +1,6 @@
 # Activate Land Project: Starter Kit Basics
 
-```
+```text
 Experimental project for the use of different web development technologies, such as: Astro, Deno, React...
 ```
 
@@ -62,6 +62,11 @@ Docker Desktop (Include Docker Engine and more for Desktop Application) [https:/
 
 ```bash
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+or
+curl -k https://deb.nodesource.com/setup_18.x | sudo -E bash -
+```
+
+```bash
 sudo apt-get install -y nodejs
 ```
 
@@ -71,10 +76,12 @@ sudo apt-get install -y nodejs
 npm install -g astro@2.3.3
 ```
 
-### Deno install
+### Deno global install (Best practice -> use DVM)
 
 ```bash
 curl -fsSL https://deno.land/x/install/install.sh | sh
+or
+curl -k https://deno.land/x/install/install.sh | sh
 ```
 
 ### Set DENO_INSTALL and add to PATH (.bashrc)
@@ -82,6 +89,26 @@ curl -fsSL https://deno.land/x/install/install.sh | sh
 ```text
 DENO_INSTALL="/root/.deno"
 PATH="$DENO_INSTALL/bin:$PATH"
+```
+
+### Deno Version Manager (DVM) install
+
+With Shell:
+
+```bash
+curl -fsSL https://dvm.deno.dev | sh
+```
+
+With Powershell:
+
+```bash
+irm https://dvm.deno.dev | iex
+```
+
+See the documentation to install, use, list or upgrade Deno versions.
+
+```bash
+dvm
 ```
 
 ### Check versions
@@ -93,6 +120,7 @@ node --version
 npm --version
 astro --version
 deno --version
+dvm -V
 ```
 
 ### Go to working directory of the project
@@ -135,7 +163,7 @@ deno task dev
 ### Is working!! Open browser and navigate to the web app
 
 ```bash
-http://localhost:3000
+http://localhost:4321
 ```
 
 ## 🚀 Project Structure
@@ -252,7 +280,7 @@ All commands are run from the root of the project, from a terminal:
 | Command                | Action                                           |
 | :--------------------- | :----------------------------------------------- |
 | `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
+| `npm run dev`          | Starts local dev server at `localhost:4321`      |
 | `npm run build`        | Build your production site to `./dist/`          |
 | `npm run preview`      | Preview your build locally, before deploying     |
 | `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
@@ -263,7 +291,7 @@ Custom commands (see file deno.json) are run from the root of the project, from 
 | Command                       | Action                                           |
 | :---------------------------- | :----------------------------------------------- |
 | `deno task dev`               | Run project in development                       |
-| `deno task dev:astro`         | Starts local WEB server `localhost:3000`         |
+| `deno task dev:astro`         | Starts local WEB server `localhost:4321`         |
 | `deno task dev:api`           | Starts local API server `localhost:3001`         |
 | `deno task dev:test`          | Execute tests                                    |
 | `deno task dev:cache`         | Install on Deno cache all dependencies           |

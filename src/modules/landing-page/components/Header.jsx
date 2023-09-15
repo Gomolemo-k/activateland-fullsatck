@@ -22,12 +22,14 @@ const Header = () => {
   const [isActive, setIsActive] = useState(false);
   // destructure header data
   const { logo, btnText } = header;
+
   // scroll event
   useEffect(() => {
     window.addEventListener('scroll', () => {
       window.scrollY > 60 ? setIsActive(true) : setIsActive(false);
     });
   });
+
   return (
     <header
       className={`${
@@ -37,7 +39,7 @@ const Header = () => {
       <div className='container mx-auto flex justify-between items-center'>
         {/* logo */}
         <a href='#' data-aos='fade-down' data-aos-delay='1000'>
-          <img className="object-cover h-20 w-35" src={logo} alt='' />
+          <img className="object-cover h-20 w-35" src={logo.src} alt='' />
         </a>
         {/* nav - initially hidden - show on desktop mode */}
         <div

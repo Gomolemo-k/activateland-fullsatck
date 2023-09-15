@@ -15,7 +15,7 @@ const Brands = () => {
           return (
             <div key={index} data-aos='fade-up' data-aos-delay={delay}>
               {/* brand img */}
-              <img src={image} alt='' />
+              <img src={image.src} alt='' />
             </div>
           );
         })}

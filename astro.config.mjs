@@ -7,7 +7,14 @@ import astroI18next from "astro-i18next";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind(), svelte(), astroI18next()],
+  integrations: [
+    react({
+      include: ['**/react/*']
+    }), 
+    tailwind(), 
+    svelte(), 
+    astroI18next()
+  ],
   output: "server",
   adapter: deno({
     port: 8080,

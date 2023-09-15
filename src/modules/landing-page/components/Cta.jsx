@@ -31,7 +31,7 @@ const Cta = () => {
         <div className='flex justify-between'>
           <img
             className='hidden xl:flex'
-            src={img1}
+            src={img1.src}
             alt=''
             data-aos='zoom-out-right'
             data-aos-delay='700'
@@ -45,7 +45,7 @@ const Cta = () => {
           </button>
           <img
             className='hidden xl:flex'
-            src={img2}
+            src={img2.src}
             alt=''
             data-aos='zoom-out-left'
             data-aos-delay='700'
