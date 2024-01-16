@@ -331,3 +331,6 @@ docker volume rm $(docker volume ls -q)
 docker-compose build --no-cache
 docker-compose up
 ```
+"# activateland-fullsatck" 
+"# activateland-fullsatck" 
+"# activateland-fullsatck" 
