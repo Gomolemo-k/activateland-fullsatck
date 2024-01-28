@@ -1,6 +1,6 @@
 import { assert, assertEquals, assertThrows } from "std/testing/asserts.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
-import { User, validate, generateRandomPassword, hashPassword } from "./user.model.ts";
+import { User, validate, generateRandomPassword, hashPassword } from "./user.model.bak";
 import { connectToDatabase } from "../../../database/db.ts";
 
 Deno.test("Generate Random Password", () => {

@@ -3,11 +3,11 @@ import { superoak } from "https://deno.land/x/superoak@4.7.0/mod.ts";
 import app from "../../../api/api.routes.ts";
 import { connectToDatabase } from "../../../database/db.ts";
 import { User } from "../../user/models/user.model.ts";
-import Project from "../../project/models/project.model.ts";
+import Workspace from "../../workspace/models/workspace.model.ts";
 
 //Save ids
 let testUserId: any = null;
-let testProjectId: any = null;
+let testWorkspaceId: any = null;
 let testModelId: any = null;
 // Data
 let dataNew: any = null;
@@ -29,22 +29,22 @@ Deno.test("Get parent Property", async () => {
             await foundUser.save();
         }
 
-        //Get project
-        const projectName = "New Project";
-        let foundProject = await Project.findOne({ user: foundUser._id, name: projectName });
-        if (!foundProject) {
-            //Create Project
-            foundProject = new Project({ user: foundUser._id, name: projectName });
-            await foundProject.save();
+        //Get workspace
+        const WorkspaceName = "New Workspace";
+        let foundWorkspace = await Workspace.findOne({ user: foundUser._id, name: WorkspaceName });
+        if (!foundWorkspace) {
+            //Create Workspace
+            foundWorkspace = new workspace({ user: foundUser._id, name: workspaceName });
+            await foundWorkspace.save();
         }
         
         //Save user id
         testUserId = foundUser?._id.toString();
-        testProjectId = foundProject?._id.toString();
+        testWorkspaceId = foundWorkspace?._id.toString();
 
         //Create new data record
         dataNew = {
-            project: testProjectId,
+            workspace: testWorkspaceId,
             title: "New Property",
             propertyType: 'LAND',
             bedrooms: 3,
@@ -55,7 +55,7 @@ Deno.test("Get parent Property", async () => {
         };
         // console.log('dataNew: ', dataNew);
 
-        assertEquals(dataNew?.project, testProjectId);
+        assertEquals(dataNew?.workspace, testWorkspaceId);
         // Disconnect services
         await mongoose.disconnect();
     }
@@ -74,7 +74,7 @@ Deno.test(`POST ${routePath}`, async () => {
             //console.log('POST BODY: ', res.body);
 
             assertEquals(res.status, 201);
-            assertEquals(res.body.project, testProjectId);
+            assertEquals(res.body.workspace, testWorkspaceId);
             assertEquals(res.body.title, dataNew.title);
             assertEquals(res.body.propertyType, dataNew.propertyType);
             assertEquals(res.body.bedrooms, dataNew.bedrooms);
@@ -119,7 +119,7 @@ Deno.test(`GET ${routePath}`, async () => {
     }
 });
 
-Deno.test("GET /api/properties-project/:projectId", async () => {
+Deno.test("GET /api/properties-workspace/:workspaceid", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
@@ -127,11 +127,11 @@ Deno.test("GET /api/properties-project/:projectId", async () => {
         const request = await superoak(app);
 
         try {
-            const res = await request.get(`/api/properties-project/${testProjectId}`);
+            const res = await request.get(`/api/properties-workspace/${testWorkspaceId}`);
             // console.log('GET BODY: ', res);
         
             assertEquals(res.status, 200);
-            assertEquals(res.body[0].project, testProjectId);
+            assertEquals(res.body[0].workspace, testWorkspaceId);
         } catch(error) {
             console.log('ERROR: ', error)
         }

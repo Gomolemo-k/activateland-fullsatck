@@ -2,7 +2,7 @@ import { Application, Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
 import usersRoutes from '../modules/user/routes/user.routes.ts'
-import projectsRoutes from '../modules/workspace/routes/project.routes.ts'
+import workspacesRoutes from '../modules/workspace/routes/workspace.routes.ts'
 import userProfileRoutes from '../modules/user-profile/routes/user-profile.routes.ts'
 import userAccountRoutes from '../modules/user-account/routes/user-account.routes.ts'
 import teamRoutes from '../modules/team/routes/team.routes.ts'
@@ -18,8 +18,8 @@ app.use(oakCors());
 app.use(usersRoutes.routes());
 app.use(usersRoutes.allowedMethods());
 
-app.use(projectsRoutes.routes());
-app.use(projectsRoutes.allowedMethods());
+app.use(workspacesRoutes.routes());
+app.use(workspacesRoutes.allowedMethods());
 
 app.use(userProfileRoutes.routes());
 app.use(userProfileRoutes.allowedMethods());

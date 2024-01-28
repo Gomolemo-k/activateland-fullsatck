@@ -1,7 +1,7 @@
 export * as UsersApiClient from "../modules/user/hooks/api/client.ts"
 export * as UserProfilesApiClient from "../modules/user-profile/hooks/api/client.ts"
 export * as UserAccountsApiClient from "../modules/user-account/hooks/api/client.ts"
-export * as ProjectsApiClient from "../modules/workspace/hooks/api/client.ts"
+export * as WorkspacesApiClient from "../modules/workspace/hooks/api/client.ts"
 export * as TeamsApiClient from "../modules/team/hooks/api/client.ts"
 export * as TeamMembersApiClient from "../modules/team-member/hooks/api/client.ts"
 export * as PropertiesApiClient from "../modules/property/hooks/api/client.ts"

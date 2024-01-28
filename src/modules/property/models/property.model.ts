@@ -25,7 +25,7 @@ const propertyType = {
 }
 
 const propertySchema  = new mongoose.Schema({
-	project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
+	workspace: { type: mongoose.Schema.Types.ObjectId, ref: 'Workspace', required: true },
 	title: { type: String, required: true },
 	propertyType: { type: String, enum: Object.values(propertyType), required: true, default: propertyType.HOUSE },
 	bedrooms: { type: Number, required: true },

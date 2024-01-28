@@ -109,7 +109,7 @@ export const features = {
     pretitle: 'Collaborative Platform',
     title: 'Work Seamlessly with Teams',
     subtitle:
-      'Create projects and workgroups, share findings, and collaborate with your team to maximize efficiency in your investment process.',
+      'Create workspaces and workgroups, share findings, and collaborate with your team to maximize efficiency in your investment process.',
     btnLink: 'Learn more',
     btnIcon: ArrowRightImg,
     image: Feature2Img,

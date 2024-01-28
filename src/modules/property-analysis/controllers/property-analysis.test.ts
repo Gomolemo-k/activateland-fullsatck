@@ -3,12 +3,12 @@ import { superoak } from "https://deno.land/x/superoak@4.7.0/mod.ts";
 import app from "../../../api/api.routes.ts";
 import { connectToDatabase } from "../../../database/db.ts";
 import { User } from "../../user/models/user.model.ts";
-import Project from "../../project/models/project.model.ts";
+import Workspace from "../../workspace/models/workspace.model.ts";
 import { Property, propertyType } from "../../property/models/property.model.ts";
 
 //Save ids
 let testUserId: any = null;
-let testProjectId: any = null;
+let testWorkspaceId: any = null;
 let testPropertyId: any = null;
 let testModelId: any = null;
 // Data
@@ -31,25 +31,25 @@ Deno.test("Get parent Property Analysis", async () => {
             await foundUser.save();
         }
 
-        //Get project
-        const projectName = "New Project";
-        let foundProject = await Project.findOne({ user: foundUser._id, name: projectName });
-        if (!foundProject) {
-            //Create Project
-            foundProject = new Project({ user: foundUser._id, name: projectName });
-            await foundProject.save();
+        //Get workspace
+        const workspaceName = "New Workspace";
+        let foundworkspace = await Workspace.findOne({ user: foundUser._id, name: workspaceName });
+        if (!foundWorkspace) {
+            //Create Workspace
+            foundWorkspace = new Workspace({ user: foundUser._id, name: workspaceName });
+            await foundWorkspace.save();
         }
         //Get property
         const propertyTitle = "New Property";
-        let foundProperty = await Property.findOne({ project: foundProject._id, name: propertyTitle });
+        let foundProperty = await Property.findOne({ workspace: foundWorkspace._id, name: propertyTitle });
         if (!foundProperty) {
-            //Create Project
-            foundProperty = new Property({ project: foundProject._id, title: propertyTitle, propertyType: propertyType.HOUSE, bedrooms: 3, bathrooms: 2, size: 80 });
+            //Create Workspace
+            foundProperty = new Property({ workspace: foundWorkspace._id, title: propertyTitle, propertyType: propertyType.HOUSE, bedrooms: 3, bathrooms: 2, size: 80 });
             await foundProperty.save();
         }
         //Save user id
         testUserId = foundUser?._id.toString();
-        testProjectId = foundProject?._id.toString();
+        testWorkspaceId = foundWorkspace?._id.toString();
         testPropertyId = foundProperty?._id.toString();
 
         //Create new data record

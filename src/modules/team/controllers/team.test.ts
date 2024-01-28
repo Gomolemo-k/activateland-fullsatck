@@ -3,11 +3,11 @@ import { superoak } from "https://deno.land/x/superoak@4.7.0/mod.ts";
 import app from "../../../api/api.routes.ts";
 import { connectToDatabase } from "../../../database/db.ts";
 import { User } from "../../user/models/user.model.ts";
-import Project from "../../project/models/project.model.ts";
+import Workspace from "../../workspace/models/workspace.model.ts";
 
 //Save ids
 let testUserId: any = null;
-let testProjectId: any = null;
+let testWorkspaceId: any = null;
 let testModelId: any = null;
 // Data
 let dataNew: any = null;
@@ -29,28 +29,28 @@ Deno.test("Get parent Team", async () => {
             await foundUser.save();
         }
 
-        //Get project
-        const projectName = "New Project";
-        let foundProject = await Project.findOne({ user: foundUser._id, name: projectName });
-        if (!foundProject) {
-            //Create Project
-            foundProject = new Project({ user: foundUser._id, name: projectName });
-            await foundProject.save();
+        //Get workspace
+        const workspaceName = "New Workspace";
+        let foundWorkspace = await Workspace.findOne({ user: foundUser._id, name: workspaceName });
+        if (!foundWorkspace) {
+            //Create Workspace
+            foundWorkspace = new Workspace({ user: foundUser._id, name: workspaceName });
+            await foundWorkspace.save();
         }
         
         //Save user id
         testUserId = foundUser?._id.toString();
-        testProjectId = foundProject?._id.toString();
+        testWorkspaceId = foundWorkspace?._id.toString();
 
         //Create new data record
         dataNew = {
-            project: testProjectId,
+            workspace: testWorkspaceId,
             name: "New Team",
             description: "Description of New Team.",
         };
         // console.log('dataNew: ', dataNew);
 
-        assertEquals(dataNew?.project, testProjectId);
+        assertEquals(dataNew?.workspace, testworkspaceId);
         // Disconnect services
         await mongoose.disconnect();
     }
@@ -69,7 +69,7 @@ Deno.test(`POST ${routePath}`, async () => {
             //console.log('POST BODY: ', res.body);
 
             assertEquals(res.status, 201);
-            assertEquals(res.body.project, testProjectId);
+            assertEquals(res.body.workspace, testworkspaceId);
             assertEquals(res.body.name, dataNew.name);
             assertEquals(res.body.description, dataNew.description);
         

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineProject, AiFillHome } from 'react-icons/ai';
+import { AiOutlineWorkspace, AiFillHome } from 'react-icons/ai';
 import { FiUserCheck, FiBarChart, FiCreditCard, FiStar } from 'react-icons/fi';
 import { BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft } from 'react-icons/bs';
 import { GiOrganigram } from 'react-icons/gi';
@@ -197,12 +197,12 @@ export const links = [
     ],
   },
   {
-    title: 'Projects',
+    title: 'workspace',
     links: [
       {
-        name: 'Projects',
-        path: 'projects/index',
-        icon: <AiOutlineProject />,
+        name: 'Workspaces',
+        path: 'workspaces/index',
+        icon: <AiOutlineWorkspace />,
       },
       {
         name: 'Teams',
@@ -533,8 +533,8 @@ export const customersGrid = [
     width: '150',
     template: customerGridImage,
     textAlign: 'Center' },
-  { field: 'ProjectName',
-    headerText: 'Project Name',
+  { field: 'WorkspaceName',
+    headerText: 'Workspace Name',
     width: '150',
     textAlign: 'Center' },
   { field: 'Status',
@@ -792,7 +792,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -804,7 +804,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -819,7 +819,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -833,7 +833,7 @@ export const customersData = [
 
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -847,7 +847,7 @@ export const customersData = [
 
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,
@@ -862,7 +862,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -874,7 +874,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -889,7 +889,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -903,7 +903,7 @@ export const customersData = [
 
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -917,7 +917,7 @@ export const customersData = [
 
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,
@@ -932,7 +932,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -944,7 +944,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -959,7 +959,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -973,7 +973,7 @@ export const customersData = [
 
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -987,7 +987,7 @@ export const customersData = [
 
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,
@@ -1002,7 +1002,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -1014,7 +1014,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -1029,7 +1029,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -1043,7 +1043,7 @@ export const customersData = [
 
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -1057,7 +1057,7 @@ export const customersData = [
 
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,
@@ -1072,7 +1072,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -1084,7 +1084,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -1099,7 +1099,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -1113,7 +1113,7 @@ export const customersData = [
 
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -1127,7 +1127,7 @@ export const customersData = [
 
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,
@@ -1142,7 +1142,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -1154,7 +1154,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -1169,7 +1169,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -1183,7 +1183,7 @@ export const customersData = [
 
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -1197,7 +1197,7 @@ export const customersData = [
 
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,
@@ -1212,7 +1212,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -1224,7 +1224,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -1239,7 +1239,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -1253,7 +1253,7 @@ export const customersData = [
 
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -1267,7 +1267,7 @@ export const customersData = [
 
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,
@@ -1282,7 +1282,7 @@ export const customersData = [
     CustomerEmail: 'nirav@gmail.com',
     CustomerImage:
       avatar2,
-    ProjectName: 'Hosting Press HTML',
+      WorkspaceName: 'Hosting Press HTML',
     Status: 'Active',
     StatusBg: '#8BE78B',
     Weeks: '40',
@@ -1294,7 +1294,7 @@ export const customersData = [
 
     CustomerName: 'Sunil Joshi',
     CustomerEmail: 'sunil@gmail.com',
-    ProjectName: 'Elite Admin',
+    WorkspaceName: 'Elite Admin',
     Status: 'Active',
     CustomerImage:
       avatar3,
@@ -1309,7 +1309,7 @@ export const customersData = [
 
     CustomerName: 'Andrew McDownland',
     CustomerEmail: 'andrew@gmail.com',
-    ProjectName: 'Real Homes WP Theme',
+    WorkspaceName: 'Real Homes WP Theme',
     Status: 'Pending',
     CustomerImage:
       avatar4,
@@ -1322,7 +1322,7 @@ export const customersData = [
     CustomerID: 1039,
     CustomerName: 'Christopher Jamil',
     CustomerEmail: 'jamil@gmail.com',
-    ProjectName: 'MedicalPro WP Theme',
+    WorkspaceName: 'MedicalPro WP Theme',
     Status: 'Completed',
     CustomerImage:
       avatar,
@@ -1335,7 +1335,7 @@ export const customersData = [
     CustomerID: 1040,
     CustomerName: 'Michael',
     CustomerEmail: 'michael@gmail.com',
-    ProjectName: 'Weekly WP Theme',
+    WorkspaceName: 'Weekly WP Theme',
     Status: 'Cancel',
     CustomerImage:
       avatar2,

@@ -196,7 +196,7 @@ Inside of Activate Land project, you'll see the following folders and files:
 │              └── components
 │       └── location
 │              └── models
-│       └── project
+│       └── workspace
 │              └── components
 │              └── controllers
 │              └── hooks
@@ -249,7 +249,7 @@ Inside of Activate Land project, you'll see the following folders and files:
 │       └── user-session
 │              └── models
 │   └── pages/
-│       └── projects
+│       └── workspaces
 │       └── properties
 │       └── property-analysis
 │       └── team-members

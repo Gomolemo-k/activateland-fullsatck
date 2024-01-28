@@ -1,12 +1,12 @@
 import React from "react";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-const IndexNewButton = (currentUser) => {
+const IndexNewButton = () => {
     return (
         <div>
             <div className="my-6 lg:my-12 container px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between pb-4 border-b border-gray-300">
                 <div>
-                    <h4 className="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">Projects</h4>
+                    <h4 className="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">Workspaces</h4>
                     <ul className="flex flex-col md:flex-row items-start md:items-center text-gray-600 dark:text-gray-400 text-sm mt-3">
                         <li className="flex items-center mr-4">
                             <div className="mr-1">
@@ -30,10 +30,11 @@ const IndexNewButton = (currentUser) => {
                     </ul>
                 </div>
                 <div className="mt-6 md:mt-0">
-                <Link to="/projects/new" type="button" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">New</Link>
+                    <Link to="/workspaces/new" type="button" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">New</Link>
                 </div>
             </div>
         </div>
     );
 };
+
 export default IndexNewButton;

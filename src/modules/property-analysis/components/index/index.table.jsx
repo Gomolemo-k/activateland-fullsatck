@@ -39,7 +39,7 @@ const IndexTablePropertyAnalysis = ({currentUser}) => {
     const fetchData = async () => {
         try {
             console.log('currentUser IndexTablePropertyAnalysis: ', $userPropertyAnalysis);
-            // let propertyAnalysis = currentUser.currentUser[0].projects[0].properties[0].propertyAnalysis;
+            // let propertyAnalysis = currentUser.currentUser[0].workspaces[0].properties[0].propertyAnalysis;
             let propertyAnalysis = [];
             // console.log('PropertyAnalysis IndexPropertyAnalysis 0: ', propertyAnalysis);
             let userApi = await UsersApiClient.getUserReferences(currentUser.currentUser[0]._id);

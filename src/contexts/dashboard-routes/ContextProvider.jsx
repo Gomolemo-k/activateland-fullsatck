@@ -17,7 +17,7 @@ export const ContextProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
-  const [userProjects, setUserProjects] = useState([])
+  const [userWorkspaces, setUserWorkspaces] = useState([])
 
 
   const setUserByEmail = async (email) => {
@@ -55,7 +55,7 @@ export const ContextProvider = ({ children }) => {
     <StateContext.Provider value={{setUserByEmail, currentUser, setCurrentUser, 
       currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, 
       isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, 
-      setColor, themeSettings, setThemeSettings, userProjects, setUserProjects }}>
+      setColor, themeSettings, setThemeSettings, userWorkspaces, setUserWorkspace }}>
       {children}
     </StateContext.Provider>
   );

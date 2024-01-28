@@ -125,8 +125,8 @@ export const getUserReferences = async (ctx: RouterContext<any, any>) => {
             })
         .populate(
             {
-                path: 'projects', 
-                model: 'Project',
+                path: 'Workspaces', 
+                model: 'Workspace',
                 populate: {
                     path: 'teams',
                     model: 'Team',
@@ -138,8 +138,8 @@ export const getUserReferences = async (ctx: RouterContext<any, any>) => {
             })
         .populate(
             {
-                path: 'projects', 
-                model: 'Project',
+                path: 'workspaces', 
+                model: 'Workspace',
                 populate: {
                      path: 'properties',
                      model: 'Property',

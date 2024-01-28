@@ -11,11 +11,11 @@ import IndexDashboard from '../dashboard/components/index/index';
 //Routes user profile
 import ShowUserProfile from '../user-profile/components/show/show';
 import EditUserProfile from '../user-profile/components/edit/edit';
-//Routes project
-import IndexProject from '../project/components/index/index';
-import NewProject from '../project/components/new/new';
-import ShowProject from '../project/components/show/show';
-import EditProject from '../project/components/edit/edit';
+//Routes worksapce
+import IndexWorkspace from '../worksapce/components/index/index';
+import NewWorkspace from '../workspace/components/new/new';
+import ShowWorkspace from '../workspacce/components/show/show';
+import EditWorkspace from '../workspace/components/edit/edit';
 //Routes team
 import IndexTeam from '../team/components/index/index';
 import NewTeam from '../team/components/new/new';
@@ -120,11 +120,11 @@ const App = () => {
                 <Route path="/users/show" element={currentUser && (<ShowUserProfile currentUser={currentUser} />)} />
                 <Route path="/users/edit" element={currentUser && (<EditUserProfile currentUser={currentUser} />)} />
 
-                {/* projects  */}
-                <Route path="/projects/index" element={currentUser && (<IndexProject currentUser={currentUser} />)} />
-                <Route path="/projects/new" element={currentUser && (<NewProject currentUser={currentUser} />)} />
-                <Route path="/projects/show" element={currentUser && (<ShowProject currentUser={currentUser} />)} />
-                <Route path="/projects/edit" element={currentUser && (<EditProject currentUser={currentUser} />)} />
+                {/* workspaces  */}
+                <Route path="/workspaces/index" element={currentUser && (<IndexWorksapce currentUser={currentUser} />)} />
+                <Route path="/workspaces/new" element={currentUser && (<NewWorkspace currentUser={currentUser} />)} />
+                <Route path="/workspaces/show" element={currentUser && (<ShowWorkspace currentUser={currentUser} />)} />
+                <Route path="/workspaces/edit" element={currentUser && (<EditWorkspace currentUser={currentUser} />)} />
 
                 {/* teams  */}
                 <Route path="/teams/index" element={currentUser && (<IndexTeam currentUser={currentUser} />)} />

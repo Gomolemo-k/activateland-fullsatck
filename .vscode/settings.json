@@ -1,5 +1,8 @@
 {
     "deno.enable": true,
     "deno.unstable": true,
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "cSpell.words": [
+        "nanostores"
+    ]
 }

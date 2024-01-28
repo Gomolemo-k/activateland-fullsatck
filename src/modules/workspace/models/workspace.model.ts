@@ -1,6 +1,6 @@
 import { mongoose}  from "../../../../deps.ts";
 
-const projectSchema  = new mongoose.Schema({
+const workspaceSchema = new mongoose.Schema({
 	user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 	name: { type: String, required: true },
 	description: { type: String },
@@ -11,4 +11,4 @@ const projectSchema  = new mongoose.Schema({
 });
 
 
-export default mongoose.model("Project", projectSchema);
+export default mongoose.model("Workspace", workspaceSchema);

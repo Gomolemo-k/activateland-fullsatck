@@ -1,12 +1,12 @@
 import { assert, assertEquals, assertThrows } from "std/testing/asserts.ts";
 import { connectToDatabase } from "../../../database/db.ts";
 import { User } from "../../user/models/user.model.ts";
-import Project from "../../project/models/project.model.ts";
+import Workspace from "../../workspace/models/workspace.model.ts";
 import { Property, propertyType } from "./property.model.ts";
 
 //Save ids
 let testUserId: any = null;
-let testProjectId: any = null;
+let testWorkspaceId: any = null;
 let testModelId: any = null;
 // Data
 let dataNew: any = null;
@@ -24,22 +24,22 @@ Deno.test("Get parent Property", async () => {
             foundUser = new User({ email: userEmail });
             await foundUser.save();
         }
-        //Get project
-        const projectName = "New Project";
-        let foundProject = await Project.findOne({ user: foundUser._id, name: projectName });
-        if (!foundProject) {
-            //Create Project
-            foundProject = new Project({ user: foundUser._id, name: projectName });
-            await foundProject.save();
+        //Get workspace
+        const workspaceName = "New Workspace";
+        let foundWorkspace = await Workspace.findOne({ user: foundUser._id, name: WorkspaceName });
+        if (!foundWorkspace) {
+            //Create Workspace
+            foundWorkspace = new Workspace({ user: foundUser._id, name: workspaceName });
+            await foundWorkspace.save();
         }
         
         //Save id
         testUserId = foundUser._id;
-        testProjectId = foundProject._id;
+        testWorkspaceId = foundWorkspace._id;
 
         //Save data
         dataNew = {
-            project: testProjectId,
+            workspace: testWorkspaced,
             title: "New Property",
             propertyType: propertyType.LAND,
             bedrooms: 3,
@@ -48,7 +48,7 @@ Deno.test("Get parent Property", async () => {
             price: 135000,
             description: "New Property description.",
         };
-        assertEquals(dataNew?.project, testProjectId);
+        assertEquals(dataNew?.workspace, testWorkspaceId);
         await mongoose.disconnect();
     }
 });
@@ -63,7 +63,7 @@ Deno.test("Create a new Property", async () => {
         //Save id
         testModelId = record?._id;
 
-        assertEquals(record?.project, dataNew?.project);
+        assertEquals(record?.workspace, dataNew?.workspace);
         assertEquals(record?.title, dataNew?.title);
         assertEquals(record?.propertyType, dataNew?.propertyType);
         assertEquals(record?.bedrooms, dataNew?.bedrooms);
@@ -75,13 +75,13 @@ Deno.test("Create a new Property", async () => {
     }
 });
 
-Deno.test("List existing Property by Project", async () => {
+Deno.test("List existing Property by Workspace", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await Property.find({project: testProjectId.toString()});
-        assertEquals(found[0].project, dataNew?.project);
+        const found = await Property.find({workspace: testWorkspaceId.toString()});
+        assertEquals(found[0].workspace, dataNew?.workspace);
         await mongoose.disconnect();
     }
 });
@@ -93,7 +93,7 @@ Deno.test("Read an existing Property", async () => {
     if (mongoose && isConnected) {
         const record = await Property.findOne(testModelId);
 
-        assertEquals(record?.project, dataNew?.project);
+        assertEquals(record?.workspace, dataNew?.workspace);
         assertEquals(record?.title, dataNew?.title);
         assertEquals(record?.propertyType, dataNew?.propertyType);
         assertEquals(record?.bedrooms, dataNew?.bedrooms);
@@ -118,7 +118,7 @@ Deno.test("Update an existing Property", async () => {
         }
         const record = await Property.findOne(testModelId);
         
-        assertEquals(record?.project, dataNew?.project);
+        assertEquals(record?.workspace, dataNew?.workspace);
         assertEquals(record?.title, updated);
         assertEquals(record?.propertyType, dataNew?.propertyType);
         assertEquals(record?.bedrooms, dataNew?.bedrooms);

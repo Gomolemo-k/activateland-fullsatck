@@ -1,15 +1,15 @@
 import { atom } from "nanostores"
 
-export const userProjects = atom([]);
-export const project = atom([]);
+export const userWorkspaces = atom([]);
+export const Wokspace = atom([]);
 
-// export function addUserProjects(userProjects: any) {
-//     userProjects.set([...userProjects.get(), userProjects]); // Save multiple objects
-//     console.log('nanostores/userProjects: ', userProjects.get());
+// export function addUsers(userWorkpsaces: any) {
+//     userW  workspaces.set([...userWorkspaces.get(), userWorkspaces]); // Save multiple objects
+//     console.log('nanostores/userWorkspaces: ', userWorkspaces.get());
 // }
 
 
-// export function addProjects(project: any) {
-//     project.set([...project.get(), project]); // Save multiple objects
-//     console.log('nanostores/project: ', project.get());
+// export function add workspaces(workspace: any) {
+//     workspace.set([...workspace.get(), workspace]); // Save multiple objects
+//     console.log('nanostores/workspace: ', workspace.get());
 // }

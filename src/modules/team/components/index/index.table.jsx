@@ -15,8 +15,8 @@ const IndexTableTeam = ({currentUser}) => {
                             header: 'ID',
                         },
                         {
-                            accessorKey: 'project._id',
-                            header: 'Project',
+                            accessorKey: 'workspace._id',
+                            header: 'Workspace',
                         },
                         {
                             accessorKey: 'name',
@@ -35,7 +35,7 @@ const IndexTableTeam = ({currentUser}) => {
     const fetchData = async () => {
         try {
             console.log('currentUser IndexTableTeam: ', $userTeams);
-            // let teams = currentUser.currentUser[0].project.teams;
+            // let teams = currentUser.currentUser[0].workspace.teams;
             let teams = [];
             // console.log('teams IndexTeam 0: ', teams);
             let userApi = await UsersApiClient.getUserReferences(currentUser.currentUser[0]._id);

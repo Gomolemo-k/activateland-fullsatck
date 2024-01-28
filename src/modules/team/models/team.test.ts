@@ -1,12 +1,12 @@
 import { assert, assertEquals, assertThrows } from "std/testing/asserts.ts";
 import { connectToDatabase } from "../../../database/db.ts";
 import { User } from "../../user/models/user.model.ts";
-import Project from "../../project/models/project.model.ts";
+import Workspace from "../../workspace/models/workspace.model.ts";
 import Team from "./team.model.ts";
 
 //Save ids
 let testUserId: any = null;
-let testProjectId: any = null;
+let testWorkspaceId: any = null;
 let testModelId: any = null;
 // Data
 let dataNew: any = null;
@@ -24,26 +24,26 @@ Deno.test("Get parent Team", async () => {
             foundUser = new User({ email: userEmail });
             await foundUser.save();
         }
-        //Get project
-        const projectName = "New Project";
-        let foundProject = await Project.findOne({ user: foundUser._id, name: projectName });
-        if (!foundProject) {
-            //Create Project
-            foundProject = new Project({ user: foundUser._id, name: projectName });
-            await foundProject.save();
+        //Get workspace
+        const workspaceName = "New Workspace";
+        let foundWorkspace = await Workspace.findOne({ user: foundUser._id, name: workspaceName });
+        if (!foundWorkspace) {
+            //Create Worksapce
+            foundWorkspace = new Workspace({ user: foundUser._id, name: workspaceName });
+            await foundWorkspace.save();
         }
         
         //Save id
         testUserId = foundUser._id;
-        testProjectId = foundProject._id;
+        testWorkspaceId = foundWorkspace._id;
 
         //Save data
         dataNew = {
-            project: testProjectId,
+            worksapce: testWorksapceId,
             name: "New Team",
             description: "Description of New Team.",
         };
-        assertEquals(dataNew?.project, testProjectId);
+        assertEquals(dataNew?.workspace, testWorkspaceId);
         await mongoose.disconnect();
     }
 });
@@ -58,7 +58,7 @@ Deno.test("Create a new Team", async () => {
         //Save id
         testModelId = record?._id;
 
-        assertEquals(record?.project, dataNew?.project);
+        assertEquals(record?.workspace, dataNew?.workspace);
         assertEquals(record?.name, dataNew?.name);
         assertEquals(record?.description, dataNew?.description);
         await mongoose.disconnect();
@@ -72,7 +72,7 @@ Deno.test("Read an existing Team", async () => {
     if (mongoose && isConnected) {
         const record = await Team.findOne(testModelId);
 
-        assertEquals(record?.project, dataNew?.project);
+        assertEquals(record?.workspace, dataNew?.workspace);
         assertEquals(record?.name, dataNew?.name);
         assertEquals(record?.description, dataNew?.description)
         await mongoose.disconnect();
@@ -92,7 +92,7 @@ Deno.test("Update an existing Team", async () => {
         }
         const record = await Team.findOne({ name: updated });
         
-        assertEquals(record?.project, dataNew?.project);
+        assertEquals(record?.workspace, dataNew?.workspace);
         assertEquals(record?.name, updated);
         assertEquals(record?.description, dataNew?.description)
         await mongoose.disconnect();

@@ -1,11 +1,11 @@
 import { assert, assertEquals, assertThrows } from "std/testing/asserts.ts";
 import { connectToDatabase } from "../../../database/db.ts";
 import { User } from "../../user/models/user.model.ts";
-import Project from "./project.model.ts";
+import Workspace from "./workspace.model.ts";
 
-//Save ids
+// Save ids
 let testUserId: any = null;
-let testProjectId: any = null;
+let testWorkspaceId: any = null;
 // Data
 let dataNew: any = null;
 
@@ -14,36 +14,35 @@ Deno.test("Get parent User", async () => {
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        //Get user
+        // Get user
         const userEmail = "test@example.com";
         let foundUser = await User.findOne({ email: userEmail });
         if (!foundUser) {
-            //Create user
+            // Create user
             foundUser = new User({ email: userEmail });
             await foundUser.save();
         }
-        //foundUser = await User.findOne({ email: userEmail });
-        //Save user id
+        // Save user id
         testUserId = foundUser._id;
         dataNew = {
             user: testUserId,
-            name: "New Project",
-            description: "Description of the new project.",
+            name: "New Workspace",
+            description: "Description of the new workspace.",
         };
         assertEquals(dataNew?.user, testUserId);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Create a new project", async () => {
+Deno.test("Create a new workspace", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const record = new Project(dataNew);
+        const record = new Workspace(dataNew);
         await record.save();
-        //Save project id
-        testProjectId = record?._id;
+        // Save workspace id
+        testWorkspaceId = record?._id;
 
         assertEquals(record?.user, dataNew?.user);
         assertEquals(record?.name, dataNew?.name);
@@ -52,25 +51,23 @@ Deno.test("Create a new project", async () => {
     }
 });
 
-Deno.test("List existing projects by user", async () => {
+Deno.test("List existing workspaces by user", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        // console.log('testUserId: ', testUserId.toString());
-        const found = await Project.find({user: testUserId.toString()});
-        // console.log('found: ', found);
+        const found = await Workspace.find({ user: testUserId.toString() });
         assertEquals(found[0].user, dataNew?.user);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Read an existing project", async () => {
+Deno.test("Read an existing workspace", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await Project.findOne(testProjectId);
+        const found = await Workspace.findOne(testWorkspaceId);
         assertEquals(found?.user, dataNew?.user);
         assertEquals(found?.name, dataNew?.name);
         assertEquals(found?.description, dataNew?.description);
@@ -78,47 +75,47 @@ Deno.test("Read an existing project", async () => {
     }
 });
 
-Deno.test("Update an existing project", async () => {
+Deno.test("Update an existing workspace", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const found = await Project.findOne(testProjectId);
-        const nameUpdated = "Updated Project"
+        const found = await Workspace.findOne(testWorkspaceId);
+        const nameUpdated = "Updated Workspace";
         if (found) {
             found.name = nameUpdated;
             await found.save();
         }
-    
-        const updated = await Project.findOne({ name: nameUpdated });
+
+        const updated = await Workspace.findOne({ name: nameUpdated });
         assertEquals(updated?.name, nameUpdated);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Delete an existing project", async () => {
+Deno.test("Delete an existing workspace", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        const record = await Project.findOne(testProjectId);
+        const record = await Workspace.findOne(testWorkspaceId);
         if (record) {
-            await Project.deleteOne({ _id: record._id });
+            await Workspace.deleteOne({ _id: record._id });
         }
-    
-        const deleted = await Project.findOne(testProjectId);
+
+        const deleted = await Workspace.findOne(testWorkspaceId);
         assertEquals(deleted, null);
         await mongoose.disconnect();
     }
 });
 
-Deno.test("Remove all project collection", async () => {
+Deno.test("Remove all workspace collection", async () => {
     const mongoose = await connectToDatabase();
     const isConnected = mongoose.connections[0].readyState === 1;
     assert(isConnected, "Database is connected");
     if (mongoose && isConnected) {
-        Project.deleteMany({});
-        const deleted = await Project.find();
+        Workspace.deleteMany({});
+        const deleted = await Workspace.find();
         assertEquals(Array.isArray(deleted), true);
         await mongoose.disconnect();
     }

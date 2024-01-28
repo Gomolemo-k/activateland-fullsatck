@@ -220,7 +220,7 @@ const NewFormPropertyAnalysis = ({currentUser}) => {
             
             // console.log('propertyAnalysisSave 1:', propertyAnalysisSave)
             // if (propertyAnalysisSave?._id) {
-            //     setProject(propertyAnalysisSave);
+            //     setWorkspace(propertyAnalysisSave);
             // }
         } catch (error) {
             console.error("Error handleSubmitNewPropertyAnalysis: ", error);

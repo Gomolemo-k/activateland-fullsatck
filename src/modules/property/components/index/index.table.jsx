@@ -15,8 +15,8 @@ const IndexTableProperty = ({currentUser}) => {
                             header: 'ID',
                         },
                         {
-                            accessorKey: 'project._id',
-                            header: 'Project',
+                            accessorKey: 'Workspace._id',
+                            header: 'Workspace',
                         },
                         {
                             accessorKey: 'title',
@@ -39,16 +39,16 @@ const IndexTableProperty = ({currentUser}) => {
     const fetchData = async () => {
         try {
             console.log('currentUser IndexTableProperty: ', $userProperties);
-            // let properties = currentUser.currentUser[0].projects[0].properties;
+            // let properties = currentUser.currentUser[0].Worksapces[0].properties;
             let properties = [];
-            // console.log('projects IndexProject 0: ', projects);
+            // console.log('workspaces IndexWorkspace 0: ', workspaces);
             let userApi = await UsersApiClient.getUserReferences(currentUser.currentUser[0]._id);
             if (userApi) {
                 // console.log('userApi IndexTableProperty: ', userApi);
                 // properties = userApi[0].properties;
             }
-            // setUserProjects(projects);
-            // userProjects.set(properties);
+            // setUserWorkspaces(workspaces);
+            // userWorkspaces.set(properties);
             console.log('UPDATE $userProperties IndexTableProperty: ', $userProperties);
             return properties;
         } catch (error) {

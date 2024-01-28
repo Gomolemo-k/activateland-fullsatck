@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ProjectsApiClient } from "../../../../api/fetch.functions"
+import { WorkspacesApiClient } from "../../../../api/fetch.functions"
 import { useStateContext } from "../../../../contexts/dashboard-routes/ContextProvider"
 
 
-const NewFormProject = ({currentUser}) => {
+const NewFormWorkspace = ({currentUser}) => {
     const queryParameters = new URLSearchParams(window.location.search)
 
     const { setUserByEmail, setCurrentUser } = useStateContext();
-    const [project, setProject] = useState(undefined)
+    const [workspace, setWorkspace] = useState(undefined)
     const [name, setName] = useState(queryParameters.get("name") || '')
     const [description, setDescription] = useState(queryParameters.get("description") || '')
     const [isPending, setIsPending] = useState(false)
@@ -16,40 +16,40 @@ const NewFormProject = ({currentUser}) => {
     const navigate = useNavigate();
     const user = currentUser?.currentUser[0];
 
-    async function handleSubmitNewProject(event) {
+    async function handleSubmitNewWorkspace(event) {
         try {
-            console.log('project handle: ', project)
-            // event?.proeventDefault();
+            console.log('workspace handle: ', workspace)
+            // event?.preventDefault();
             setIsPending(true);
-            const projectData = {
+            const workspaceData = {
                 user: user._id,
                 name: name,
                 description: description,
             }
-            let projectSaved;
+            let workspaceSaved;
 
-            projectSaved = await ProjectsApiClient.postApiProjects(projectData);
+            workspaceSaved = await WorkspaceApiClient.postApiWorkspace(workspaceData);
             
-            console.log('projectSaved 1:', projectSaved)
-            if (projectSaved?._id) {
-                setProject(projectSaved);
+            console.log('workspaceSaved 1:', workspaceSaved)
+            if (workspaceSaved?._id) {
+                setworkspace(workspaceSaved);
             }
         } catch (error) {
             console.error("Error saving: ", error);
-            navigate("/projects/new");
+            navigate("/workspace/new");
         } finally {
             setIsPending(false);
         }
-        navigate("/projects/index");
+        navigate("/workspace/index");
     }
 
     return (
         <div className="flex flex-col w-full p-10 space-y-4 bg-white rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-800">
-            <form onSubmit={handleSubmitNewProject}>
+            <form onSubmit={handleSubmitNewWorkspace}>
                 <fieldset>
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
-                            <h2 className="text-base font-semibold leading-7 text-gray-900">New Project</h2>
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">New Workspace</h2>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
@@ -99,7 +99,7 @@ const NewFormProject = ({currentUser}) => {
                 <fieldset>
                     <div className="mt-6 flex items-center justify-end gap-x-6">
                         <>
-                            <Link to="/projects/index" type="button" className="bt text-sm font-semibold leading-6 text-gray-900">Cancel</Link>
+                            <Link to="/workspaces/index" type="button" className="bt text-sm font-semibold leading-6 text-gray-900">Cancel</Link>
                             {!isPending && <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>}
                             {isPending && <button disabled className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>}
                         </>
@@ -110,4 +110,4 @@ const NewFormProject = ({currentUser}) => {
     )
 }
 
-export default NewFormProject;
+export default NewFormWorkspace;

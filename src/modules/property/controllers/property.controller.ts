@@ -16,9 +16,9 @@ export const list = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const listByProject = async (ctx: RouterContext<any, any>) => {
+export const listByWorkpsace = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await Property.find({project: ctx.params?.projectId});
+        const record = await Property.find({workspace: ctx.params?.workspaceId});
         // console.log('record: ', record)
         ctx.response.body = record;
     } catch (error) {
