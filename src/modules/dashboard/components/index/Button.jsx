@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useStateContext } from '../../../../contexts/dashboard-routes/ContextProvider';
+import { useStateContext } from "../../../../contexts/dashboard-routes/ContextProvider.jsx";
 
 const Button = ({ icon, bgColor, color, bgHoverColor, size, text, borderRadius, width }) => {
   const { setIsClicked, initialState } = useStateContext();
