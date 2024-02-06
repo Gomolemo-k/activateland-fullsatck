@@ -13,4 +13,4 @@ function IndexWorkspace(currentUser) {
     );
 }
 
-export default IndexWorkspacce;
+export default IndexWorkspace;

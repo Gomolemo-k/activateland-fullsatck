@@ -7,14 +7,14 @@ import { useUser } from "@clerk/clerk-react";
 import "../../assets/css/dashboard-routes/App.css";
 
 //Routes dashboard
-import IndexDashboard from '../dashboard/components/index/index';
+import IndexDashboard from "../dashboard/components/index/index.jsx";
 //Routes user profile
 import ShowUserProfile from '../user-profile/components/show/show';
 import EditUserProfile from '../user-profile/components/edit/edit';
 //Routes worksapce
-import IndexWorkspace from '../worksapce/components/index/index';
+import IndexWorkspace from '../workspace/components/index/index.jsx'
 import NewWorkspace from '../workspace/components/new/new';
-import ShowWorkspace from '../workspacce/components/show/show';
+import ShowWorkspace from '../workspace/components/show/show.jsx';
 import EditWorkspace from '../workspace/components/edit/edit';
 //Routes team
 import IndexTeam from '../team/components/index/index';
@@ -22,7 +22,7 @@ import NewTeam from '../team/components/new/new';
 import ShowTeam from '../team/components/show/show';
 import EditTeam from '../team/components/edit/edit';
 //Routes team member
-import IndexTeamMember from '../team-member/components/index/index';
+import IndexTeamMember from "../team-member/components/index/index.jsx";
 import NewTeamMember from '../team-member/components/new/new';
 import ShowTeamMember from '../team-member/components/show/show';
 import EditTeamMember from '../team-member/components/edit/edit';

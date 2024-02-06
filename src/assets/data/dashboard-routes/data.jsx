@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineWorkspace, AiFillHome } from 'react-icons/ai';
+import { AiOutlineProject, AiFillHome } from 'react-icons/ai';
 import { FiUserCheck, FiBarChart, FiCreditCard, FiStar } from 'react-icons/fi';
 import { BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft } from 'react-icons/bs';
 import { GiOrganigram } from 'react-icons/gi';
@@ -202,7 +202,7 @@ export const links = [
       {
         name: 'Workspaces',
         path: 'workspaces/index',
-        icon: <AiOutlineWorkspace />,
+        icon: <AiOutlineProject/>,
       },
       {
         name: 'Teams',

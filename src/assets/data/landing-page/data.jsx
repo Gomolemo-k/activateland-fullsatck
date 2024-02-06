@@ -30,7 +30,7 @@ import TwitterIcon from '../../img/landing-page/copyright/twitter.svg';
 import LinkedinIcon from '../../img/landing-page/copyright/linkedin.svg';
 import ArrowImg from '../../img/landing-page/product/cards/arrow.svg';
 
-import CookieConsentCss from '../../css/landing-page/CookieConsent.css';
+//import CookieConsentCss from '../../css/landing-page/CookieConsent.css';
 
 import CookiePolicy from '../../docs/policies/Cookie-Policy.pdf';
 import PrivacyPolicy from '../../docs/policies/Privacy-Policy.pdf';
@@ -38,7 +38,7 @@ import ServiceGuarantees from '../../docs/policies/Service-Guarantees.pdf';
 import TermsOfUse from '../../docs/policies/Terms-of-Use.pdf';
 
 export const cookieConsent = {
-  css: CookieConsentCss,
+//css: CookieConsentCss,
 };
 
 export const header = {

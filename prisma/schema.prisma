@@ -16,7 +16,7 @@ model User {
   workspaces  Workspace[]
   userProfile UserProfile?
   userAccount UserAccount?
-  userSession UserSession?
+  userSession UserSession? 
 }
 
 model Workspace {
