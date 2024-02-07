@@ -9,15 +9,15 @@ import "../../assets/css/dashboard-routes/App.css";
 //Routes dashboard
 import IndexDashboard from "../dashboard/components/index/index.jsx";
 //Routes user profile
-import ShowUserProfile from '../user-profile/components/show/show';
-import EditUserProfile from '../user-profile/components/edit/edit';
+import ShowUserProfile from "../user-profile/components/show/show.jsx";
+import EditUserProfile from "../user-profile/components/edit/edit.jsx";
 //Routes worksapce
 import IndexWorkspace from '../workspace/components/index/index.jsx'
-import NewWorkspace from '../workspace/components/new/new';
+import NewWorkspace from "../workspace/components/new/new.jsx";
 import ShowWorkspace from '../workspace/components/show/show.jsx';
-import EditWorkspace from '../workspace/components/edit/edit';
+import EditWorkspace from "../workspace/components/edit/edit.jsx";
 //Routes team
-import IndexTeam from '../team/components/index/index';
+import IndexTeam from "../team/components/index/index.jsx";
 import NewTeam from '../team/components/new/new';
 import ShowTeam from '../team/components/show/show';
 import EditTeam from '../team/components/edit/edit';

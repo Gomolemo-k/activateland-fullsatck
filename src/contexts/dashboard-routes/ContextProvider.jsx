@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { getUserId, getUserReferences } from './setLocalStorageUserId';
+import { getUserId, getUserReferences } from "./setLocalStorageUserId.ts";
 
 const StateContext = createContext();
 
