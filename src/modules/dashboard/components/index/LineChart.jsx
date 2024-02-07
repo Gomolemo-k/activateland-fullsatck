@@ -42,7 +42,7 @@ export const data = {
   datasets: [
     {
       label: 'Rent Incomes',
-      data: labels.map(() => faker.datatype.number({ min: 50000, max: 100000 })),
+      data: labels.map(() => faker.datatype.number({ min: 10000, max: 30000 })),
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },

@@ -55,7 +55,7 @@ export const ContextProvider = ({ children }) => {
     <StateContext.Provider value={{setUserByEmail, currentUser, setCurrentUser, 
       currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, 
       isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, 
-      setColor, themeSettings, setThemeSettings, userWorkspaces, setUserWorkspace }}>
+      setColor, themeSettings, setThemeSettings, userWorkspaces, setUserWorkspaces }}>
       {children}
     </StateContext.Provider>
   );
