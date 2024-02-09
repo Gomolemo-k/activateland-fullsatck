@@ -2,7 +2,7 @@ import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import { Button } from '.';
-import { chatData } from '../../../assets/data/dashboard-routes/data';
+import { chatData } from "../../../assets/data/dashboard-routes/data.jsx";
 import { useStateContext } from '../../../contexts/dashboard-routes/ContextProvider';
 
 const Notification = () => {
