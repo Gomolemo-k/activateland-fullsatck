@@ -34,3 +34,15 @@ export async function deleteProperty(id: string) {
   });
 }
 
+export async function getPropertyReferences(propertyId: string) {
+  try {
+      return await prisma.property.findUnique({
+          where: { id: parseInt(propertyId) },
+          include: {
+              propertyAnalysis: true
+          }
+      });
+  } catch (error) {
+      throw new Error(`Error retrieving property references: ${error.message}`);
+  }
+}
