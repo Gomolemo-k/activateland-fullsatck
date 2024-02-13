@@ -1,21 +1,42 @@
-import { mongoose}  from "../../../../deps.ts";
+import { PrismaClient } from '@prisma/client';
 
-const teamMemberRole = {
-	NONE: 'NONE',
-	VIEW: 'VIEW',
-	ALL: 'ALL',
+const prisma = new PrismaClient();
+
+type TeamMemberCreateBody = PrismaClient.Args<typeof prisma.teamMember, 'create'>['data'];
+type TeamMemberUpdateBody = PrismaClient.Args<typeof prisma.teamMember, 'update'>['data'];
+
+export async function listTeamMembers() {
+	return await prisma.teamMember.findMany();
+  }
+
+export async function createTeamMember(userId: string, body: TeamMemberCreateBody) {
+  return await prisma.teamMember.create({
+    data: {
+      user: { connect: { id: userId } },
+      role: role,
+    },
+  });
+}
+
+export async function updateTeamMember(id: string, body: TeamMemberUpdateBody) {
+  return await prisma.teamMember.update({
+    where: { id: id },
+    data: {
+		body: data
+    },
+  });
+}
+
+export async function getTeamMemberById(id: string) {
+  return await prisma.teamMember.findUnique({
+    where: { id: id },
+  });
+}
+
+export async function deleteTeamMember(id: string) {
+  return await prisma.teamMember.delete({
+    where: { id: id },
+  });
 }
 
 
-const teamMemberSchema  = new mongoose.Schema({
-	user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-	role: { type: String, enum: Object.values(teamMemberRole), required: true, default: teamMemberRole.VIEW },
-}, {
-	timestamps: true
-});
-
-
-// export default mongoose.model("TeamMember", teamMemberSchema);
-const TeamMember = mongoose.model("TeamMember", teamMemberSchema);
-
-export { TeamMember, teamMemberRole };
