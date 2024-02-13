@@ -1,34 +1,15 @@
-import { PrismaClient } from '@prisma/client';
-import prisma from "../../../../client.ts";
+import { mongoose}  from "../../../../deps.ts";
 
-type LocationCreateBody = PrismaClient.Args<typeof prisma.location, 'create'>['data'];
-type LocationUpdateBody = PrismaClient.Args<typeof prisma.location, 'update'>['data'];
+const locationSchema  = new mongoose.Schema({
+	latitude: { type: Number, required: true },
+	longitude: { type: Number, required: true },
+	address: { type: String, required: true },
+	city: { type: String, required: true },
+	country: { type: String, required: true },
+	postalCode: { type: String, required: true },    
+}, {
+	timestamps: true
+});
 
-export async function listLocations() {
-    return await prisma.location.findMany();
-}
 
-export async function getLocationById(id: string) {
-    return await prisma.location.findUnique({ 
-		where: { id: id } 
-	});
-}
-
-export async function createLocation(body: LocationCreateBody) {
-    return await prisma.location.create({ 
-		data: body
-	});
-}
-
-export async function updateLocation(id: string, body: LocationUpdateBody) {
-    return await prisma.location.update({ 
-		where: { id: id}, 
-		data: body
-	});
-}
-
-export async function deleteLocation(id: string) {
-    return await prisma.location.delete({ 
-		where: { id: id } 
-	});
-}
+export default mongoose.model("Location", locationSchema);

@@ -1,36 +1,24 @@
-import { PrismaClient } from '@prisma/client';
+import { mongoose}  from "../../../../deps.ts";
 
-const prisma = new PrismaClient();
+const propertyAnalysisSchema  = new mongoose.Schema({
+	property: { type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true },
+	title: { type: String, required: true },
+	description: { type: String },
+	rentalIncome: { type: Number },
+	netIncome: { type: Number },
+	returnOnInvestment: { type: Number },
+	purchasePrice: { type: Number },
+	rehabAmount: { type: Number },
+	salesCommission: { type: Number },
+	additionalCosts: { type: Number },
+	annualCosts: { type: Number },
+	mortgageAmount: { type: Number },
+	mortgageInterest: { type: Number },
+	mortgageCosts: { type: Number },
+	taxes: { type: Number },
+	registrationFees: { type: Number },
+}, {
+	timestamps: true
+});
 
-type PropertyAnalysisCreateBody = PrismaClient.Args<typeof prisma.user, 'create'>['data'];
-type PropertyAnalysisUpdateBody = PrismaClient.Args<typeof prisma.user, 'update'>['data'];
-
-export async function listTeamMembers() {
-  return await prisma.teamMember.findMany();
-}
-
-export async function createPropertyAnalysis(body: PropertyAnalysisCreateBody) {
-  return await prisma.propertyAnalysis.create({
-    data: body,
-  });
-}
-
-export async function updatePropertyAnalysis(id: string, body: PropertyAnalysisUpdateBody  ) {
-	return await prisma.propertyAnalysis.update({
-	  where: { id: id },
-	  data: body,
-	});
-  }
-
-export async function getPropertyAnalysisById(id: string) {
-  return await prisma.propertyAnalysis.findUnique({
-    where: { id: id },
-  });
-}
-
-export async function deletePropertyAnalysis(id: string) {
-  return await prisma.propertyAnalysis.delete({
-    where: { id: id },
-  });
-}
-
+export default mongoose.model("PropertyAnalysis", propertyAnalysisSchema);

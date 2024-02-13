@@ -5,8 +5,8 @@ import Joi from 'https://deno.land/x/joi@17.9.2/mod.ts';
 
 const prisma = new PrismaClient();
 
-type UserCreateBody = PrismaClient.Args<typeof prisma.user, 'create'>['data'];
-type UserUpdateBody = PrismaClient.Args<typeof prisma.user, 'update'>['data'];
+type UserCreateBody = PrismaClient.Args<typeof prisma.user, 'create'>['data']
+type UserUpdateBody = PrismaClient.Args<typeof prisma.user, 'update'>['data']
 
 export async function listUsers() { 
     return await prisma.user.findMany();
@@ -50,8 +50,12 @@ export async function updateOrCreateUser(body: UserUpdateBody) {
     }
     return prisma.user.upsert({
         where: { email: body.email },
-        update: {data: body },
-        create: {data: body}
+        update: {
+            data: body
+        },
+        create: {
+            data: body
+        }
     });
 }
 

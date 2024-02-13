@@ -1,36 +1,22 @@
-import { PrismaClient } from '@prisma/client';
+import { mongoose}  from "../../../../deps.ts";
 
-const prisma = new PrismaClient();
-
-type UserAccountCreateBody = PrismaClient.Args<typeof prisma.userAccount, 'create'>['data'];
-type UserAccountUpdateBody = PrismaClient.Args<typeof prisma.userAccount, 'update'>['data'];
-
-export async function listUserAccounts() {
-  return await prisma.userAccount.findMany();
+const userAccountType = {
+	FREE: 'FREE',
+	BASIC: 'BASIC',
+	PRO: 'PRO',
 }
 
-export async function getUserAccountById(id: string) {
-  return await prisma.userAccount.findUnique({
-    where: { id: id },
-    include: { user: true }
-  });
-}
+const userAccountSchema  = new mongoose.Schema({
+	user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+	type: { type: String, enum: Object.values(userAccountType), default: userAccountType.FREE },
+	purchase: { type: Number, default: 0 },
+	expiresAt: { type: Date, required: true },
+}, {
+	timestamps: true
+});
 
-export async function createUserAccount(body: UserAccountCreateBody) {
-  return await prisma.userAccount.create({
-    data: body 
-  });
-}
 
-export async function updateUserAccount(id: string, body: UserAccountUpdateBody) {
-  return await prisma.userAccount.update({
-    where: { id: id },
-    data: body
-  });
-}
+// export default mongoose.model("UserAccount", userAccountSchema);
+const UserAccount = mongoose.model("UserAccount", userAccountSchema);
 
-export async function deleteUserAccount(id: string) {
-  return await prisma.userAccount.delete({
-    where: { id: id }
-  });
-}
+export { UserAccount, userAccountType };
