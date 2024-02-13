@@ -1,51 +1,35 @@
-import { mongoose}  from "../../../../deps.ts";
+import { PrismaClient } from '@prisma/client';
 
-const propertyType = {
-	HOUSE: 'HOUSE',
-	FLAT: 'FLAT',
-	APARTMENT: 'APARTMENT',
-	TOWNHOUSE: 'TOWNHOUSE',
-	VILLA: 'VILLA',
-	PENTHOUSE: 'PENTHOUSE',
-	STUDIO: 'STUDIO',
-	LOFT: 'LOFT',
-	DUPLEX: 'DUPLEX',
-	TRIPLEX: 'TRIPLEX',
-	BUNGALOW: 'BUNGALOW',
-	OFFICE: 'OFFICE',
-	RETAIL: 'RETAIL',
-	WAREHOUSE: 'WAREHOUSE',
-	INDUSTRIAL: 'INDUSTRIAL',
-	LAND: 'LAND',
-	FARM: 'FARM',
-	HOTEL: 'HOTEL',
-	HOSTEL: 'HOSTEL',
-	MOBILE_HOME: 'MOBILE_HOME',
-	BOAT_HOUSE: 'BOAT_HOUSE',
+const prisma = new PrismaClient();
+
+type PropertyCreateBody = PrismaClient.Args<typeof prisma.property, 'create'>['data'];
+type PropertyUpdateBody = PrismaClient.Args<typeof prisma.property, 'update'>['data'];
+
+export async function listTeams() {
+  return await prisma.team.findMany();
 }
 
-const propertySchema  = new mongoose.Schema({
-	workspace: { type: mongoose.Schema.Types.ObjectId, ref: 'Workspace', required: true },
-	title: { type: String, required: true },
-	propertyType: { type: String, enum: Object.values(propertyType), required: true, default: propertyType.HOUSE },
-	bedrooms: { type: Number, required: true },
-	baze: { type: Number, required: true },
-	price: { type: Number },
-	description: { type: String },
-	mthrooms: { type: Number, required: true },
-	siainImage: { type: mongoose.Schema.Types.ObjectId, ref: 'UploadedFile' },
-	images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UploadedFile' }],
-	location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
-	constructionYear: { type: Number },
-	isFurnished: { type: Boolean, default: false },
-	isAvailable: { type: Boolean, default: true },
-	propertyAnalysis: { type: mongoose.Schema.Types.ObjectId, ref: 'PropertyAnalysis' },
-}, {
-	timestamps: true
-});
+export async function getPropertyById(id: string) {
+  return await prisma.property.findUnique({
+    where: { id: id }
+  });
+}
 
+export async function createProperty(body: PropertyCreateBody) {
+  return await prisma.property.create({
+    data: body
+  });
+}
 
-// export default mongoose.model("Property", propertySchema);
-const Property = mongoose.model("Property", propertySchema);
+export async function updateProperty(id: string, body: PropertyUpdateBody) {
+  return await prisma.property.update({
+    where: { id: id },
+    data: body
+  });
+}
 
-export { Property, propertyType };
+export async function deleteProperty(id: string) {
+  return await prisma.property.delete({
+    where: { id: id }
+  });
+}

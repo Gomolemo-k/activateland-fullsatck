@@ -1,42 +1,37 @@
- import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-async function createWorkspace(name: string, description?: string, userId: number) {
-  return await prisma.workspace.create({
-    data: {
-      name,
-      description,
-      userId,
-    },
-  });
-}
+type WorkspaceCreateBody = PrismaClient.Args<typeof prisma.workspace, 'create'>['data'];
+type WorkspaceUpdateBody = PrismaClient.Args<typeof prisma.workspace, 'update'>['data'];
 
-async function getWorkspaces() {
+export async function listWorkspaces() {
   return await prisma.workspace.findMany();
 }
 
-async function getWorkspaceById(id: number) {
+export async function getWorkspaceById(id: string) {
   return await prisma.workspace.findUnique({
-    where: {
-      id,
-    },
+    where: { id: id }
   });
 }
 
-async function updateWorkspace(id: number, newData: { name?: string; description?: string }) {
+export async function createWorkspace(body: WorkspaceCreateBody) {
+  return await prisma.workspace.create({
+    data: body
+  });
+}
+
+export async function updateWorkspace(id: string, body: WorkspaceUpdateBody) {
   return await prisma.workspace.update({
-    where: {
-      id,
-    },
-    data: newData,
+    where: { id: id },
+    data: body,
   });
 }
 
-async function deleteWorkspace(id: number) {
+ export async function deleteWorkspace(id: string) {
   return await prisma.workspace.delete({
-    where: {
-      id,
-    },
+    where: { id: id }
   });
 }
+
+
