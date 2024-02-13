@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import IndexTablePropertyAnalysis from "./index.table.jsx";
-import IndexNewButton from "./index.new-button.jsx"
+import IndexNewButton from "./index.new-button"
 
 function IndexPropertyAnalysis(currentUser) {
 

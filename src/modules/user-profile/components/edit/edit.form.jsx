@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { UsersApiClient, UserProfilesApiClient } from "../../../../api/fetch.functions.ts"
+import { UsersApiClient, UserProfilesApiClient } from "../../../../api/fetch.functions"
 import { useStateContext } from "../../../../contexts/dashboard-routes/ContextProvider"
 
 

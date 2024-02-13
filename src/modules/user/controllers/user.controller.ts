@@ -1,4 +1,4 @@
-import { listUsers, getUserById, getUserByEmail, createUser, updateUser, deleteUser, userReferences } from "../models/user.model.ts";
+import { User } from "../models/user.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 const userNotFoundMessage = "User not found in database.";
@@ -8,7 +8,7 @@ const userDeletedMessage = "User deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
     try {
-        const users = await listUsers;
+        const users = await User.find();
         ctx.response.body = users;
     } catch (error) {
         console.log('API ERROR USER getUsers:', error);
@@ -19,7 +19,7 @@ export const list = async (ctx: RouterContext<any, any>) => {
 
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await getUserById(ctx.params?.id);
+        const user = await User.findById(ctx.params?.id);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
@@ -33,7 +33,7 @@ export const get = async (ctx: RouterContext<any, any>) => {
 
 export const getByEmail = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await getUserByEmail(ctx.params?.email);
+        const user = await User.findOne({email: ctx.params?.email});
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
@@ -59,10 +59,11 @@ export const create = async (ctx: RouterContext<any, any>) => {
         // await new User({ ...formData.fields }).save();
 
         //Find user if exist
-        let user = await getUserByEmail(reqBody.email);
+        let user = await User.findOne({email: reqBody.email});
         if (!user) {
             //Create User
-            user = await createUser(reqBody);
+            user = new User(reqBody);
+            await user.save();
         }
     
         ctx.response.status = 201;
@@ -78,7 +79,7 @@ export const update = async (ctx: RouterContext<any, any>) => {
         const reqBody = await ctx.request.body().value;
         // console.log('ctx.params?.id', ctx.params?.id);
         // console.log('reqBody', reqBody);
-        const user = await updateUser(ctx.params?.id, reqBody);
+        const user = await User.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
@@ -92,7 +93,7 @@ export const update = async (ctx: RouterContext<any, any>) => {
 
 export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await deleteUser(ctx.params?.id);
+        const user = await User.findByIdAndDelete(ctx.params?.id);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
@@ -106,15 +107,49 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
 
 export const getUserReferences = async (ctx: RouterContext<any, any>) => {
     try {
-        const userId = ctx.params?.id;
-        if (!userId) {
-            ctx.response.status = 400;
-            ctx.response.body = { message: "User ID is missing in the request." };
-            return;
-        }
-        const user = await userReferences(userId);
+        const user = await User.find({_id: ctx.params?.id})
+        .populate(
+            {
+                path: 'userAccount', 
+                model: 'UserAccount',
+            })
+        .populate(
+            {
+                path: 'userProfile', 
+                model: 'UserProfile',
+            })
+        .populate(
+            {
+                path: 'userSession', 
+                model: 'UserSession',
+            })
+        .populate(
+            {
+                path: 'Workspaces', 
+                model: 'Workspace',
+                populate: {
+                    path: 'teams',
+                    model: 'Team',
+                    populate: {
+                        path: 'teamMembers',
+                        model: 'TeamMembers',
+                    }
+                }
+            })
+        .populate(
+            {
+                path: 'workspaces', 
+                model: 'Workspace',
+                populate: {
+                     path: 'properties',
+                     model: 'Property',
+                     populate: {
+                        path: 'propertyAnalysis',
+                        model: 'PropertyAnalysis'
+                   }
+                }
+            });
         // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%getUserReferences: ', user)
-       
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
@@ -125,4 +160,3 @@ export const getUserReferences = async (ctx: RouterContext<any, any>) => {
         ctx.response.body = { message: iternalServerErrorMessage, error: error };
     }
 };
-

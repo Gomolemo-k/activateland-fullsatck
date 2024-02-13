@@ -45,7 +45,7 @@ const getSuspender = (promise: { then: (arg0: (res: any) => void,arg1: (err: any
 export async function fetchData(url: RequestInfo|URL, method: string = "GET", body?: any) {
   try {
     const data = (method === "GET" || method === "HEAD") ? null : JSON.stringify(body);
-    const response = await fetch(url,{
+    const response = await fetch(url, {
       method: method,
       headers: {
         "Content-Type": "application/json",
@@ -57,6 +57,6 @@ export async function fetchData(url: RequestInfo|URL, method: string = "GET", bo
     console.log("result:", result);
     return result;
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error("Error:", error);
   }
 }
