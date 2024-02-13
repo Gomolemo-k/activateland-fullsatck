@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
-import PropertyAnalysis from "../models/property-analysis.model.ts";
+import {listPropertyAnalysis, getPropertyAnalysisById,createPropertyAnalysis, updatePropertyAnalysis, deletePropertyAnalysis } from "../models/property-analysis.model.ts";
 
 const notFoundMessage = "Record not found in database.";
 const iternalServerErrorMessage = "Internal Server Error.";
@@ -18,7 +18,7 @@ export const list = async (ctx: RouterContext<any, any>) => {
 
 export const listPropertyAnalysisByProperty = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await PropertyAnalysis.find({property: ctx.params?.propertyId});
+        const record = await listPropertyAnalysis({property: ctx.params?.propertyId});
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
@@ -28,7 +28,7 @@ export const listPropertyAnalysisByProperty = async (ctx: RouterContext<any, any
 
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await PropertyAnalysis.findById(ctx.params?.id);
+        const record = await getPropertyAnalysisById(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -42,7 +42,7 @@ export const get = async (ctx: RouterContext<any, any>) => {
 
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
-        const reqBody = await ctx.request.body().value;
+        const reqBody = await createPropertyAnalysis().value;
         const record = new PropertyAnalysis(reqBody);
         await record.save();
 
@@ -57,7 +57,7 @@ export const create = async (ctx: RouterContext<any, any>) => {
 export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = await PropertyAnalysis.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
+        const record = await updatePropertyAnalysis(ctx.params?.id, reqBody, {new: true});
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -71,7 +71,7 @@ export const update = async (ctx: RouterContext<any, any>) => {
 
 export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await PropertyAnalysis.findByIdAndDelete(ctx.params?.id);
+        const record = await deletePropertyAnalysis(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
