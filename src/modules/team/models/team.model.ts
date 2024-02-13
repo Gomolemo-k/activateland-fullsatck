@@ -1,13 +1,37 @@
-import { mongoose}  from "../../../../deps.ts";
+import { PrismaClient } from '@prisma/client';
 
-const teamSchema  = new mongoose.Schema({
-	workspace: { type: mongoose.Schema.Types.ObjectId, ref: 'Workspace', required: true },
-	name: { type: String, required: true },
-	description: { type: String },
-	teamMembers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TeamMember' }],
-}, {
-	timestamps: true
-});
+const prisma = new PrismaClient();
+
+type TeamCreateBody = PrismaClient.Args<typeof prisma.Team, 'create'>['data'];
+type TeamUpdateBody = PrismaClient.Args<typeof prisma.Team, 'update'>['data'];
+
+export async function listTeams() {
+    return await prisma.team.findMany();
+}
+
+export async function getTeamById(id: string) {
+    return await prisma.team.findUnique({
+        where: { id: id }
+    });
+}
+
+export async function createTeam(body: TeamCreateBody) {
+    return await prisma.team.create({
+        data: body
+    });
+}
+
+export async function updateTeam(id: string, body: TeamUpdateBody) {
+    return await prisma.team.update({
+        where: { id: id },
+        data: body,
+    });
+}
+
+export async function deleteTeam(id: string) {
+    return await prisma.team.delete({
+        where: { id: id }
+    });
+}
 
 
-export default mongoose.model("Team", teamSchema);
