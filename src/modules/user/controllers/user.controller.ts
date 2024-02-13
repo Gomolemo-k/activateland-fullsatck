@@ -1,162 +1,121 @@
+import { listUsers, getUserById, getUserByEmail, createUser, updateUser, deleteUser, userReferences } from "../models/user.model.ts";
 import { User } from "../models/user.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 const userNotFoundMessage = "User not found in database.";
-const iternalServerErrorMessage = "Internal Server Error.";
-const userCreatedMessage = "User created successfully.";
 const userDeletedMessage = "User deleted successfully.";
+const internalServerErrorMessage = "Internal Server Error.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
     try {
-        const users = await User.find();
+        const users = await listUsers();
         ctx.response.body = users;
     } catch (error) {
-        console.log('API ERROR USER getUsers:', error);
+        console.log('API ERROR USER list:', error);
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage };
     }
 };
 
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await User.findById(ctx.params?.id);
+        const user = await getUserById(ctx.params?.id);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
+            return;
         }
         ctx.response.body = user;
     } catch (error) {
+        console.log('API ERROR USER get:', error);
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage };
     }
 };
 
 export const getByEmail = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await User.findOne({email: ctx.params?.email});
+        const user = await getUserByEmail(ctx.params?.email);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
+            return;
         }
         ctx.response.body = user;
     } catch (error) {
+        console.log('API ERROR USER getByEmail:', error);
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage };
     }
 };
 
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        //console.log('reqBody', reqBody);
-        //const reqBodyJSON = await JSON.parse(reqBody);
-        //console.log(reqBodyJSON, typeof reqBodyJSON);
-
-        // const body = await ctx.request.body({ type: 'form-data'});
-        // const formData = await body.value.read();
-        // console.log(formData.fields);
-        //Save new user.
-        // await new User({ ...formData.fields }).save();
-
-        //Find user if exist
-        let user = await User.findOne({email: reqBody.email});
+        let user = await getUserByEmail(reqBody.email);
         if (!user) {
-            //Create User
-            user = new User(reqBody);
-            await user.save();
+            user = await createUser(reqBody);
         }
-    
         ctx.response.status = 201;
         ctx.response.body = user;
     } catch (error) {
+        console.log('API ERROR USER create:', error);
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage };
     }
 };
 
 export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        // console.log('ctx.params?.id', ctx.params?.id);
-        // console.log('reqBody', reqBody);
-        const user = await User.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
+        const user = await updateUser(ctx.params?.id, reqBody);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
+            return;
         }
-        return ctx.response.body = user;
+        ctx.response.body = user;
     } catch (error) {
+        console.log('API ERROR USER update:', error);
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage };
     }
 };
 
 export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await User.findByIdAndDelete(ctx.params?.id);
+        const user = await deleteUser(ctx.params?.id);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
+            return;
         }
         ctx.response.body = { message: userDeletedMessage };
     } catch (error) {
+        console.log('API ERROR USER destroy:', error);
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage };
     }
 };
 
 export const getUserReferences = async (ctx: RouterContext<any, any>) => {
     try {
-        const user = await User.find({_id: ctx.params?.id})
-        .populate(
-            {
-                path: 'userAccount', 
-                model: 'UserAccount',
-            })
-        .populate(
-            {
-                path: 'userProfile', 
-                model: 'UserProfile',
-            })
-        .populate(
-            {
-                path: 'userSession', 
-                model: 'UserSession',
-            })
-        .populate(
-            {
-                path: 'Workspaces', 
-                model: 'Workspace',
-                populate: {
-                    path: 'teams',
-                    model: 'Team',
-                    populate: {
-                        path: 'teamMembers',
-                        model: 'TeamMembers',
-                    }
-                }
-            })
-        .populate(
-            {
-                path: 'workspaces', 
-                model: 'Workspace',
-                populate: {
-                     path: 'properties',
-                     model: 'Property',
-                     populate: {
-                        path: 'propertyAnalysis',
-                        model: 'PropertyAnalysis'
-                   }
-                }
-            });
-        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%getUserReferences: ', user)
+        const userId = ctx.params?.id;
+        if (!userId) {
+            ctx.response.status = 400;
+            ctx.response.body = { message: "User ID is missing in the request." };
+            return;
+        }
+        const user = await userReferences(userId);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
+            return;
         }
         ctx.response.body = user;
     } catch (error) {
+        console.log('API ERROR USER getUserReferences:', error);
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage };
     }
 };
