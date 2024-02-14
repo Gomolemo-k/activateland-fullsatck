@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
-import { UserAccount } from "../models/user-account.model.ts";
+import { listUserAccounts, getUserAccountById, createUserAccount, updateUserAccount, deleteUserAccount } from "../models/user-account.model.ts";
 
 const notFoundMessage = "Record not found in database.";
 const iternalServerErrorMessage = "Internal Server Error.";
@@ -8,7 +8,7 @@ const deletedMessage = "Record deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await UserAccount.find();
+        const record = await listUserAccounts();
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
@@ -18,7 +18,7 @@ export const list = async (ctx: RouterContext<any, any>) => {
 
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await UserAccount.findById(ctx.params?.id);
+        const record = await getUserAccountById(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -33,7 +33,7 @@ export const get = async (ctx: RouterContext<any, any>) => {
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = new UserAccount(reqBody);
+        const record = createUserAccount(reqBody);
         await record.save();
 
         ctx.response.status = 201;
@@ -47,7 +47,7 @@ export const create = async (ctx: RouterContext<any, any>) => {
 export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = await UserAccount.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
+        const record = await updateUserAccount(ctx.params?.id, reqBody, {new: true});
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -61,7 +61,7 @@ export const update = async (ctx: RouterContext<any, any>) => {
 
 export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await UserAccount.findByIdAndDelete(ctx.params?.id);
+        const record = await deleteUserAccount(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
