@@ -15,6 +15,14 @@ export async function getWorkspaceById(id: string) {
   });
 }
 
+export async function listWorkspacesByUser(userId: string) {
+    return await prisma.workspace.findMany({
+      where: {
+        userId: parseInt(userId) 
+      }
+    });
+  }
+
 export async function createWorkspace(body: WorkspaceCreateBody) {
   return await prisma.workspace.create({
     data: body
@@ -34,4 +42,20 @@ export async function updateWorkspace(id: string, body: WorkspaceUpdateBody) {
   });
 }
 
-
+export async function getWorkspaceReferences(workspaceId: string) {
+    return await prisma.workspace.findUnique({
+      where: { id: parseInt(workspaceId) },
+      include: {
+        teams: {
+          include: {
+            teamMembers: true
+          }
+        },
+        properties: {
+          include: {
+            propertyAnalysis: true
+          }
+        }
+      }
+    });
+  }
