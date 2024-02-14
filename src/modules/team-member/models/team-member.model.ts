@@ -9,6 +9,12 @@ export async function listTeamMembers() {
 	return await prisma.teamMember.findMany();
   }
 
+  export async function getTeamMemberById(id: string) {
+    return await prisma.teamMember.findUnique({
+      where: { id: id },
+    });
+  }
+
 export async function createTeamMember(userId: string, body: TeamMemberCreateBody) {
   return await prisma.teamMember.create({
     data: {
@@ -24,12 +30,6 @@ export async function updateTeamMember(id: string, body: TeamMemberUpdateBody) {
     data: {
 		body: data
     },
-  });
-}
-
-export async function getTeamMemberById(id: string) {
-  return await prisma.teamMember.findUnique({
-    where: { id: id },
   });
 }
 
