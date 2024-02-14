@@ -1,3 +1,4 @@
+import {listUserProfiles, getUserProfileById, createUserProfile,updateUserProfile, deleteUserProfile } from "../models/user-profile.model.ts";
 import UserProfile from "../models/user-profile.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
@@ -8,7 +9,7 @@ const deletedMessage = "Record deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await UserProfile.find();
+        const record = await listUserProfiles();
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
@@ -18,7 +19,7 @@ export const list = async (ctx: RouterContext<any, any>) => {
 
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await UserProfile.findById(ctx.params?.id);
+        const record = await getUserProfileById(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -33,7 +34,7 @@ export const get = async (ctx: RouterContext<any, any>) => {
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = new UserProfile(reqBody);
+        const record = createUserProfile(reqBody);
         await record.save();
 
         ctx.response.status = 201;
@@ -47,7 +48,7 @@ export const create = async (ctx: RouterContext<any, any>) => {
 export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = await UserProfile.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
+        const record = await updateUserProfile(ctx.params?.id, reqBody, {new: true});
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -61,7 +62,7 @@ export const update = async (ctx: RouterContext<any, any>) => {
 
 export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await UserProfile.findByIdAndDelete(ctx.params?.id);
+        const record = await deleteUserProfile(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
