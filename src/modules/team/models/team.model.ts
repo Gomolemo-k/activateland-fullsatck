@@ -34,4 +34,11 @@ export async function deleteTeam(id: string) {
     });
 }
 
-
+export async function getTeamReferences(teamId: string) {
+        return await prisma.team.findUnique({
+            where: { id: parseInt(teamId) },
+            include: {
+                teamMembers: true 
+            }
+        });
+}
