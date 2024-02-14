@@ -1,3 +1,4 @@
+import {listTeams, getTeamById, createTeam, updateTeam, deleteTeam, TeamReferences} from "../models/team.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 import Team from "../models/team.model.ts";
 
@@ -8,7 +9,7 @@ const deletedMessage = "Record deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await Team.find();
+        const record = await listTeams();
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
@@ -18,7 +19,7 @@ export const list = async (ctx: RouterContext<any, any>) => {
 
 export const get = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await Team.findById(ctx.params?.id);
+        const record = await getTeamById(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -32,7 +33,7 @@ export const get = async (ctx: RouterContext<any, any>) => {
 
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
-        const reqBody = await ctx.request.body().value;
+        const reqBody = await createTeam().value;
         const record = new Team(reqBody);
         await record.save();
 
@@ -47,7 +48,7 @@ export const create = async (ctx: RouterContext<any, any>) => {
 export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = await Team.findByIdAndUpdate(ctx.params?.id, reqBody, {new: true});
+        const record = await updateTeam(ctx.params?.id, reqBody, {new: true});
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -61,7 +62,7 @@ export const update = async (ctx: RouterContext<any, any>) => {
 
 export const destroy = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await Team.findByIdAndDelete(ctx.params?.id);
+        const record = await deleteTeam(ctx.params?.id);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -75,9 +76,9 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
 
 export const getTeamReferences = async (ctx: RouterContext<any, any>) => {
     try {
-        const team = await Team.find({_id: ctx.params?.id})
+        const team = await TeamReferences ({_id: ctx.params?.id})
         .populate(
-            {
+            { 
                 path: 'teamMembers',
                 model: 'TeamMember'
             });
