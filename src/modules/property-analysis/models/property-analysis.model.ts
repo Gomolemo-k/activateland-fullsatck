@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 type PropertyAnalysisCreateBody = PrismaClient.Args<typeof prisma.propertyAnalysis, 'create'>['data'];
 type PropertyAnalysisUpdateBody = PrismaClient.Args<typeof prisma.propertyAnalysis, 'update'>['data'];
 
-export async function listPropertyAnalyses() {
+export async function listPropertyAnalysis() {
 	return await prisma.propertyAnalysis.findMany();
 }
   
