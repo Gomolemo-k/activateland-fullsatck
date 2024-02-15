@@ -19,7 +19,7 @@ export async function createTeamMember(userId: string, body: TeamMemberCreateBod
   return await prisma.teamMember.create({
     data: {
       user: { connect: { id: userId } },
-      role: role,
+      role: body.role
     },
   });
 }
@@ -27,9 +27,7 @@ export async function createTeamMember(userId: string, body: TeamMemberCreateBod
 export async function updateTeamMember(id: string, body: TeamMemberUpdateBody) {
   return await prisma.teamMember.update({
     where: { id: id },
-    data: {
-		body: data
-    },
+    data: body
   });
 }
 
