@@ -1,28 +1,32 @@
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
-import {listPropertyAnalysis, getPropertyAnalysisById,createPropertyAnalysis, updatePropertyAnalysis, deletePropertyAnalysis } from "../models/property-analysis.model.ts";
+import {listPropertyAnalysis, getPropertyAnalysisByProperty,  getPropertyAnalysisById, createPropertyAnalysis, updatePropertyAnalysis, deletePropertyAnalysis } from "../models/property-analysis.model.ts";
 
 const notFoundMessage = "Record not found in database.";
-const iternalServerErrorMessage = "Internal Server Error.";
+const internalServerErrorMessage = "Internal Server Error.";
 const createdMessage = "Record created successfully.";
 const deletedMessage = "Record deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await PropertyAnalysis.find();
+        const record = await listPropertyAnalysis.find();
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage, error: error };
     }
 };
 
 export const listPropertyAnalysisByProperty = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await listPropertyAnalysis({property: ctx.params?.propertyId});
+        const record = await getPropertyAnalysisByProperty(property: ctx.params?.propertyId);
+        if (!record) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: notFoundMessage };
+        }
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage, error: error };
     }
 };
 
@@ -36,28 +40,28 @@ export const get = async (ctx: RouterContext<any, any>) => {
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage, error: error };
     }
 };
 
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
-        const reqBody = await createPropertyAnalysis().value;
-        const record = new PropertyAnalysis(reqBody);
+        const reqBody = await ctx.request.body().value;
+        const record = createPropertyAnalysis(reqBody);
         await record.save();
 
         ctx.response.status = 201;
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage, error: error };
     }
 };
 
 export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = await updatePropertyAnalysis(ctx.params?.id, reqBody, {new: true});
+        const record = await updatePropertyAnalysis(ctx.params?.id, reqBody);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -65,7 +69,7 @@ export const update = async (ctx: RouterContext<any, any>) => {
         return ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage, error: error };
     }
 };
 
@@ -79,6 +83,6 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
         ctx.response.body = { message: deletedMessage };
     } catch (error) {
         ctx.response.status = 500;
-        ctx.response.body = { message: iternalServerErrorMessage, error: error };
+        ctx.response.body = { message: internalServerErrorMessage, error: error };
     }
 };
