@@ -15,6 +15,15 @@ export async function getTeamById(id: string) {
     });
 }
 
+export async function getTeamReferences(teamId: string) {
+    return await prisma.team.findUnique({
+        where: { id: parseInt(teamId) },
+        include: {
+            teamMembers: true 
+        }
+    });
+}
+
 export async function createTeam(body: TeamCreateBody) {
     return await prisma.team.create({
         data: body
@@ -32,13 +41,4 @@ export async function deleteTeam(id: string) {
     return await prisma.team.delete({
         where: { id: id }
     });
-}
-
-export async function getTeamReferences(teamId: string) {
-        return await prisma.team.findUnique({
-            where: { id: parseInt(teamId) },
-            include: {
-                teamMembers: true 
-            }
-        });
 }
