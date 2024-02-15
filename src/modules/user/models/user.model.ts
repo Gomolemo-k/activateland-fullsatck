@@ -11,21 +11,6 @@ export async function listUsers() {
     return await prisma.user.findMany();
 }
 
-export async function updateOrCreateUser(body: UserCreateBody | UserUpdateBody) {
-    const user = await prisma.user.upsert({
-        where: { email: body.email },
-        update: { data: body },
-        create: { data: body }
-    });
-    return user;
-}
-
-export async function deleteUser(id: string) {
-    return await prisma.user.delete({
-        where: { id: parseInt(id) }
-    });
-}
-
 export async function getUserReferences(userId: string) {
     return await prisma.user.findUnique({
         where: { id: parseInt(userId) },
@@ -52,6 +37,21 @@ export async function getUserReferences(userId: string) {
                 }
             }
         }
+    });
+}
+
+export async function updateOrCreateUser(body: UserCreateBody | UserUpdateBody) {
+    const user = await prisma.user.upsert({
+        where: { email: body.email },
+        update: { data: body },
+        create: { data: body }
+    });
+    return user;
+}
+
+export async function deleteUser(id: string) {
+    return await prisma.user.delete({
+        where: { id: parseInt(id) }
     });
 }
 
