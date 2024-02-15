@@ -1,4 +1,4 @@
-import {listWorkspaces, listWorkspacesByUser, getWorkspaceById,createWorkspace, updateWorkspace, deleteWorkspace, getWorkspaceReferences } from "../models/workspace.model.ts";
+import {listWorkspaces, listWorkspacesByUser, getWorkspaceById, createWorkspace, updateWorkspace, deleteWorkspace,  } from "../models/workspace.model.ts";
 import Workspace from "../models/workspace.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
@@ -19,7 +19,7 @@ export const list = async (ctx: RouterContext<any, any>) => {
 
 export const listByUser = async (ctx: RouterContext<any, any>) => {
     try {
-        const records = await listWorkspacesByUser({ user: ctx.params?.userId });
+        const records = await listWorkspacesByUser(ctx.params?.userId);
         ctx.response.body = records;
     } catch (error) {
         ctx.response.status = 500;
@@ -42,6 +42,21 @@ export const get = async (ctx: RouterContext<any, any>) => {
     }
 };
 
+export const getWorkspaceReferences = async (ctx: RouterContext<any, any>) => {
+    try {
+        const workspace = await getWorkspaceById(ctx.params?.id)
+        if (!workspace) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: notFoundMessage };
+        }
+        ctx.response.body = workspace;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = { message: internalServerErrorMessage, error: error };
+    }
+};
+
+
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
@@ -58,7 +73,7 @@ export const create = async (ctx: RouterContext<any, any>) => {
 export const update = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = await updateWorkspace(ctx.params?.id, reqBody, { new: true });
+        const record = await updateWorkspace(ctx.params?.id, reqBody);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -86,28 +101,3 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const getWorkspaceReferences = async (ctx: RouterContext<any, any>) => {
-    try {
-        const workspace = await Workspace.findById(ctx.params?.id)
-            .populate({
-                path: 'teams',
-                model: 'Team',
-                populate: {
-                    path: 'teamMembers',
-                    model: 'TeamMembers',
-                }
-            })
-            .populate({
-                path: 'properties',
-                model: 'Property',
-                populate: {
-                    path: 'propertyAnalysis',
-                    model: 'PropertyAnalysis'
-                }
-            });
-        ctx.response.body = workspace;
-    } catch (error) {
-        ctx.response.status = 500;
-        ctx.response.body = { message: internalServerErrorMessage, error: error };
-    }
-};
