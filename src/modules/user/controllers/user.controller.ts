@@ -1,4 +1,4 @@
-import { listUsers, getUserById, getUserByEmail, createUser, updateUser, deleteUser, userReferences } from "../models/user.model.ts";
+import { listUsers, getUserById, getUserByEmail, userReferences,  createUser, updateUser, deleteUser,  } from "../models/user.model.ts";
 import { User } from "../models/user.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
@@ -44,6 +44,28 @@ export const getByEmail = async (ctx: RouterContext<any, any>) => {
         ctx.response.body = user;
     } catch (error) {
         console.log('API ERROR USER getByEmail:', error);
+        ctx.response.status = 500;
+        ctx.response.body = { message: internalServerErrorMessage };
+    }
+};
+
+export const getUserReferences = async (ctx: RouterContext<any, any>) => {
+    try {
+        const userId = ctx.params?.id;
+        if (!userId) {
+            ctx.response.status = 400;
+            ctx.response.body = { message: "User ID is missing in the request." };
+            return;
+        }
+        const user = await userReferences(userId);
+        if (!user) {
+            ctx.response.status = 404;
+            ctx.response.body = { message: userNotFoundMessage };
+            return;
+        }
+        ctx.response.body = user;
+    } catch (error) {
+        console.log('API ERROR USER getUserReferences:', error);
         ctx.response.status = 500;
         ctx.response.body = { message: internalServerErrorMessage };
     }
@@ -98,24 +120,3 @@ export const destroy = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const getUserReferences = async (ctx: RouterContext<any, any>) => {
-    try {
-        const userId = ctx.params?.id;
-        if (!userId) {
-            ctx.response.status = 400;
-            ctx.response.body = { message: "User ID is missing in the request." };
-            return;
-        }
-        const user = await userReferences(userId);
-        if (!user) {
-            ctx.response.status = 404;
-            ctx.response.body = { message: userNotFoundMessage };
-            return;
-        }
-        ctx.response.body = user;
-    } catch (error) {
-        console.log('API ERROR USER getUserReferences:', error);
-        ctx.response.status = 500;
-        ctx.response.body = { message: internalServerErrorMessage };
-    }
-};
