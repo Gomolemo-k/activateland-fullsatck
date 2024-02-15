@@ -15,6 +15,21 @@ export async function getPropertyById(id: string) {
   });
 }
 
+export async function getPropertiesByWorkspaceId(workspaceId: string) {
+  return await prisma.property.findMany({
+    where: { workspaceId: parseInt(workspaceId) }
+  });
+}
+
+export async function getPropertyReferences(propertyId: string) {
+      return await prisma.property.findUnique({
+          where: { id: parseInt(propertyId) },
+          include: {
+              propertyAnalysis: true
+          }
+      });
+}
+
 export async function createProperty(body: PropertyCreateBody) {
   return await prisma.property.create({
     data: body
@@ -32,17 +47,4 @@ export async function deleteProperty(id: string) {
   return await prisma.property.delete({
     where: { id: id }
   });
-}
-
-export async function getPropertyReferences(propertyId: string) {
-  try {
-      return await prisma.property.findUnique({
-          where: { id: parseInt(propertyId) },
-          include: {
-              propertyAnalysis: true
-          }
-      });
-  } catch (error) {
-      throw new Error(`Error retrieving property references: ${error.message}`);
-  }
 }
