@@ -1,10 +1,8 @@
 import { listTeamMembers, getTeamMemberById, createTeamMember, updateTeamMember, deleteTeamMember  } from "../models/team-member.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
-import { TeamMember, teamMemberRole } from "../models/team-member.model.ts";
 
 const notFoundMessage = "Record not found in database.";
 const internalServerErrorMessage = "Internal Server Error.";
-const createdMessage = "Record created successfully.";
 const deletedMessage = "Record deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
@@ -34,9 +32,7 @@ export const get = async (ctx: RouterContext<any, any>) => {
 export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
-        const record = createTeamMember(reqBody);
-        await record.save();
-
+        const record =  createTeamMember(ctx.params?.id, reqBody);
         ctx.response.status = 201;
         ctx.response.body = record;
     } catch (error) {
