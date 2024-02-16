@@ -1,10 +1,8 @@
 import {listWorkspaces, listWorkspacesByUser, getWorkspaceById, createWorkspace, updateWorkspace, deleteWorkspace,  } from "../models/workspace.model.ts";
-import Workspace from "../models/workspace.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 const notFoundMessage = "Record not found in database.";
 const internalServerErrorMessage = "Internal Server Error.";
-const createdMessage = "Record created successfully.";
 const deletedMessage = "Record deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
@@ -61,7 +59,6 @@ export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
         const record = createWorkspace(reqBody);
-        await record.save();
         ctx.response.status = 201;
         ctx.response.body = record;
     } catch (error) {
