@@ -1,14 +1,13 @@
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
-import {listPropertyAnalysis, getPropertyAnalysisByProperty,  getPropertyAnalysisById, createPropertyAnalysis, updatePropertyAnalysis, deletePropertyAnalysis } from "../models/property-analysis.model.ts";
+import {listPropertyAnalysis, listPropertyAnalysisByProperty,  getPropertyAnalysisById, createPropertyAnalysis, updatePropertyAnalysis, deletePropertyAnalysis } from "../models/property-analysis.model.ts";
 
 const notFoundMessage = "Record not found in database.";
 const internalServerErrorMessage = "Internal Server Error.";
-const createdMessage = "Record created successfully.";
 const deletedMessage = "Record deleted successfully.";
 
 export const list = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await listPropertyAnalysis.find();
+        const record = await listPropertyAnalysis();
         ctx.response.body = record;
     } catch (error) {
         ctx.response.status = 500;
@@ -16,9 +15,9 @@ export const list = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const listPropertyAnalysisByProperty = async (ctx: RouterContext<any, any>) => {
+export const getPropertyAnalysisByProperty = async (ctx: RouterContext<any, any>) => {
     try {
-        const record = await getPropertyAnalysisByProperty(property: ctx.params?.propertyId);
+        const record = await listPropertyAnalysisByProperty(ctx.params?.propertyId);
         if (!record) {
             ctx.response.status = 404;
             ctx.response.body = { message: notFoundMessage };
@@ -48,8 +47,6 @@ export const create = async (ctx: RouterContext<any, any>) => {
     try {
         const reqBody = await ctx.request.body().value;
         const record = createPropertyAnalysis(reqBody);
-        await record.save();
-
         ctx.response.status = 201;
         ctx.response.body = record;
     } catch (error) {
