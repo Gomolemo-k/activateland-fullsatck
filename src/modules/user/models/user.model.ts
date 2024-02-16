@@ -11,6 +11,18 @@ export async function listUsers() {
     return await prisma.user.findMany();
 }
 
+export async function getUserById(id: string) {
+    return await prisma.user.findUnique({
+        where: { id: parseInt(id) }
+    });
+}
+
+export async function getUserByEmail(email: string) {
+    return await prisma.user.findUnique({
+        where: { email }
+    });
+}
+
 export async function getUserReferences(userId: string) {
     return await prisma.user.findUnique({
         where: { id: parseInt(userId) },
@@ -39,6 +51,20 @@ export async function getUserReferences(userId: string) {
         }
     });
 }
+
+export async function createUser(body: UserCreateBody) {
+    return await prisma.user.create({
+        data: body
+    });
+}
+
+export async function updateUser(id: string, body: UserUpdateBody) {
+    return await prisma.user.update({
+        where: { id: parseInt(id) },
+        data: body
+    });
+}
+
 
 export async function updateOrCreateUser(body: UserCreateBody | UserUpdateBody) {
     const user = await prisma.user.upsert({
