@@ -1,5 +1,4 @@
-import { listUsers, getUserById, getUserByEmail, userReferences,  createUser, updateUser, deleteUser,  } from "../models/user.model.ts";
-import { User } from "../models/user.model.ts";
+import { listUsers, getUserById, getUserByEmail, getUserReferences,  createUser, updateUser, deleteUser,  } from "../models/user.model.ts";
 import { RouterContext } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 
 const userNotFoundMessage = "User not found in database.";
@@ -49,7 +48,7 @@ export const getByEmail = async (ctx: RouterContext<any, any>) => {
     }
 };
 
-export const getUserReferences = async (ctx: RouterContext<any, any>) => {
+export const getReferences = async (ctx: RouterContext<any, any>) => {
     try {
         const userId = ctx.params?.id;
         if (!userId) {
@@ -57,7 +56,7 @@ export const getUserReferences = async (ctx: RouterContext<any, any>) => {
             ctx.response.body = { message: "User ID is missing in the request." };
             return;
         }
-        const user = await userReferences(userId);
+        const user = await getUserReferences(userId);
         if (!user) {
             ctx.response.status = 404;
             ctx.response.body = { message: userNotFoundMessage };
